@@ -1,0 +1,5 @@
+jupyter
+pandas
+python-dotenv
+fastapi
+uvicorn
