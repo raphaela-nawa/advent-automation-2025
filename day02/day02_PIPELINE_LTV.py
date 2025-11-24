@@ -144,7 +144,7 @@ def main():
 
         if db_summary['account_metrics_count'] == 0 or db_summary['posts_count'] == 0:
             print("\n❌ No data found in database!")
-            print("\n💡 Please run: python load_synthetic_data.py")
+            print("\n💡 Please run: python experimental/day02_PIPELINE_synthetic_data_loader.py")
             sys.exit(1)
 
         print(f"   ✓ Found {db_summary['account_metrics_count']} days of metrics")
@@ -239,7 +239,7 @@ def main():
                 'growth_strategy': strategy
             }
 
-            output_file = 'data/hour2_analysis_results.json'
+            output_file = 'data/day02_DATA_ltv_analysis.json'
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(results, f, indent=2, ensure_ascii=False)
 

@@ -63,7 +63,7 @@ def load_data():
     posts = dm.get_posts()
 
     # Load Hour 2 analysis results
-    results_path = Path(__file__).parent / 'data' / 'hour2_analysis_results.json'
+    results_path = Path(__file__).parent / 'data' / 'day02_DATA_ltv_analysis.json'
     with open(results_path, 'r') as f:
         analysis_results = json.load(f)
 
@@ -75,7 +75,7 @@ try:
     data_loaded = True
 except Exception as e:
     st.error(f"Error loading data: {e}")
-    st.info("Please run the analysis pipeline first: `python pipeline_day02_hour2.py`")
+    st.info("Please run the analysis pipeline first: `python day02_PIPELINE_LTV.py`")
     data_loaded = False
     st.stop()
 

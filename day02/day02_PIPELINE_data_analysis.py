@@ -104,7 +104,7 @@ def main():
 
         if db_summary['account_metrics_count'] == 0 or db_summary['posts_count'] == 0:
             print("\n❌ No data found in database!")
-            print("\n💡 Please run: python load_synthetic_data.py")
+            print("\n💡 Please run: python experimental/day02_PIPELINE_synthetic_data_loader.py")
             print("   to load the synthetic data first.\n")
             sys.exit(1)
 
