@@ -184,3 +184,25 @@ cython_debug/
 *.env
 config/.env
 config/*.env
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+
+# IDE-specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-*
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
