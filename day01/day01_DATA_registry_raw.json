@@ -1,0 +1,755 @@
+{
+  "metadata": {
+    "source": "https://www.ibanet.org/IBA-Climate-Registry",
+    "scraped_at": "2025-11-25 15:54:58",
+    "total_resources": 84,
+    "regional_count": 77,
+    "curated_count": 9
+  },
+  "statistics": {
+    "by_type": {
+      "contact_email": 19,
+      "policy": 18,
+      "training": 5,
+      "litigation": 3,
+      "guidance": 8,
+      "operational": 4,
+      "other": 21,
+      "tool": 2,
+      "article": 4
+    },
+    "by_region": {
+      "Africa": 3,
+      "Asia": 17,
+      "Europe": 25,
+      "Central and South America (LATAM)": 2,
+      "North America": 10,
+      "Oceania": 16,
+      "International": 2
+    },
+    "by_country": {
+      "International": 25,
+      "Unknown": 16,
+      "Uk": 15,
+      "Japan": 7,
+      "America": 4,
+      "Zambia": 3,
+      "Australia": 3,
+      "Brazil": 2,
+      "Aba": 2,
+      "Iba": 2,
+      "Singapore": 1,
+      "Taiwan": 1,
+      "Scotland": 1,
+      "Ireland": 1,
+      "Canada": 1
+    },
+    "by_category": {
+      "Tools and databases": 4,
+      "Articles which consider intersections between climate change, sustainability issues and the legal profession": 5
+    },
+    "other_percentage": 25.0
+  },
+  "resources": [
+    {
+      "title": "sakalae@laz.org.zm",
+      "url": "mailto:sakalae@laz.org.zm ",
+      "region": "Africa",
+      "country": "Zambia",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "lzulu@equitas-legal.com",
+      "url": "mailto:lzulu@equitas-legal.com",
+      "region": "Africa",
+      "country": "Zambia",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Change Statement",
+      "url": "https://www.ibanet.org/document?id=Climate-registry-law-association-of-zambia-statement",
+      "region": "Africa",
+      "country": "Zambia",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Usamamalik733@gmail.com",
+      "url": "mailto:Usamamalik733@gmail.com",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Usamamalik@molaw.gov.pk",
+      "url": "mailto:Usamamalik@molaw.gov.pk",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Revised Legal Curriculum includes Environment & Climate Justice",
+      "url": "https://www.ibanet.org/document?id=Notification-of-LLB-Curriculum-2025",
+      "region": "Asia",
+      "country": "International",
+      "type": "training",
+      "source": "regional_submission"
+    },
+    {
+      "title": "climatechange.ihcba@gmail.com",
+      "url": "mailto:climatechange.ihcba@gmail.com",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Revised Legal Curriculum includes Environment & Climate Justice",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Lecture: Doctors, Lawyers, and Climate Change: Understanding the Nexus",
+      "url": "https://www.ibanet.org/document?id=energy-20-jan-25",
+      "region": "Asia",
+      "country": "International",
+      "type": "training",
+      "source": "regional_submission"
+    },
+    {
+      "title": "tatement on World Environment Day 2024",
+      "url": "https://www.ibanet.org/document?id=climate-registry-Islamabad-high-court-bar-association",
+      "region": "Asia",
+      "country": "International",
+      "type": "litigation",
+      "source": "regional_submission"
+    },
+    {
+      "title": "",
+      "url": "mailto:anil@changarothchambers.com",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "IHCBA, Climate Change Committee - Terms of Reference (2024)",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Presentation on State of Climate Change and Environmental Litigation in Singapore",
+      "url": "https://www.ibanet.org/document?id=climate-registry-signapore",
+      "region": "Asia",
+      "country": "Singapore",
+      "type": "litigation",
+      "source": "regional_submission"
+    },
+    {
+      "title": "humanrights@koreanbar.or.kr",
+      "url": "mailto:humanrights@koreanbar.or.kr",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Presentation on State of Climate Change and Environmental Litigation in Singapore",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Statement welcoming the advisory opinion of the International Court of Justice on the obligations of States in respect of climate change",
+      "url": "https://www.ibanet.org/document?id=Statement-welcoming-the-advisory-opinion-of-the-International-Court-of-Justice-on-the-obligations-of-States-in-respect-of-climate-change",
+      "region": "Asia",
+      "country": "International",
+      "type": "litigation",
+      "source": "regional_submission"
+    },
+    {
+      "title": "mahler0413@gmail.com",
+      "url": "mailto:mahler0413@gmail.com",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Statement welcoming the advisory opinion of the International Court of Justice on the obligations of States in respect of climate change",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Declaration on Global Climate Crisis (English and Mandarin) (2023)",
+      "url": "https://www.tba.org.tw/announcement?id=65fa9c9be9f1e5cf47f5aa28",
+      "region": "Asia",
+      "country": "International",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate-focused seminar",
+      "url": "https://www.tba.org.tw/product?id=66344cd037a1fde4839b1714",
+      "region": "Asia",
+      "country": "Unknown",
+      "type": "training",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate-focused seminar",
+      "url": "https://www.ibanet.org/document?id=Taipei-Bar-Association-Climate-focused-seminar-Nov",
+      "region": "Asia",
+      "country": "International",
+      "type": "training",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Taiwan Bar Association Climate Declaration",
+      "url": "https://www.ibanet.org/document?id=Taiwan-Bar-Association-Climate-Declaration",
+      "region": "Asia",
+      "country": "Taiwan",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "zoe998877@gmail.com",
+      "url": "mailto:zoe998877@gmail.com",
+      "region": "Asia",
+      "country": "Japan",
+      "type": "contact_email",
+      "contact_name": "Taiwan Bar Association Climate Declaration",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Declaration to affirm our commitment to climate action.",
+      "url": "https://www.twba.org.tw/news/e88e241a-004d-473b-aa34-58d20699d35b",
+      "region": "Asia",
+      "country": "Unknown",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "info@advokatsamfundet.se",
+      "url": "mailto:info@advokatsamfundet.se",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in English |",
+      "url": "https://www.ibanet.org/document?id=Recommendations-on-measures-in-response-to-climate-change-english-translation",
+      "region": "Europe",
+      "country": "International",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "international@cnb.avocat.fr",
+      "url": "mailto: international@cnb.avocat.fr",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Read in English |",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Informational report on the environmental law committee’s work and guidelines for training in the service of environment (2025)",
+      "url": "https://www.ibanet.org/document?id=climate-registry-entry-2025",
+      "region": "Europe",
+      "country": "International",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "ccbe@ccbe.eu",
+      "url": "mailto:ccbe@ccbe.eu",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Informational report on the environmental law committee’s work and guidelines for training in the service of environment (2025)",
+      "source": "regional_submission"
+    },
+    {
+      "title": "roosbeek@ccbe.eu",
+      "url": "mailto:roosbeek@ccbe.eu",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Informational report on the environmental law committee’s work and guidelines for training in the service of environment (2025)",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in English",
+      "url": "https://www.ibanet.org/document?id=climate-registry-CCBE-carbon-footprint-EN",
+      "region": "Europe",
+      "country": "International",
+      "type": "operational",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in French",
+      "url": "https://www.ibanet.org/document?id=climate-registry-CCBE-carbon-footprint-FR",
+      "region": "Europe",
+      "country": "International",
+      "type": "operational",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in English",
+      "url": "https://www.ibanet.org/document?id=climate-registry-CSR-CBBE",
+      "region": "Europe",
+      "country": "International",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "CCBE Presidency and Secretariat carbon footprint report 2024",
+      "url": "https://www.ibanet.org/document?id=ccbe-carbon-footprint",
+      "region": "Europe",
+      "country": "International",
+      "type": "operational",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Alasdair.Cameron@lawsociety.org.uk",
+      "url": "mailto:Alasdair.Cameron@lawsociety.org.uk",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "CCBE Presidency and Secretariat carbon footprint report 2024",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Practice Note on Climate Change and Property (May 2025)",
+      "url": "https://www.ibanet.org/document?id=climate-change-and-property-the-law-society",
+      "region": "Europe",
+      "country": "International",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate risk governance and greenwashing risks (2023)",
+      "url": "https://www.lawsociety.org.uk/topics/climate-change/climate-risk-governance-and-greenwashing-risks",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Green leases and minimum energy efficiency standards (2023)",
+      "url": "https://www.lawsociety.org.uk/Topics/Climate-change/Guides/Green-Leases-and-Minimum-Energy-Efficiency-Standards",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Impact of climate change on solicitors (2023)",
+      "url": "https://www.lawsociety.org.uk/topics/climate-change/impact-of-climate-change-on-solicitors",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Creating a climate-conscious approach to legal practice (2021)",
+      "url": "https://www.lawsociety.org.uk/topics/climate-change/creating-a-climate-conscious-approach-to-legal-practice",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "sustainability@lawscot.org.uk",
+      "url": "mailto:sustainability@lawscot.org.uk",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Practice Note on Climate Change and Property (May 2025)",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate change initiatives",
+      "url": "https://www.ibanet.org/document?id=climate-registry-scotland",
+      "region": "Europe",
+      "country": "Scotland",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Change Resolution",
+      "url": "https://www.lawscot.org.uk/members/cop26-and-climate-change/climate-change-resolution/",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Council of the Law Society of Scotland",
+      "url": "https://www.lawscot.org.uk/about-us/who-we-are/council-members/",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Sustainability Strategy",
+      "url": "https://www.lawscot.org.uk/about-us/strategy-reports-plans/strategy-2022-27/#strat-intr",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate action resource hub",
+      "url": "https://www.lawscot.org.uk/members/sustainability/",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "tool",
+      "source": "regional_submission"
+    },
+    {
+      "title": "policy@lawsoc-ni.org",
+      "url": "mailto:policy@lawsoc-ni.org",
+      "region": "Europe",
+      "country": "Uk",
+      "type": "contact_email",
+      "contact_name": "Climate change initiatives",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Resolution on Climate Change",
+      "url": "https://www.ibanet.org/document?id=northern-ireland-climate-statement-24",
+      "region": "Europe",
+      "country": "Ireland",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Sustainability Strategy",
+      "url": "https://www.lawsoc-ni.org/DatabaseDocs/new_2219035__law_society_sustainability_strategy_v3.pdf",
+      "region": "Europe",
+      "country": "Unknown",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in Portuguese",
+      "url": "https://www.ibanet.org/document?id=climate-registry-brazil-portugese",
+      "region": "Central and South America (LATAM)",
+      "country": "Brazil",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Read in English",
+      "url": "https://www.ibanet.org/document?id=climate-registry-brazil-english",
+      "region": "Central and South America (LATAM)",
+      "country": "Brazil",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "John Dernbach jcdernbach@widener.edu",
+      "url": "mailto:jcdernbach@widener.edu",
+      "region": "North America",
+      "country": "America",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Environmental Justice Resolution 513 (2021)",
+      "url": "https://www.ibanet.org/document?id=ABA-resolution-2021",
+      "region": "North America",
+      "country": "Aba",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "ABA House of Delegates Resolution 111 (2019)",
+      "url": "https://www.ibanet.org/document?id=ABA-House-of-Delegates-Resolution-111",
+      "region": "North America",
+      "country": "Aba",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "United Nations Climate Change Conferences",
+      "url": "https://www.americanbar.org/groups/environment_energy_resources/resources/cop/",
+      "region": "North America",
+      "country": "America",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "ABA House of Delegates Resolution 513 (2024)",
+      "url": "https://www.americanbar.org/news/reporter_resources/annual-meeting-2024/house-of-delegates-resolutions/513/?utm_medium=social&utm_source=twitter&utm_campaign=dcannual",
+      "region": "North America",
+      "country": "America",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "environnement@barreau.qc.ca",
+      "url": "mailto:environnement@barreau.qc.ca",
+      "region": "North America",
+      "country": "America",
+      "type": "contact_email",
+      "contact_name": "ABA House of Delegates Resolution 111 (2019)",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Politique Responsabilite Sociale Environement",
+      "url": "https://www.ibanet.org/document?id=climate-registry-politique-responsabilite",
+      "region": "North America",
+      "country": "International",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Guide des meilleures pratiques écoresponsables pour les services juridiques",
+      "url": "https://www.ibanet.org/document?id=climate-registry-guide-des-meilleures-pratiques-écoresponsables-pour-les-services-juridiques",
+      "region": "North America",
+      "country": "International",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Change Resolution 11-05-A in English and French (2011)",
+      "url": "https://www.ibanet.org/document?id=Canada-climate-change-statement",
+      "region": "North America",
+      "country": "Canada",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Resolution 01-07 (Implementation of International Environmental Conventions) (2001)",
+      "url": "https://www.cba.org/Our-Work/Resolutions/Resolutions/2001/Implementation-of-International-Environmental-Conv",
+      "region": "North America",
+      "country": "International",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to 2020 Review of the Emissions Reduction Fund",
+      "url": "https://lawcouncil.au/publicassets/0c1d4d5e-e7ca-ea11-9434-005056be13b5/3820%20-%202020%20Review%20of%20the%20Emissions%20Reduction%20Fund.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "operational",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to Inquiry on Climate Change (National Framework for Adaption and Mitigation) Bill 2020 and Climate Change (National Framework for Adaption and Mitigation) (Consequential and Transitional Provisions) Bill 2020",
+      "url": "https://lawcouncil.au/publicassets/69364394-ed61-eb11-9438-005056be13b5/3934%20-%20Climate%20Change%20%20National%20Framework%20for%20Adaption%20and%20Mitigation%20%20Bill%202020.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Change Policy",
+      "url": "https://lawcouncil.au/publicassets/4cc8f2e4-375d-ec11-9445-005056be13b5/2021%2011%2027%20-%20P%20-%20Climate%20Change%20Policy.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Legal implications of Climate Change: Background Paper",
+      "url": "https://lawcouncil.au/publicassets/53537b56-d807-ed11-945e-005056be13b5/Climate%20Change%20Background%20Paper.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "article",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to Inquiry on Climate Change Bill 2022 (Cth) and Climate Change (Consequential Amendments) Bill 2022 (Cth)",
+      "url": "https://lawcouncil.au/resources/submissions/climate-change-bill-2022--cth-and-climate-change-consequential-amendments-bill-2022-cth",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to Inquiry into Australia’s transition to a green energy superpower",
+      "url": "https://lawcouncil.au/publicassets/5f408e9a-abad-ed11-9479-005056be13b5/2022%2012%2022%20-%20L%20-%20%20Green%20Energy%20Superpower%20Inquiry.pdf",
+      "region": "Oceania",
+      "country": "Australia",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate-related financial disclosure – Consultation Paper",
+      "url": "https://lawcouncil.au/publicassets/0f063284-c3bb-ed11-947a-005056be13b5/2023%2003%2002%20-%20S%20-%20Climate-related%20financial%20disclosure.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "article",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate-related financial disclosure – Second Consultation",
+      "url": "https://lawcouncil.au/publicassets/ccba92a2-6936-ee11-9489-005056be13b5/4394%20-%20S%20-%20Climate-Related%20Financial%20Disclosure.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate-related financial disclosure: exposure draft legislation",
+      "url": "https://lawcouncil.au/publicassets/25478dfb-35c9-ee11-948f-005056be13b5/4483%20-%20S%20-%20Climate-Related%20Financial%20Disclosure%20Exposure%20Draft.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to Inquiry into the Treasury Laws Amendment (Financial Market Infrastructure and Other Measures) Bill 2024",
+      "url": "https://lawcouncil.au/publicassets/8f94f1ed-3800-ef11-9498-005056be13b5/4516%20-%20S%20-%20Treasury%20Laws%20Amendment%20%20Financial%20Market%20Infrastructure%20and%20Other%20Measures%20Bill.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Submission to Inquiry into the Impact of Climate Risk on Insurance Premiums and Availability",
+      "url": "https://lawcouncil.au/publicassets/c3d611d6-4c63-ef11-94a8-005056be13b5/4583%20-%20S%20-%20Climate%20risk%20impact%20on%20insurance%20premiums%20%20FINAL.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "other",
+      "source": "regional_submission"
+    },
+    {
+      "title": "lawsociety@lawsociety.com.au",
+      "url": "mailto:lawsociety@lawsociety.com.au",
+      "region": "Oceania",
+      "country": "Australia",
+      "type": "contact_email",
+      "contact_name": "Contact",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate change practical guide (2024)",
+      "url": "https://www.ibanet.org/document?id=Law-society-of-Australia-climate practitioner-guide-2024",
+      "region": "Oceania",
+      "country": "Australia",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Change Practitioner Guidance",
+      "url": "https://www.lawsociety.com.au/sites/default/files/2024-06/LS4037_PAP_ClimateChng-PracGuide2024-Publication-Only_2024-05-06.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Annexure B: Climate Change Guidance: Advising on Climate Risk",
+      "url": "https://www.lawsociety.com.au/sites/default/files/2024-06/LS4037_PAP_ClimateChng-PracGuide2024-AnnexB_2024-06-13.pdf",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "guidance",
+      "source": "regional_submission"
+    },
+    {
+      "title": "CommBar Climate Change Section Climate Change Report 2024",
+      "url": "https://www.vicbar.com.au/Web/Web/Contents/Associations/Commercial/Publications/CommBar-Climate-Change-Report-2024.aspx",
+      "region": "Oceania",
+      "country": "Unknown",
+      "type": "article",
+      "source": "regional_submission"
+    },
+    {
+      "title": "The Sabah Declaration on Climate Justice (2024)",
+      "url": "https://www.ibanet.org/document?id=The-Sabah-Declaration-on-Climate-Justice",
+      "region": "International",
+      "country": "Iba",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate Statement IBA (2020)",
+      "url": "https://www.ibanet.org/document?id=822C1967-F851-4819-8200-2FE298164922",
+      "region": "International",
+      "country": "Iba",
+      "type": "policy",
+      "source": "regional_submission"
+    },
+    {
+      "title": "Climate contracting in action training course (launched May 2025)",
+      "url": "https://chancerylaneproject.org/training-course-climate-contracting-in-action/",
+      "category": "Tools and databases",
+      "country": "International",
+      "description": "",
+      "type": "training",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Law and climate atlas",
+      "url": "https://lawclimateatlas.org/resources/",
+      "category": "Tools and databases",
+      "country": "International",
+      "description": "",
+      "type": "tool",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Climate change legal knowledge hub",
+      "url": "https://legalcharter1point5.com/project/education/",
+      "category": "Tools and databases",
+      "country": "International",
+      "description": "",
+      "type": "policy",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Legal Charter 1.5 matter classification toolkit.",
+      "url": "https://legalcharter1point5.com/project/matters-and-mandates/",
+      "category": "Tools and databases",
+      "country": "International",
+      "description": "",
+      "type": "policy",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Sustainability-competent lawyering in the international context (John C Dernbach and Amy L Edwards, 2025)",
+      "url": "https://download.ssrn.com/2025/4/17/5220858.pdf?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHYaCXVzLWVhc3QtMSJGMEQCIFhgiUyYcZxxYzJmgc1VUjCh1FPE8zaN9AfmpmgKY0cCAiBcRWobLlPK5kRgS%2BYJdtByB078YwzBNRAqI1a6ht80USq9BQhfEAQaDDMwODQ3NTMwMTI1NyIMZsq4vfps9xEuYOhiKpoFiMkDI9qe7JOwP1r20hexIAncQLvF2HWxIDs%2ByMbWZUCsJZr7H4j3Jz3DrYtls1PCoL4Y1LFxJ1505dQCjHsFapxfkPR7%2B4x%2FPGx4jO%2FsiyDDR7L5CPCfZb1aoBegfzUmkzQgOwIuJjjLX9Dt7rGvkOT2H8U2halK%2BK3lYheRNzsksBp3a%2FCeqVn3LEXPcXdfhXhoSDgOaXGe9UKr3DsDn1HVGx564Q3%2BOocgU%2BOH824ucWlaRgv6LSkknif4Xb7wZp61dJ15AzmF27A8HXSodKjHgjrEDqKNHpKMAw4B%2FPW6dYF3zyzm79hKyxXrEDkcpFjvgZDQS%2F1b0Y%2FAjAbQ5jTuGr2Dcctt4NR1Cu1BcrRNXs297bGUb66RHfQMHY1cLfpGcw2WX748YuJr6pIAv7Mlp7JiBzbVLomVMLDRrf%2Ba%2FSle6LwxvgvdxA%2FiBYwc1x0h4UqtEJLYgdMcILuZAScr0EBl5qeVMxoYGkz3J9eHtrdXI%2B3LQepK6T5WJZuXtscc6H2ODJfTezvj7qBZTsufg8KEvf5EHUkR8bbbdRkINyBaE3bIoYWIJii7EYFM95%2FFMMtJruqDU5%2B0TISqHmRfbiRYEFWaq4qgOpU2L8GvHpZKUgjzNXtl9CQjwEIVK1H2gPt4nKNmhuZtxF3DbbnrgoQrrCA4fRYF53McuIHdi8xa2BcK5jthqxlw%2ByDqljAg5Y5iO%2F50NrMkax9eKTlrYyMPftzsDv1zTsYDofiHbUr1doCPA2yhsA1GQCOslFLmbxwS6VqInd1O0owsVcX%2BWtoOeh%2B%2BGEOclzpYyfT%2B%2BkA4Kg8zt9v2cCudSmcvMNwqazhBqrti3nbseKfmOP3WuZWAAcfkmNgb1di10W6GDduE7%2BMEQ2xRMM69wMIGOrIBno10RKNVfPDXMHPQg8OnyPSsREDiHyzLumaFFCWHY3PUneswtNTmnxRGlcpXfplxbgDVSkDHJ7lrd1yRFtoBsy8KXEmcXqF2pWJnBzaBOEHZ3QjvG7dvpoD%2B1%2F3448wcNxUkDXYPGMOg8R2NQRx6py7HXzLHlMI4Y%2FvMmextyoX2RtJiw2FUuDjfZiiZkgZvGKwl21Sl1H58WE9P8Un3ToxsjkN7l8Xaditx3I2X%2FbJlnQ%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250616T134826Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAUPUUPRWERNMN2AYT%2F20250616%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=7ad556f937aae07c6a2b6fc05f50a87901aa86d214f0ab5e0c37a7094f214789&abstractId=5220858",
+      "category": "Articles which consider intersections between climate change, sustainability issues and the legal profession",
+      "country": "International",
+      "description": "",
+      "type": "other",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Representing climate wreckers (Camila Bustos, 2025)",
+      "url": "https://nyuelj.org/wp-content/uploads/2025/05/Bustos_Representing-Climate-Wreckers.pdf",
+      "category": "Articles which consider intersections between climate change, sustainability issues and the legal profession",
+      "country": "International",
+      "description": "",
+      "type": "other",
+      "source": "iba_curated"
+    },
+    {
+      "title": "The legal profession and climate change: becoming a climate conscious lawyer - climate change and the Australian legal system (Vivien Holmes and Julian Webb, 2024)",
+      "url": "https://oercollective.caul.edu.au/climate-conscious-lawyer/part/chapter-x-the-legal-profession-and-climate-change/",
+      "category": "Articles which consider intersections between climate change, sustainability issues and the legal profession",
+      "country": "International",
+      "description": "",
+      "type": "other",
+      "source": "iba_curated"
+    },
+    {
+      "title": "The lawyer's duty of competence in a climate-imperiled world (John C Dernbach, Irma S Russell and Matthew Bogoshian, 2024)",
+      "url": "https://irlaw.umkc.edu/cgi/viewcontent.cgi?article=1075&context=lawreview",
+      "category": "Articles which consider intersections between climate change, sustainability issues and the legal profession",
+      "country": "International",
+      "description": "",
+      "type": "article",
+      "source": "iba_curated"
+    },
+    {
+      "title": "Climate conscious lawyering (Brian J Preston, 2021)",
+      "url": "https://search.informit.org/doi/10.3316/agispt.20210204043331",
+      "category": "Articles which consider intersections between climate change, sustainability issues and the legal profession",
+      "country": "International",
+      "description": "",
+      "type": "other",
+      "source": "iba_curated"
+    }
+  ]
+}

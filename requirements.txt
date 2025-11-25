@@ -3,3 +3,7 @@ pandas
 python-dotenv
 fastapi
 uvicorn
+requests
+beautifulsoup4
+streamlit
+plotly
