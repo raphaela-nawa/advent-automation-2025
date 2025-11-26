@@ -1,0 +1,13 @@
+# Day 01: GA4 + Google Ads → BigQuery Pipeline
+# Specific dependencies for this project
+
+# Core dependencies
+pandas==2.1.4
+numpy==1.26.2
+python-dotenv==1.0.0
+
+# Google Cloud & Analytics
+google-cloud-bigquery==3.14.1
+google-analytics-data==0.17.1
+
+# Note: These are also added to the root requirements.txt for global availability

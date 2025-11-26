@@ -7,3 +7,8 @@ requests
 beautifulsoup4
 streamlit
 plotly
+
+# Day 01: GA4 + Google Ads → BigQuery Pipeline
+google-cloud-bigquery==3.14.1
+google-analytics-data==0.17.1
+numpy==1.26.2
