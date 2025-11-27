@@ -15,8 +15,30 @@ This project implements a webhook server that:
 - **GDPR Compliance**: Automatic retention date calculation (30 days without consent, 1 year with consent)
 - **Validation**: Email format, required fields, consent purpose validation
 - **BigQuery Integration**: Automatic dataset/table creation and data insertion
+- **Cost-Conscious Design**: Uses batch loading (free tier compatible) instead of streaming inserts
 - **REST API**: Simple webhook endpoints for lead submission and statistics
 - **Day-Scoped**: All code follows `day03_` naming convention to prevent conflicts
+
+## Architecture Decision: Batch vs. Streaming Inserts
+
+This implementation uses **BigQuery batch loading** (`load_table_from_json`) rather than **streaming inserts** (`insert_rows_json`) for the following reasons:
+
+**Free Tier Compatibility:**
+- Streaming inserts require BigQuery paid tier
+- Batch loading works on free tier, making this project accessible for development/testing
+
+**Cost Considerations:**
+- Streaming: $0.01 per 200MB (billed immediately)
+- Batch loading: Free for the first 10GB/day, then $0.05 per GB
+
+**Performance Trade-offs:**
+- Streaming: Data available immediately (<1 second)
+- Batch: Data available after job completes (2-5 seconds)
+
+**When to Switch to Streaming:**
+For production systems requiring real-time analytics or SLA guarantees < 5 seconds, streaming inserts would be preferable. The code can be easily modified in [day03_DATA_load_bigquery.py](day03_DATA_load_bigquery.py) by replacing `load_table_from_json()` with `insert_rows_json()`.
+
+This design choice demonstrates awareness of client budget constraints while maintaining full functionality.
 
 ## Quick Start
 

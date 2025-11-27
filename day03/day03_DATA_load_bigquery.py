@@ -79,7 +79,7 @@ class day03_BigQueryLoader:
 
     def day03_insert_leads(self, leads: List[Dict]) -> bool:
         """
-        Inserts multiple leads into BigQuery.
+        Inserts multiple leads into BigQuery using load job (free tier compatible).
 
         Args:
             leads: List of processed lead dictionaries
@@ -92,12 +92,23 @@ class day03_BigQueryLoader:
             self.day03_ensure_dataset_exists()
             self.day03_ensure_table_exists()
 
-            # Insert rows
-            errors = self.client.insert_rows_json(self.table_id, leads)
+            # Get table reference
+            table_ref = self.client.get_table(self.table_id)
 
-            if errors:
-                logger.error(f"Errors occurred while inserting rows: {errors}")
-                return False
+            # Use load_table_from_json (free tier compatible)
+            job_config = bigquery.LoadJobConfig(
+                schema=table_ref.schema,
+                write_disposition=bigquery.WriteDisposition.WRITE_APPEND,
+            )
+
+            load_job = self.client.load_table_from_json(
+                leads,
+                table_ref,
+                job_config=job_config
+            )
+
+            # Wait for the job to complete
+            load_job.result()
 
             logger.info(f"Successfully inserted {len(leads)} lead(s) into {self.table_id}")
             return True
