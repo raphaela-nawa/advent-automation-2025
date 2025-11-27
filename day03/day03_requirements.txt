@@ -1,0 +1,6 @@
+# Day 03: GDPR Lead Ingestion - Specific Dependencies
+# These are the day-specific dependencies for the GDPR webhook project
+
+Flask==3.0.0
+google-cloud-bigquery==3.14.1
+python-dotenv==1.0.0

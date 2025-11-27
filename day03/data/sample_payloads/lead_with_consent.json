@@ -1,0 +1,8 @@
+{
+  "name": "João Silva",
+  "email": "joao.silva@example.com",
+  "consent_given": true,
+  "consent_purpose": "marketing_communications",
+  "ip_address": "192.168.1.1",
+  "timestamp": "2024-11-26T10:30:00Z"
+}

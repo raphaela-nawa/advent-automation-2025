@@ -15,3 +15,6 @@ google-auth==2.25.2
 google-auth-oauthlib==1.2.0
 google-auth-httplib2==0.2.0
 numpy==1.26.2
+
+# Day 03: GDPR Lead Ingestion
+Flask==3.0.0
