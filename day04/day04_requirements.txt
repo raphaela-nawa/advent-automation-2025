@@ -1,0 +1,14 @@
+# Day 04: Cardano Blockchain Transparency Pipeline
+# Dependencies for extracting on-chain metrics via Blockfrost API
+
+# HTTP Requests
+requests==2.31.0
+
+# Data Processing
+pandas==2.1.4
+
+# Google Cloud BigQuery
+google-cloud-bigquery==3.14.1
+
+# Environment Variables
+python-dotenv==1.0.0

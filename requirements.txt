@@ -18,3 +18,6 @@ numpy==1.26.2
 
 # Day 03: GDPR Lead Ingestion
 Flask==3.0.0
+
+# Day 04: Cardano Blockchain Transparency Pipeline
+# Note: Blockfrost API uses standard requests library (already installed above)

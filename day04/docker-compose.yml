@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  cardano-transparency:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: day04-cardano-transparency
+    environment:
+      # Blockfrost API Configuration
+      - DAY04_BLOCKFROST_API_KEY=${DAY04_BLOCKFROST_API_KEY}
+      - DAY04_BLOCKFROST_NETWORK=${DAY04_BLOCKFROST_NETWORK:-mainnet}
+
+      # BigQuery Configuration
+      - DAY04_GCP_PROJECT_ID=${DAY04_GCP_PROJECT_ID}
+      - DAY04_BQ_DATASET=${DAY04_BQ_DATASET:-cardano_data}
+      - DAY04_BQ_TABLE=${DAY04_BQ_TABLE:-cardano_network_activity}
+      - DAY04_BQ_LOCATION=${DAY04_BQ_LOCATION:-US}
+
+      # Google Cloud Authentication (if using service account)
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials/gcp-key.json
+
+    volumes:
+      # Persist extracted data locally
+      - ./data:/app/data
+
+      # Mount GCP credentials (if using service account instead of gcloud auth)
+      # Uncomment if you have a service account JSON file
+      # - ./credentials:/app/credentials:ro
+
+      # Mount root config/.env for environment variables
+      - ../config/.env:/app/.env:ro
+
+    networks:
+      - cardano-network
+
+    # Default command runs extraction
+    # Override for loading: docker-compose run cardano-transparency python day04_DATA_load_bigquery.py
+    command: python day04_DATA_extract_blockfrost.py
+
+networks:
+  cardano-network:
+    driver: bridge
+
+# Usage Examples:
+#
+# 1. Extract Cardano metrics:
+#    docker-compose up
+#
+# 2. Load to BigQuery:
+#    docker-compose run cardano-transparency python day04_DATA_load_bigquery.py
+#
+# 3. Run full pipeline:
+#    docker-compose up && docker-compose run cardano-transparency python day04_DATA_load_bigquery.py
+#
+# 4. View logs:
+#    docker-compose logs -f
+#
+# 5. Clean up:
+#    docker-compose down
