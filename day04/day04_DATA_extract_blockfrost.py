@@ -111,8 +111,12 @@ class day04_CardanoMetricsExtractor:
         supply = data.get('supply', {})
         stake = data.get('stake', {})
 
-        print(f"   ✓ Circulating supply: {supply.get('circulating', 0) / day04_LOVELACE_TO_ADA:,.0f} ADA")
-        print(f"   ✓ Active stake: {stake.get('active', 0) / day04_LOVELACE_TO_ADA:,.0f} ADA")
+        # Convert strings to integers (Blockfrost API returns strings)
+        circulating = int(supply.get('circulating', 0))
+        active_stake = int(stake.get('active', 0))
+
+        print(f"   ✓ Circulating supply: {circulating / day04_LOVELACE_TO_ADA:,.0f} ADA")
+        print(f"   ✓ Active stake: {active_stake / day04_LOVELACE_TO_ADA:,.0f} ADA")
 
         return data
 
@@ -182,9 +186,9 @@ class day04_CardanoMetricsExtractor:
         network_data = self.day04_fetch_network_info()
         stake_pools_count = self.day04_fetch_stake_pools_count()
 
-        # Extract values
-        circulating_supply = network_data.get('supply', {}).get('circulating', 0)
-        active_stake = epoch_data.get('active_stake', 0)
+        # Extract values and convert strings to integers (Blockfrost API quirk)
+        circulating_supply = int(network_data.get('supply', {}).get('circulating', 0))
+        active_stake = int(epoch_data.get('active_stake', 0))
 
         # Build metrics dictionary
         metrics = {
