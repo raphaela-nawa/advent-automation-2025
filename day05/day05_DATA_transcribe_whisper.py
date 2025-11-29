@@ -6,7 +6,7 @@ Usage:
     python day05_DATA_transcribe_whisper.py
 """
 
-import whisper
+from faster_whisper import WhisperModel
 import json
 from pathlib import Path
 from datetime import datetime
@@ -24,13 +24,19 @@ from day05_CONFIG_settings import (
 
 
 class day05_WhisperTranscriber:
-    """Handles transcription of podcast episodes using OpenAI Whisper"""
+    """Handles transcription of podcast episodes using Faster Whisper"""
 
     def __init__(self):
-        """Initialize Whisper model"""
-        print(f"🔄 Loading Whisper model: {day05_WHISPER_MODEL}")
+        """Initialize Faster Whisper model"""
+        print(f"🔄 Loading Faster Whisper model: {day05_WHISPER_MODEL}")
         print("   (This may take a few moments on first run...)")
-        self.model = whisper.load_model(day05_WHISPER_MODEL)
+
+        # Use CPU by default for compatibility
+        self.model = WhisperModel(
+            day05_WHISPER_MODEL,
+            device="cpu",
+            compute_type="int8"
+        )
         print(f"✅ Whisper model loaded successfully")
 
     def day05_transcribe_audio(self, audio_path: Path) -> dict:
@@ -46,13 +52,19 @@ class day05_WhisperTranscriber:
         print(f"\n🎙️  Transcribing: {audio_path.name}")
         print(f"   Language: {day05_AUDIO_LANGUAGE}")
 
-        # Transcribe with word-level timestamps
-        result = self.model.transcribe(
+        # Transcribe with faster-whisper
+        segments, info = self.model.transcribe(
             str(audio_path),
             language=day05_AUDIO_LANGUAGE,
-            verbose=False,
-            word_timestamps=True
+            word_timestamps=False,  # faster-whisper uses different API
+            vad_filter=True  # Voice Activity Detection for better segmentation
         )
+
+        # Convert generator to list
+        segments_list = list(segments)
+
+        # Build full text
+        full_text = " ".join([seg.text.strip() for seg in segments_list])
 
         # Extract metadata
         transcript_data = {
@@ -60,24 +72,25 @@ class day05_WhisperTranscriber:
             "transcription_date": datetime.now().isoformat(),
             "language": day05_AUDIO_LANGUAGE,
             "model": day05_WHISPER_MODEL,
-            "full_text": result["text"].strip(),
+            "full_text": full_text,
             "segments": []
         }
 
         # Process segments with timestamps
-        for segment in result["segments"]:
+        for idx, segment in enumerate(segments_list):
             segment_data = {
-                "id": segment["id"],
-                "start": self.day05_format_timestamp(segment["start"]),
-                "end": self.day05_format_timestamp(segment["end"]),
-                "start_seconds": segment["start"],
-                "end_seconds": segment["end"],
-                "text": segment["text"].strip()
+                "id": idx,
+                "start": self.day05_format_timestamp(segment.start),
+                "end": self.day05_format_timestamp(segment.end),
+                "start_seconds": segment.start,
+                "end_seconds": segment.end,
+                "text": segment.text.strip()
             }
             transcript_data["segments"].append(segment_data)
 
         print(f"   ✅ Transcribed {len(transcript_data['segments'])} segments")
-        print(f"   ⏱️  Duration: {self.day05_format_timestamp(result['segments'][-1]['end'])}")
+        if segments_list:
+            print(f"   ⏱️  Duration: {self.day05_format_timestamp(segments_list[-1].end)}")
 
         return transcript_data
 
@@ -118,7 +131,7 @@ def day05_main():
     """Main transcription pipeline"""
     print("=" * 80)
     print("Day 05: Podcast Transcription Pipeline")
-    print("Museu Ipiranga Cultural Data - Whisper AI")
+    print("Museu Ipiranga Cultural Data - Faster Whisper")
     print("=" * 80)
 
     # Ensure directories exist
