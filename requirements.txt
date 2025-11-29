@@ -21,3 +21,8 @@ Flask==3.0.0
 
 # Day 04: Cardano Blockchain Transparency Pipeline
 # Note: Blockfrost API uses standard requests library (already installed above)
+
+# Day 05: Museu Ipiranga Cultural Data Pipeline
+openai-whisper==20231117
+openai==1.54.0
+scikit-learn==1.3.2  # For text similarity matching
