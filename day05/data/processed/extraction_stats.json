@@ -1,0 +1,6 @@
+{
+  "extraction_date": "2025-11-30T02:04:14.268077",
+  "total_items": 79392,
+  "database_path": "/Users/raphaelanawa/Desktop/advent2025/repo/advent-automation-2025/day05/data/processed/museu_paulista_completo.db",
+  "api_url": "https://acervoonline.mp.usp.br/wp-json/tainacan/v2"
+}
