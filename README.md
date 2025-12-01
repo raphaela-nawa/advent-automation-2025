@@ -1,3 +1,5 @@
+![Christmas Data Advent 2025 Banner](./assets/banner.png)
+
 # Christmas Data Advent 2025
 ### 25 Real Automation Projects in 25 Days
 
