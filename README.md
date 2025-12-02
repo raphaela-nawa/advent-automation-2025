@@ -24,7 +24,7 @@ Each one ships with full code and documentation.
 | Day | Pillar | Project | Industry | Status | Code |
 |-----|--------|---------|----------|--------|------|
 | 1 | Ingestion | GA4 + Google Ads → BigQuery | Marketing | ✅ Complete | [Day 01](./day01) |
-| 2 | Ingestion | TBD | TBD | 🚧 Planned | [Day 02](./day02) |
+| 2 | Ingestion | Meta Analytics & LTV | Creator Economy | ✅ Complete | [Day 02](./day02) |
 | 3 | Ingestion | TBD | TBD | 🚧 Planned | [Day 03](./day03) |
 | 4 | Ingestion | TBD | TBD | 🚧 Planned | [Day 04](./day04) |
 | 5 | Ingestion | TBD | TBD | 🚧 Planned | [Day 05](./day05) |
