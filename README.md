@@ -25,8 +25,8 @@ Each one ships with full code and documentation.
 |-----|--------|---------|----------|--------|------|
 | 1 | Ingestion | GA4 + Google Ads → BigQuery | Marketing | ✅ Complete | [Day 01](./day01) |
 | 2 | Ingestion | Meta Analytics & LTV | Creator Economy | ✅ Complete | [Day 02](./day02) |
-| 3 | Ingestion | TBD | TBD | 🚧 Planned | [Day 03](./day03) |
-| 4 | Ingestion | TBD | TBD | 🚧 Planned | [Day 04](./day04) |
+| 3 | Ingestion | GDPR Lead Ingestion Webhook | Compliance | ✅ Complete | [Day 03](./day03) |
+| 4 | Ingestion | Cardano Blockchain Transparency | Crypto | ✅ Complete | [Day 04](./day04) |
 | 5 | Ingestion | TBD | TBD | 🚧 Planned | [Day 05](./day05) |
 | 6 | Modeling | TBD | TBD | 🚧 Planned | [Day 06](./day06) |
 | 7 | Modeling | TBD | TBD | 🚧 Planned | [Day 07](./day07) |
