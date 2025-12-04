@@ -546,6 +546,181 @@ python day05_CONFIG_settings.py
 
 ---
 
+## 🎓 Learnings & Reflections
+
+### What Worked Well
+
+**1. Complete Catalog Extraction Strategy**
+- Downloading all 79,392 items upfront proved highly efficient
+- Local fuzzy matching much faster than repeated API calls
+- 134 Militão-related items found and matched successfully
+
+**2. Multi-format Storage (SQLite + Parquet + CSV)**
+- Parquet: Fast pandas operations (53.68 MB compressed)
+- CSV: Excel-friendly manual inspection (1.8 GB)
+- SQLite: SQL queries when needed
+- **Learning**: Storage format matters for different use cases
+
+**3. GPT-4 Extraction Quality**
+- High-quality extraction from Portuguese podcast transcripts
+- Good context capture with timestamps
+- 29 total items extracted, 8 Militão-specific mentions validated
+
+### Trade-offs & Design Decisions
+
+**1. Complete Catalog vs. Strategic Search**
+
+| Approach | Time | Best For |
+|----------|------|----------|
+| **Complete catalog download** | 30-45 min once + instant searches | Exploratory analysis, fuzzy matching, reusability |
+| **Strategic targeted search** | 5-10 min for 5-10 specific items | POC/MVP with exact item names, small scope |
+
+**For this project:** Complete catalog was chosen for thoroughness and reusability.
+
+**For a simpler MVP:** Strategic search of 5-10 obvious items ("Independência ou Morte - Pedro Américo") would have been faster.
+
+**💡 Lesson**: Match your data strategy to project scope. Over-engineering is real.
+
+### Data Historicity: The Museum as Living Archive
+
+**Case Study: The Krahô Axe**
+
+One of the most interesting challenges in this project wasn't technical—it was conceptual:
+
+**The Problem:**
+> "What happens when a mentioned artifact is no longer in the digital catalog?"
+
+**Example:** The Krahô ceremonial axe (machadinha) was mentioned in podcasts but doesn't appear in the online catalog. Why?
+
+- **Scenario 1**: Item was repatriated (returned to indigenous Krahô people)
+- **Scenario 2**: Item transferred to another institution
+- **Scenario 3**: Item exists but not yet digitized
+- **Scenario 4**: Item in storage/conservation
+
+**The Data Challenge:**
+
+Traditional database design treats "not found" as a null value. But in museum contexts, **absence tells a story**:
+
+```csv
+item_mention,matched,match_type,notes
+Machadinha Krahô,FALSE,repatriated,"Devolvida ao povo Krahô em 2023"
+Documento Colonial,FALSE,transferred,"Migrado para Arquivo Nacional"
+Fotografia Perdida,FALSE,never_digitized,"Existe fisicamente, não digitalizado"
+```
+
+**Why This Matters:**
+
+1. **Historical Accountability**: Repatriation and decolonization efforts need documentation
+2. **Provenance Tracking**: Items move between institutions—databases should reflect this
+3. **Research Context**: Knowing *why* something isn't available is as important as knowing what is
+4. **Temporal Data**: Museum collections are **temporal**—they change over time
+
+**Database Design Implication:**
+
+Instead of:
+```sql
+-- ❌ Binary approach
+matched BOOLEAN
+```
+
+Use:
+```sql
+-- ✅ Rich status tracking
+match_status ENUM('found', 'repatriated', 'transferred', 'not_digitized', 'unknown')
+status_date DATE
+status_notes TEXT
+previous_location TEXT
+```
+
+**💡 Big Learning**: Cultural data engineering isn't just about matching strings—it's about preserving the **movement, context, and stories** behind artifacts.
+
+This same principle applies to:
+- **E-commerce**: Product discontinuation vs. out of stock
+- **Healthcare**: Patient transfer vs. deceased vs. lost to follow-up
+- **HR**: Employee terminated vs. transferred vs. retired
+- **Government**: Document declassified vs. destroyed vs. sealed
+
+**The meta-lesson**: Always ask "What does NULL really mean in this domain?"
+
+#### Does the Tainacan API Support Historical Context?
+
+**We investigated:** Can the API tell us if items were repatriated, transferred, or removed?
+
+**Finding:** ❌ **No, not by default.**
+
+**What the API has:**
+- ✅ `status` field → but only for publication (publish/draft/trash)
+- ✅ `modification_date` → but only system changes, not physical/legal ones
+- ✅ `description` field → provenance **can** be mentioned in free text
+- ✅ `full_metadata` → JSON where custom fields could exist
+
+**What it doesn't have:**
+- ❌ Structured provenance field (`provenance_status`, `repatriation_date`, etc.)
+- ❌ Historical location tracking
+- ❌ Transfer/repatriation events log
+
+**Example found:** ID 240193 mentions "repatriación" in description—but that's about the **object's history** (1906 repatriation of Juan Gregorio de las Heras' remains), not about the **object itself** being repatriated from the museum.
+
+**Implication:**
+> "There's a gap between museum practice (repatriations happen) and digital systems (APIs don't track them structurally)."
+
+For our Krahô axe example, the information would need to come from:
+- Manual research
+- News articles
+- Internal museum documentation
+- Not from the API
+
+**What could be done:**
+1. Tainacan allows custom metadata fields → institutions could add provenance tracking
+2. External provenance systems (CollectionSpace, CIDOC-CRM standards)
+3. For now: document in our `notes` field manually
+
+See [TAINACAN_HISTORICAL_CONTEXT_INVESTIGATION.md](TAINACAN_HISTORICAL_CONTEXT_INVESTIGATION.md) for full analysis.
+
+### Scope Management: Knowing When to Ship
+
+**Initial Ambition:**
+- 5 episodes transcribed ✅
+- Extract ALL mentions (paintings, sculptures, documents) ✅
+- Match ALL items with complete catalog ⚠️
+- Manual validation + fuzzy matching ⚠️
+
+**Reality Check:**
+- Timeline pressure (Advent Calendar deadline)
+- Matching quality varies by item type
+- Some items need deep domain expertise
+
+**Pragmatic Decision:**
+- ✅ **Shipped**: Militão photographs (134 items, 8 podcast matches)
+- 📝 **Documented**: Architecture decisions, learnings, data historicity
+- 🔮 **Future work**: Expand to other artists, paintings, documents
+
+**💡 Lesson**: A complete, well-documented subset beats an incomplete "everything" project.
+
+### What I Would Do Differently
+
+**1. Start with Strategic Search**
+- Identify top 5-10 obvious mentions first
+- Example: "Independência ou Morte" → Direct match to Pedro Américo painting
+- Validate pipeline with easy wins before full catalog extraction
+
+**2. Better Author Metadata**
+- Realized "Militão" appears in `title/description`, not `author_name` field
+- Would have explored metadata structure earlier
+- **Lesson**: Always profile your data schema before building pipelines
+
+**3. Human-in-the-Loop Earlier**
+- Manual validation happened late in pipeline
+- Could have validated 5 items first, then scaled
+- **Lesson**: Test with small batches before automating everything
+
+**4. Clearer Success Metrics**
+- "Match ALL items" was too vague
+- Better metric: "Successfully match 80% of Militão mentions with >0.6 confidence"
+- **Lesson**: Define "done" before you start
+
+---
+
 ## 📄 License
 
 Part of the Advent Calendar 2025 project.
