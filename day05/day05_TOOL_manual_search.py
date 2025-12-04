@@ -122,7 +122,7 @@ class day05_ManualSearchTool:
         print("  - Digite um termo para buscar em título e descrição")
         print("  - 'autor:nome' para buscar por autor")
         print("  - 'campo:valor' para buscar em campo específico")
-        print("  - 'stats' para ver estatísticas do acervo")
+        print("  - 'stats' para ver esautor:nometatísticas do acervo")
         print("  - 'q' ou 'quit' para sair")
         print("=" * 100)
 
