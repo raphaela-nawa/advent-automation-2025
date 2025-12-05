@@ -98,53 +98,38 @@ class day05_BigQueryLoader:
         print(f"   📊 Schema: {len(schema)} columns")
 
     def day05_load_data_from_csv(self, csv_path: Path):
-        """Load data from CSV to BigQuery"""
-        print(f"\n📤 Loading data from: {csv_path.name}")
+        """
+        Load data from CSV to BigQuery using a LOAD job (batch), not streaming.
+        This avoids streaming limits on the free tier.
+        """
+        print(f"\n📤 Loading data from: {csv_path.name} via LOAD job")
 
-        # Read and transform CSV data
-        rows_to_insert = []
+        job_config = bigquery.LoadJobConfig(
+            autodetect=True,  # infer schema from CSV header
+            source_format=bigquery.SourceFormat.CSV,
+            skip_leading_rows=1,
+            write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
+        )
 
-        with open(csv_path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
+        try:
+            with open(csv_path, "rb") as source_file:
+                load_job = self.client.load_table_from_file(
+                    source_file,
+                    self.table_id,
+                    job_config=job_config,
+                    location=day05_BQ_LOCATION,
+                )
 
-            for row in reader:
-                # Transform row to match schema
-                transformed_row = {
-                    "episode_id": row.get('episode_id', ''),
-                    "item_mention": row.get('item_mention', ''),
-                    "timestamp": row.get('timestamp', '00:00:00'),
-                    "context": row.get('context', ''),
-                    "confidence": row.get('confidence', 'medium'),
-                    "matched": row.get('matched', 'False').lower() == 'true',
-                    "match_confidence": float(row.get('match_confidence', 0.0)),
-                    "match_type": row.get('match_type', 'no_match'),
-                    "tainacan_item_id": row.get('tainacan_item_id', ''),
-                    "tainacan_title": row.get('tainacan_title', ''),
-                    "tainacan_description": row.get('tainacan_description', ''),
-                    "tainacan_url": row.get('tainacan_url', ''),
-                    "tainacan_metadata": row.get('tainacan_metadata', ''),
-                    "loaded_at": datetime.utcnow().isoformat()
-                }
+            print("   ⏳ Waiting for load job to finish...")
+            load_job.result()
 
-                rows_to_insert.append(transformed_row)
+            destination_table = self.client.get_table(self.table_id)
+            print(f"   ✅ Loaded {destination_table.num_rows} rows into {destination_table.full_table_id}")
+            return destination_table.num_rows
 
-        if not rows_to_insert:
-            print("   ⚠️  No rows to insert")
+        except Exception as e:
+            print(f"   ❌ Load job failed: {str(e)}")
             return 0
-
-        print(f"   📊 Prepared {len(rows_to_insert)} rows")
-
-        # Insert rows
-        errors = self.client.insert_rows_json(self.table_id, rows_to_insert)
-
-        if errors:
-            print(f"   ❌ Errors occurred during insert:")
-            for error in errors:
-                print(f"      {error}")
-            return 0
-        else:
-            print(f"   ✅ Successfully loaded {len(rows_to_insert)} rows")
-            return len(rows_to_insert)
 
     def day05_verify_data(self):
         """Verify loaded data with sample query"""
@@ -207,9 +192,6 @@ def day05_main():
 
     # Create dataset
     loader.day05_create_dataset_if_not_exists()
-
-    # Create table
-    loader.day05_create_or_replace_table()
 
     # Load data
     rows_loaded = loader.day05_load_data_from_csv(csv_path)

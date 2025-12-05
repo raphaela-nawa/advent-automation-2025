@@ -184,6 +184,10 @@ cython_debug/
 *.env
 config/.env
 config/*.env
+.gcloud-config/
+day05/data/processed/*.db
+day05/data/processed/*.csv
+day05/data/processed/*.parquet
 
 # OS-specific files
 .DS_Store
