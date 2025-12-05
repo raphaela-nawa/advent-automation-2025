@@ -3,781 +3,520 @@
 **HOW TO USE THIS TEMPLATE:**
 1. Copy this entire file to your project folder as `README.md`
 2. Replace all `[PLACEHOLDER_TEXT]` with your actual content
-3. Remove sections that don't apply to your project
-4. Keep the structure and ordering of sections
+3. Follow the **Pyramid Principle**: Most important business insights first, technical details last
+4. Keep Executive Summary concise (30 seconds to read)
 5. Ensure all code examples use the correct `dayXX_` prefix for your day number
+6. Collapse technical sections for executive readers - expand for engineers
+
+**Reading Guide by Audience:**
+- **Recruiters/Hiring Managers:** Read Executive Summary + Key Takeaways (2 min)
+- **Technical Leads:** Add Business Context + Solution Overview (5 min)
+- **Engineers:** Expand Technical Deep Dive section (10 min)
+- **Stakeholders:** Add Recommendations + Adaptation Guide (15 min)
 
 ---
 
 # Day [DAY_NUMBER]: [PROJECT_NAME]
 
-> [ONE_LINE_DESCRIPTION]
+> **One-line pitch:** [ONE_LINE_DESCRIPTION - What problem this solves and for whom]
 
 **Part of:** [Advent Automation 2025 - 25 Days of Data Engineering](../../README.md)
 
 ---
 
-## Table of Contents
-- [Challenge](#challenge)
-- [Built For](#built-for)
-- [What It Does](#what-it-does)
-- [Technical Stack](#technical-stack)
-- [Data](#data)
-- [Quick Start](#quick-start)
-- [Architectural Decisions](#architectural-decisions)
-- [Results](#results)
-- [How to Adapt for Your Data](#how-to-adapt-for-your-data)
-- [What I Learned](#what-i-learned)
-- [Links](#links)
+## Navigation
+
+### Quick Access (By Role)
+
+| For | Start Here | Read Time |
+|-----|------------|-----------|
+|  **Recruiters** | [Executive Summary](#executive-summary) → [Key Takeaways](#key-takeaways) | 2 min |
+|  **Business Stakeholders** | [Executive Summary](#executive-summary) → [Recommendations](#recommendations) | 5 min |
+|  **Technical Reviewers** | [Executive Summary](#executive-summary) → [Technical Deep Dive](#technical-deep-dive) | 10 min |
+|  **Implementation** | [Quick Start](#how-to-use-this-project) → [Adaptation Guide](#detailed-adaptation-guide) | 15 min |
 
 ---
 
-## Challenge
+## Executive Summary
 
-[BUSINESS_CHALLENGE]
+**Business Problem:** [ONE_LINE_DESCRIPTION of what problem this solves]
 
-**Why this matters:**
-[Explain the business impact or technical importance. 2-3 sentences.]
+**Solution Delivered:** [One sentence - what was built and key outcome]
 
----
+**Business Impact:** [One metric or outcome that matters to stakeholder]
 
-## Built For
-
-**Stakeholder:** [STAKEHOLDER_NAME]
-**Role/Context:** [STAKEHOLDER_ROLE]
-
-[Briefly explain why this is relevant to them. 1-2 sentences.]
+**For:** [STAKEHOLDER_NAME] ([STAKEHOLDER_ROLE]) | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
-## What It Does
+## Key Takeaways
 
-[CORE_FUNCTIONALITY_BULLETS]
+### Business Value
+- **Primary Metric:** [Key business metric calculated - e.g., "Client ROI ranges 2.1x-5.8x"]
+- **Decision Enabled:** [What business decision this supports - e.g., "Prioritize high-ROI client segments"]
+- **Efficiency Gain:** [Time/cost saved - e.g., "Reduces manual reporting from 4h to 5min"]
 
-**Example structure:**
-- Calculates [metric/model] using [technique]
-- Generates [output type] showing [business insight]
-- Implements [data modeling pattern] for [use case]
-- Provides [analytical capability] for [stakeholder need]
+### Technical Achievement
+- **Core Capability:** [Main technical feature - e.g., "Cohort analysis with LTV tracking"]
+- **Architecture:** [Pattern used - e.g., "Star schema with SCD Type 2"]
+- **Scalability:** [Current capacity - e.g., "Handles 50K records, optimized for 500K+"]
 
----
-
-## Technical Stack
-
-**Language:** Python 3.11+
-**Database:** [SQLite / PostgreSQL / BigQuery]
-**Data Modeling:** [SQL / dbt Core 1.7+]
-
-**Key Libraries:**
-- [Library 1] - [Purpose]
-- [Library 2] - [Purpose]
-- [Library 3] - [Purpose]
-
-**Output Format:** [CSV / Database Tables / dbt Models / SQL Views]
+### Critical Learning
+[One key architectural or business insight that would apply to other projects]
 
 ---
 
-## Data
+## Business Context
 
-**Source:** Synthetic data generated for demonstration
-**Type:** [Business domain - e.g., Financial consulting, Hospitality, Family office]
-**Volume:** [Approximate row counts for main tables]
+### The Challenge
 
-**Schema Overview:**
+[2-3 sentences describing the business problem, stakeholder pain point, or opportunity]
 
+**Why This Matters:**
+- **Stakeholder Impact:** [How this affects the stakeholder's work]
+- **Strategic Value:** [Broader business or portfolio value]
+- **Urgency/Frequency:** [How often this problem occurs or decision is needed]
+
+### Success Criteria
+
+**From Stakeholder Perspective:**
+1. [Success metric 1 - e.g., "Can identify top 20% clients by ROI in <10 seconds"]
+2. [Success metric 2 - e.g., "Monthly cohort reports automated"]
+3. [Success metric 3 - e.g., "Historical trends visible for 24+ months"]
+
+**Technical Validation:**
+- ✅ [Technical criterion 1]
+- ✅ [Technical criterion 2]
+- ✅ [Technical criterion 3]
+
+---
+
+## Solution Overview
+
+### What It Does
+
+| Capability | Business Outcome |
+|------------|------------------|
+| **[Feature 1]** | [Business benefit - e.g., "Identifies profitable client segments"] |
+| **[Feature 2]** | [Business benefit - e.g., "Tracks retention patterns over time"] |
+| **[Feature 3]** | [Business benefit - e.g., "Calculates lifetime value per cohort"] |
+
+### Architecture at a Glance
 ```
-[TABLE_NAME_1] (dayXX_[table_name])
-├── [column_1] ([type]) - [description]
-├── [column_2] ([type]) - [description]
-└── [column_3] ([type]) - [description]
+[INPUT] → [TRANSFORMATION] → [OUTPUT]
 
-[TABLE_NAME_2] (dayXX_[table_name])
-├── [column_1] ([type]) - [description]
-└── [column_2] ([type]) - [description]
+[Data Source] → [Model Type] → [Delivery Format]
+     ↓              ↓                ↓
+[Specifics]   [Key Technique]   [How Used]
+```
+
+**Example:**
+```
+Synthetic Guest Data → Cohort Analysis (SQL) → SQLite Views
+        ↓                     ↓                      ↓
+  500 bookings        Window Functions      Looker Studio Ready
 ```
 
 ---
 
-## Quick Start
+## Key Results & Insights
 
-### Prerequisites
-- Python 3.11+
-- [Additional tool - e.g., SQLite3, dbt-core, etc.]
+### Business Metrics (Synthetic Data)
 
-### Setup Instructions
+| Metric | Finding | Implication |
+|--------|---------|-------------|
+| **[Metric 1]** | [Number/trend] | [What this means for business] |
+| **[Metric 2]** | [Number/trend] | [What this means for business] |
+| **[Metric 3]** | [Number/trend] | [What this means for business] |
 
-#### 1. Clone and Navigate
+**Example:**
+| Metric | Finding | Implication |
+|--------|---------|-------------|
+| **Avg Utilization** | 68% (target: 75%) | 10% capacity opportunity = $150K/year |
+| **Client Concentration** | Top 3 clients = 60% profit | High risk - diversification needed |
+| **Seasonal Variance** | Q4 +35% vs Q2 | Resource planning optimization opportunity |
+
+### Analytical Capabilities Demonstrated
+
+- ✅ **[Capability 1]** - [Specific analytical question answered]
+- ✅ **[Capability 2]** - [Specific analytical question answered]
+- ✅ **[Capability 3]** - [Specific analytical question answered]
+
+---
+
+## Risks & Limitations
+
+### Current Limitations
+
+| Limitation | Impact | Mitigation Path |
+|------------|--------|-----------------|
+| **[Limitation 1]** | [Business impact] | [How to address in production] |
+| **[Limitation 2]** | [Business impact] | [How to address in production] |
+
+**Example:**
+| Limitation | Impact | Mitigation Path |
+|------------|--------|-----------------|
+| **Synthetic data only** | Cannot validate real patterns | Pilot with 90 days real data before rollout |
+| **No real-time updates** | Metrics lag by 1 day | Implement incremental refresh for production |
+| **Single-currency** | Cannot handle multi-currency deals | Add FX table and conversion logic |
+
+### Assumptions Made
+
+1. **[Assumption 1]** - [What was assumed and why]
+2. **[Assumption 2]** - [What was assumed and why]
+3. **[Assumption 3]** - [What was assumed and why]
+
+---
+
+## Recommendations
+
+### For [STAKEHOLDER_NAME]
+
+**Immediate Next Steps (Week 1):**
+1. **[Action 1]** - [What to do and expected outcome]
+2. **[Action 2]** - [What to do and expected outcome]
+
+**Short-Term (Month 1):**
+- **[Action 3]** - [What to do]
+- **[Action 4]** - [What to do]
+
+**Production Readiness:**
+- **Data Integration:** [What needs to connect]
+- **Validation Required:** [What to test with real data]
+- **Stakeholder Review:** [Who needs to approve business logic]
+
+### For Portfolio/Technical Evolution
+
+**Reusability:**
+- **[Pattern/technique]** applicable to [X other projects]
+- **[Code component]** can be extracted as shared utility
+- **[Business logic]** transferable to [similar domain]
+
+**Scale Considerations:**
+- **Current capacity:** [X records]
+- **Optimization needed at:** [Y records]
+- **Architecture changes if >Z records:** [Specific changes]
+
+---
+
+## How to Use This Project
+
+### Quick Start (5 minutes)
 ```bash
+# 1. Navigate
 cd advent-automation-2025/day[XX]
-```
 
-#### 2. Install Dependencies
-```bash
+# 2. Install
 pip install -r day[XX]_requirements.txt
-```
 
-#### 3. Configure Environment Variables
-
-Copy the example environment file:
-```bash
+# 3. Configure
 cp .env.example .env
-```
+# Edit .env with your values
 
-Edit `.env` and add the following to your root `config/.env`:
-```bash
-# Day [XX] - [Project Name]
-DAYXX_DB_PATH=/path/to/day[XX]_database.db
-DAYXX_[SPECIFIC_CONFIG_1]=[value]
-DAYXX_[SPECIFIC_CONFIG_2]=[value]
-```
-
-#### 4. Generate Synthetic Data
-```bash
+# 4. Generate data
 python day[XX]_DATA_synthetic_generator.py
+
+# 5. Run models
+[EXECUTION COMMAND - SQL or dbt]
+
+# 6. Validate
+[VALIDATION COMMAND]
 ```
 
-Expected output:
-```
-Generating synthetic data...
-Created [X] [entity_type_1]
-Created [Y] [entity_type_2]
-Data saved to data/day[XX]_database.db
-```
+**Expected Runtime:** ~2 minutes
+**Expected Output:** [Specific files/tables created]
 
-#### 5. Run Models
+### Adapting for Real Data
 
-**For SQL Projects:**
-```bash
-sqlite3 data/day[XX]_database.db < models/day[XX]_MODEL_[model_name].sql
-```
+**Priority Changes (Do These First):**
+1. **[Change 1]** - [File/section to modify] - [Why critical]
+2. **[Change 2]** - [File/section to modify] - [Why critical]
+3. **[Change 3]** - [File/section to modify] - [Why critical]
 
-**For dbt Projects:**
+**Schema Mapping:**
+| Your Data | This Project | Transform Needed |
+|-----------|--------------|------------------|
+| [your_field] | day[XX]_[field] | [Transformation] |
 
-First, configure your dbt profile:
-```bash
-# Copy profile template
-cp profiles.yml ~/.dbt/profiles.yml
-
-# Or add to existing profiles.yml:
-day[XX]_[project_name]:
-  target: dev
-  outputs:
-    dev:
-      type: sqlite
-      threads: 1
-      database: 'data/day[XX]_database.db'
-      schema: 'main'
-```
-
-Then run dbt:
-```bash
-dbt deps
-dbt run
-dbt test
-```
-
-#### 6. Validate Results
-
-**For SQL Projects:**
-```bash
-sqlite3 data/day[XX]_database.db
-```
-
+**Business Logic Adjustments:**
 ```sql
--- Check model outputs
-SELECT * FROM day[XX]_[model_name] LIMIT 5;
-SELECT COUNT(*) FROM day[XX]_[model_name];
+-- Example: Adjust utilization threshold
+-- Current: 75% target
+-- Change in: models/day[XX]_MODEL_metrics.sql, line XX
 
--- Validate specific metrics
-SELECT [key_metric] FROM day[XX]_[view_name];
+WHERE utilization_rate >= 0.75  -- <-- Adjust to your target
 ```
 
-**For dbt Projects:**
-```bash
-# View test results
-dbt test --select day[XX]_[model_name]
+**Full adaptation guide:** [See "Detailed Adaptation" section below]
 
-# Generate and serve documentation
-dbt docs generate
-dbt docs serve
-# Open http://localhost:8080
+---
+
+## Technical Deep Dive
+
+<details>
+<summary><strong>📋 Full Technical Documentation (Click to Expand)</strong></summary>
+
+### Technical Stack
+
+**Core:**
+- **Language:** Python 3.11+
+- **Database:** [SQLite/PostgreSQL/BigQuery]
+- **Modeling Tool:** [SQL/dbt Core 1.7+]
+
+**Dependencies:**
+```
+[key_library_1]==X.Y.Z  # [Purpose]
+[key_library_2]==X.Y.Z  # [Purpose]
 ```
 
-### Expected Output
+### Data Model
 
-After successful execution, you should see:
-- [Output 1 - e.g., "4 SQL views created in the database"]
-- [Output 2 - e.g., "dbt models materialized successfully"]
-- [Output 3 - e.g., "All tests passing (5/5)"]
+**Schema:**
+```
+day[XX]_[table_1] (Primary)
+├── [pk_field] - Primary key
+├── [fk_field] - Foreign key to [table_2]
+├── [business_field_1] - [Business meaning]
+└── [metric_field] - [Calculation source]
 
----
+day[XX]_[table_2] (Reference)
+├── [pk_field] - Primary key
+└── [attribute] - [Purpose]
+```
 
-## Architectural Decisions
+**Relationships:**
+```
+[TABLE_1] ─(1:N)→ [TABLE_2]
+[TABLE_2] ─(N:1)→ [TABLE_3]
+```
 
-### Decision 1: [DECISION_TITLE_1]
+### Architectural Decisions
 
-**Context:**
-[Why was this decision necessary? What problem needed solving?]
+#### Decision 1: [DECISION_TITLE]
 
-**Example:**
-"Needed to calculate multiple dependent metrics (utilization rate, profitability, ROI) without duplicating logic or creating maintenance burden."
+**Context:** [Why decision needed - 1 sentence]
 
-**Options Considered:**
-1. **[Option 1]** - [Brief description with pros/cons]
-2. **[Option 2]** - [Brief description with pros/cons]
-3. **[Option 3]** - [Brief description with pros/cons]
-4. **[Option 4]** - [Brief description with pros/cons]
+**Options Evaluated:**
 
-**Decision:**
-[What was chosen?]
+| Option | Pros | Cons | Decision |
+|--------|------|------|----------|
+| **[Option 1]** | [Pro 1, Pro 2] | [Con 1, Con 2] | ❌ Rejected |
+| **[Option 2]** | [Pro 1, Pro 2] | [Con 1, Con 2] | ✅ **Chosen** |
+| **[Option 3]** | [Pro 1, Pro 2] | [Con 1, Con 2] | ❌ Rejected |
 
-**Example:**
-"Used CTEs (Common Table Expressions) for all metric calculations, with a clear dependency chain: raw data -> staging -> intermediate metrics -> final metrics."
+**Rationale:** [Why option 2 was best for this specific context - 2 sentences]
 
-**Rationale:**
-[Why was this the best choice for this context?]
+**Tradeoffs Accepted:**
+- ✅ **Gained:** [Benefit 1], [Benefit 2]
+- ⚠️ **Sacrificed:** [Cost 1], [Cost 2]
 
-**Tradeoffs:**
-- **Gained:**
-  - [Benefit 1]
-  - [Benefit 2]
-  - [Benefit 3]
-- **Sacrificed:**
-  - [Cost 1]
-  - [Cost 2]
-
-**Learning:**
-[What would you take to future projects?]
-
-**Example:**
-"For analytical queries with multiple dependent calculations under 1M rows, CTEs provide the best balance of readability and performance. Would consider materialized views or temp tables only for larger datasets or frequently-run queries."
+**Generalization:** [When this decision would/wouldn't apply to other projects - 1 sentence]
 
 ---
 
-### Decision 2: [DECISION_TITLE_2]
+#### Decision 2: [DECISION_TITLE]
 
-**Context:**
-[Describe the situation that required a decision]
-
-**Options Considered:**
-1. **[Option 1]**
-2. **[Option 2]**
-3. **[Option 3]**
-
-**Decision:**
-[State what was chosen]
-
-**Rationale:**
-[Explain why this was the best choice]
-
-**Tradeoffs:**
-- **Gained:**
-  - [Benefit 1]
-  - [Benefit 2]
-- **Sacrificed:**
-  - [Cost 1]
-  - [Cost 2]
-
-**Learning:**
-[Key takeaway for future projects]
+[Repeat structure above]
 
 ---
 
-### Decision 3: [DECISION_TITLE_3]
+#### Decision 3: [DECISION_TITLE]
 
-**Context:**
-[Describe the situation]
-
-**Options Considered:**
-1. **[Option 1]**
-2. **[Option 2]**
-
-**Decision:**
-[State what was chosen]
-
-**Rationale:**
-[Explain why]
-
-**Tradeoffs:**
-- **Gained:** [Benefits]
-- **Sacrificed:** [Costs]
-
-**Learning:**
-[Key takeaway]
+[Repeat structure above]
 
 ---
 
-## Results
+### Implementation Details
 
-### Sample Outputs
-
-#### [Metric/Model Name 1]
-
-**Query:**
+**Key Algorithms/Techniques:**
 ```sql
-SELECT * FROM day[XX]_[model_name] LIMIT 5;
+-- Example: Cohort calculation logic
+WITH day[XX]_first_purchase AS (
+    SELECT
+        customer_id,
+        DATE_TRUNC('month', MIN(purchase_date)) as cohort_month
+    FROM day[XX]_transactions
+    GROUP BY customer_id
+)
+-- [Rest of implementation with inline comments]
 ```
 
-**Sample Results:**
-```
-[SAMPLE_OUTPUT_TABLE_OR_DESCRIPTION]
-```
+**Performance Characteristics:**
+- **Current dataset:** [X rows] in [Y seconds]
+- **Tested up to:** [Z rows] in [T seconds]
+- **Bottleneck:** [Specific operation]
+- **Optimization:** [What was done to improve performance]
 
-#### [Metric/Model Name 2]
+### Testing Approach
 
-**Query:**
+**Validation Queries:**
 ```sql
-SELECT [columns] FROM day[XX]_[another_model];
+-- 1. Row count validation
+SELECT COUNT(*) as actual,
+       [expected_count] as expected
+FROM day[XX]_[model];
+
+-- 2. Business logic validation
+SELECT * FROM day[XX]_[model]
+WHERE [metric] NOT BETWEEN [expected_min] AND [expected_max];
+
+-- 3. Data quality check
+SELECT
+    COUNT(*) as total_rows,
+    SUM(CASE WHEN [key_field] IS NULL THEN 1 ELSE 0 END) as null_count
+FROM day[XX]_[model];
 ```
 
-**Sample Results:**
-```
-[SAMPLE_OUTPUT_TABLE_OR_DESCRIPTION]
-```
+**Test Results:**
+- ✅ All validations passed
+- ⚠️ [Any warnings or notes]
 
-### Key Insights from Synthetic Data
-
-**Note:** These insights are from synthetic data. With real data, you'd see actual business trends specific to your organization.
-
-- **[Insight Category 1]:** [Specific finding with numbers]
-- **[Insight Category 2]:** [Specific finding with numbers]
-- **[Insight Category 3]:** [Specific finding with numbers]
-- **[Insight Category 4]:** [Specific finding with numbers]
-
-**Example structure:**
-- **Utilization Rate:** Average of 68% across all consultants, with top performers at 85%+
-- **Profitability:** 3 projects account for 60% of total profit
-- **Client ROI:** Ranges from 2.1x to 5.8x, with marketing clients showing highest returns
-- **Seasonal Patterns:** Q4 shows 35% higher booking rates than Q2
-
-### Visual Examples
-
-[SPACE FOR SCREENSHOTS OR DIAGRAMS]
-
-**For SQL Projects:**
-- Screenshot of key query results
-- ERD diagram (text-based or image)
-- Sample dashboard mockup (if applicable)
-
-**For dbt Projects:**
-- Screenshot of dbt DAG (lineage graph)
-- Test results summary
-- Documentation site preview
-
-**For Data Warehouse Projects:**
-- Star schema diagram
-- SCD Type 2 historical tracking example
-- Sample analytical query results
+</details>
 
 ---
 
-## How to Adapt for Your Data
+## Detailed Adaptation Guide
 
-This project uses synthetic data for demonstration, but it's designed to be production-ready with minimal changes.
+<details>
+<summary><strong>🔄 Step-by-Step Production Adaptation (Click to Expand)</strong></summary>
 
-### Step 1: Understand Current Schema
+### Step 1: Assess Your Data
 
-**Current Tables:**
-```
-day[XX]_[table_1]: [Brief description]
-day[XX]_[table_2]: [Brief description]
-day[XX]_[table_3]: [Brief description]
-```
+**Checklist:**
+- [ ] Do you have access to source data?
+- [ ] Does data structure match expected schema?
+- [ ] Are there data quality issues to address?
+- [ ] What's the data volume? ([X rows])
+- [ ] What's the update frequency? (daily/weekly/monthly)
 
-**Current Business Logic:**
-- [Calculation 1]: [Formula or description]
-- [Calculation 2]: [Formula or description]
-- [Threshold/Rule]: [Current value and purpose]
+### Step 2: Map Your Schema
 
-### Step 2: Map Your Data
+| Your Column | Project Column | Transformation |
+|-------------|----------------|----------------|
+| [your_col_1] | day[XX]_[col_1] | [None/Cast/Formula] |
+| [your_col_2] | day[XX]_[col_2] | [None/Cast/Formula] |
+| [your_col_3] | day[XX]_[col_3] | [None/Cast/Formula] |
 
-Create a mapping between your data and the expected schema:
+### Step 3: Modify Data Source
 
-| Your Column | Expected Column | Transformation Needed |
-|-------------|----------------|----------------------|
-| [your_col_1] | day[XX]_[expected_col_1] | [None / Date format / Calculation] |
-| [your_col_2] | day[XX]_[expected_col_2] | [None / Join / Aggregation] |
-| [your_col_3] | day[XX]_[expected_col_3] | [None / Type cast / Lookup] |
+**Replace:**
+`day[XX]_DATA_synthetic_generator.py`
 
-### Step 3: Modify Data Generator
-
-**Option A: Replace with Real Extraction**
-
-Replace `day[XX]_DATA_synthetic_generator.py` with your extraction logic:
-
+**With:**
+`day[XX]_DATA_extract_real.py`
 ```python
-# day[XX]_DATA_extract_real.py
-import [your_data_source_library]
-from day[XX]_CONFIG_settings import DAYXX_DB_PATH
-
 def day[XX]_extract_from_your_system():
-    """
-    Extract real data from your system.
-    Adjust connection details in .env file.
-    """
-    # Connect to your data source
-    conn = [your_connection_logic]
-
-    # Extract data
-    [table_1]_data = [your_query_1]
-    [table_2]_data = [your_query_2]
-
-    # Transform to match schema
-    transformed = day[XX]_transform_to_schema([table_1]_data)
-
-    # Load to database
-    day[XX]_load_to_db(transformed, DAYXX_DB_PATH)
-
-def day[XX]_transform_to_schema(raw_data):
-    """
-    Transform your data format to match expected schema.
-    """
-    # Your transformation logic here
+    """Extract from your actual system"""
+    # Your extraction logic
+    # Connect → Extract → Transform → Load
     pass
-```
-
-**Option B: Modify Synthetic Generator to Match Your Schema**
-
-If your schema differs significantly, adjust the generator:
-
-```python
-# In day[XX]_DATA_synthetic_generator.py
-
-# Change table structure
-def day[XX]_generate_[table_name]():
-    return pd.DataFrame({
-        'day[XX]_[your_column_1]': [your_data_generation],
-        'day[XX]_[your_column_2]': [your_data_generation],
-        # Add/remove columns as needed
-    })
 ```
 
 ### Step 4: Adjust Business Logic
 
-Review and adjust calculations in your models:
+**Files to Review:**
+1. `models/day[XX]_MODEL_*.sql` - Calculation logic
+2. `day[XX]_CONFIG_settings.py` - Thresholds, rates, windows
 
-**For SQL Projects:**
-```sql
--- In models/day[XX]_MODEL_metrics.sql
-
--- Example: Adjust utilization rate threshold
-WITH day[XX]_utilization AS (
-    SELECT
-        consultant_id,
-        billable_hours / total_hours as utilization_rate
-    FROM day[XX]_timesheets
-    WHERE total_hours > 0
-)
-SELECT
-    *,
-    CASE
-        WHEN utilization_rate >= 0.75 THEN 'High'  -- Adjust this threshold
-        WHEN utilization_rate >= 0.50 THEN 'Medium'
-        ELSE 'Low'
-    END as utilization_category
-FROM day[XX]_utilization;
-```
-
-**For dbt Projects:**
-```yaml
-# In dbt_project.yml, adjust variables
-vars:
-  day[XX]_target_utilization: 0.75  # Change to your target
-  day[XX]_billable_rate: 150.00     # Change to your rate
-  day[XX]_min_project_value: 5000   # Change to your threshold
-```
-
-### Step 5: Update Configuration
-
-Update your `.env` file:
-```bash
-# Point to real data sources
-DAYXX_DB_PATH=/path/to/production/database.db
-DAYXX_SOURCE_SYSTEM_URL=https://your-system.com/api
-DAYXX_SOURCE_API_KEY=your_api_key_here
-
-# Adjust business parameters
-DAYXX_FISCAL_YEAR_START=4  # April for fiscal year starting in April
-DAYXX_RETENTION_WINDOW_DAYS=90
-DAYXX_MIN_COHORT_SIZE=10
-```
-
-### Step 6: Validate with Real Data
-
-**Testing Strategy:**
-1. **Small Sample First:** Run with 1 week or 1 month of real data
-2. **Validate Known Metrics:** Compare outputs to existing reports/calculations
-3. **Check Edge Cases:** Look for null values, outliers, data quality issues
-4. **Incremental Scale:** Gradually increase to full dataset
-
-**Validation Queries:**
-```sql
--- Compare row counts
-SELECT
-    'Expected' as source, [expected_count] as count
-UNION ALL
-SELECT
-    'Actual' as source, COUNT(*) as count
-FROM day[XX]_[table_name];
-
--- Check for data quality issues
-SELECT
-    SUM(CASE WHEN [critical_field] IS NULL THEN 1 ELSE 0 END) as null_count,
-    MIN([date_field]) as earliest_date,
-    MAX([date_field]) as latest_date
-FROM day[XX]_[table_name];
-
--- Validate business logic
-SELECT
-    [group_by_field],
-    [calculated_metric],
-    [known_metric_for_comparison]
-FROM day[XX]_[model_name]
-WHERE [calculated_metric] != [known_metric_for_comparison];
-```
-
-### Step 7: Document Your Changes
-
-Create a `day[XX]_ADAPTATION_NOTES.md` file documenting:
-- Schema changes made
-- Business logic adjustments
-- Configuration values used
-- Any assumptions or limitations
-- Data quality issues encountered
-
----
-
-## What I Learned
-
-### Technical Skills
-
-**[Skill Area 1]:**
-- [Specific learning point 1]
-- [Specific learning point 2]
-
-**[Skill Area 2]:**
-- [Specific learning point 1]
-- [Specific learning point 2]
-
-**[Skill Area 3]:**
-- [Specific learning point 1]
-
-**Example structure:**
-
-**SQL & Data Modeling:**
-- How to use window functions (RANK, LAG) for cohort analysis
-- When CTEs are more appropriate than subqueries or temp tables
-- Implementing SCD Type 2 for historical tracking
-
-**dbt:**
-- Setting up incremental models with proper unique keys
-- Writing custom macros for reusable business logic
-- Configuring source freshness tests
-
-**Business Domain:**
-- How consulting firms track utilization and profitability
-- Key metrics for hospitality operations (LTV, retention, conversion)
-- Family office asset tracking and reporting requirements
-
-### Process & Approach
-
-**What Worked Well:**
-- [Approach or technique that was effective]
-- [Time management strategy that helped]
-- [Tool or resource that was valuable]
-
-**What I'd Do Differently:**
-- [Lesson learned about approach]
-- [Alternative technique to try next time]
-- [Process improvement for future projects]
-
-**Example:**
-
-**What Worked Well:**
-- Starting with ER diagram on paper before writing SQL
-- Writing tests first (dbt) to clarify expected behavior
-- Using ChatGPT to validate SQL logic for edge cases
-
-**What I'd Do Differently:**
-- Would create sample data with more edge cases earlier
-- Should have read dbt docs on incremental models before starting
-- Could have simplified first iteration (KISS principle)
-
-### Business Understanding
-
-**Domain Knowledge Gained:**
-- [Business concept 1 learned]
-- [Business concept 2 learned]
-- [Industry practice or metric understood]
-
-**Stakeholder Perspective:**
-- [How this project helps the stakeholder]
-- [What decisions this data enables]
-- [Business impact of having this model]
-
----
-
-## Links
-
-**Project Links:**
-- LinkedIn Post: [Add your LinkedIn post URL when published]
-- Live Demo: [If applicable - Looker Studio, Streamlit, etc.]
-- Documentation: [Link to additional docs if any]
-
-**Related Projects:**
-- [Previous Day Project] - [Link]
-- [Next Day Project] - [Link]
-- [Main Advent Calendar] - [Link to main README]
-
-**Learning Resources:**
-- [Resource 1 that helped you] - [URL]
-- [Resource 2 that helped you] - [URL]
-- [Documentation you referenced] - [URL]
-
----
-
-## Project Structure
-
-```
-day[XX]/
-├── data/
-│   ├── raw/                          # Raw synthetic data (if applicable)
-│   └── day[XX]_database.db           # SQLite database with all tables
-├── models/                            # SQL models or dbt models
-│   ├── day[XX]_MODEL_[name].sql      # Main transformation logic
-│   └── ...
-├── queries/                           # Sample analytical queries
-│   ├── day[XX]_QUERY_[name].sql      # Demonstrating model usage
-│   └── ...
-├── docs/                              # Documentation files
-│   └── day[XX]_ERD_[name].md         # Entity-relationship diagram
-├── day[XX]_DATA_synthetic_generator.py  # Data generation script
-├── day[XX]_CONFIG_settings.py        # Configuration and constants
-├── day[XX]_requirements.txt          # Python dependencies
-├── .env.example                      # Environment variables template
-└── README.md                         # This file
-```
-
-**For dbt Projects, additional structure:**
-```
-day[XX]/
-├── dbt_project.yml                   # dbt project configuration
-├── profiles.yml                      # Database connection profiles
-├── models/
-│   ├── staging/
-│   │   ├── sources.yml               # Source declarations
-│   │   ├── stg_[name].sql            # Staging models
-│   │   └── ...
-│   ├── intermediate/
-│   │   └── int_[name].sql            # Intermediate transformations
-│   └── marts/
-│       └── fct_[name].sql            # Final fact/dimension tables
-├── macros/
-│   └── [macro_name].sql              # Custom dbt macros
-├── tests/
-│   └── schema.yml                    # dbt tests configuration
-└── ...
-```
-
----
-
-## Naming Conventions
-
-**Critical for Project Isolation:**
-
-All files, variables, classes, and functions must use the `day[XX]_` prefix to prevent conflicts with other days.
-
-**Files:**
-```
-day[XX]_DATA_*.py      # Data extraction/generation
-day[XX]_MODEL_*.sql    # Data models/transformations
-day[XX]_PIPELINE_*.py  # Processing logic
-day[XX]_CONFIG_*.py    # Configuration files
-day[XX]_TEST_*.py      # Test files
-day[XX]_QUERY_*.sql    # Sample queries
-```
-
-**Variables:**
+**Common Adjustments:**
 ```python
-# Global variables/constants
-DAYXX_DB_PATH = "data/day[XX]_database.db"
-DAYXX_TARGET_UTILIZATION = 0.75
-DAYXX_FISCAL_YEAR_START = 1
+# In day[XX]_CONFIG_settings.py
 
-# Class names
-class dayXX_MetricsCalculator:
-    pass
-
-# Function names
-def dayXX_calculate_utilization():
-    pass
+# Change these to your business values:
+DAYXX_TARGET_UTILIZATION = 0.75  # Your target
+DAYXX_BILLABLE_RATE = 150.00     # Your rate
+DAYXX_FISCAL_YEAR_START = 1      # Your fiscal year
 ```
 
-**SQL Objects:**
-```sql
--- Tables
-CREATE TABLE day[XX]_projects (...);
-CREATE TABLE day[XX]_timesheets (...);
+### Step 5: Validate with Sample
 
--- Views
-CREATE VIEW day[XX]_utilization_rate AS ...;
-CREATE VIEW day[XX]_project_profitability AS ...;
+**Test with subset:**
+```bash
+# Use 1 week or 1 month of data first
+python day[XX]_DATA_extract_real.py --start-date=2024-11-01 --end-date=2024-11-07
+```
 
--- CTEs
-WITH day[XX]_billable_hours AS (...)
+**Compare to known values:**
+- [ ] Metric A matches existing report: ✅/❌
+- [ ] Metric B within 5% of known value: ✅/❌
+- [ ] Row counts as expected: ✅/❌
+
+### Step 6: Scale to Full Data
+
+**Incremental approach:**
+1. Week 1: 1 week of data
+2. Week 2: 1 month of data
+3. Week 3: 3 months of data
+4. Week 4: Full historical + ongoing
+
+**Monitor:**
+- Execution time
+- Memory usage
+- Data quality issues
+- Business logic edge cases
+
+</details>
+
+---
+
+## Project Files
+```
+day[XX]/
+├── README.md                          # This file
+├── data/
+│   └── day[XX]_database.db            # Main database
+├── models/
+│   └── day[XX]_MODEL_*.sql            # Transformation logic
+├── day[XX]_DATA_synthetic_generator.py
+├── day[XX]_CONFIG_settings.py
+├── day[XX]_requirements.txt
+└── .env.example
 ```
 
 ---
 
-## Time Spent
+## Appendix
 
-**Total:** 3 hours
+### Time Breakdown
 
-| Phase | Time | Notes |
-|-------|------|-------|
-| Setup & Planning | [XX] min | [What you did] |
-| Data Generation | [XX] min | [What you did] |
-| Model Development | [XX] min | [What you did] |
-| Testing & Validation | [XX] min | [What you did] |
-| Documentation | [XX] min | [What you did] |
+| Phase | Time | % |
+|-------|------|---|
+| Planning & Setup | [X min] | [Y%] |
+| Development | [X min] | [Y%] |
+| Testing | [X min] | [Y%] |
+| Documentation | [X min] | [Y%] |
+| **Total** | **180 min** | **100%** |
 
-**Pivot Points:** [Did you need to pivot? When and why?]
+### Learning Outcomes
 
----
+**Technical Skills Acquired:**
+- [Skill 1]: [Specific thing learned]
+- [Skill 2]: [Specific thing learned]
+- [Skill 3]: [Specific thing learned]
 
-## Delivery Checklist
+**Business Domain Understanding:**
+- [Domain insight 1]
+- [Domain insight 2]
 
-Before considering this project complete:
+**Process Improvements for Next Project:**
+- [Improvement 1]
+- [Improvement 2]
 
-**Core Functionality:**
-- [ ] SQL models execute without errors
-- [ ] Results match expected business logic
-- [ ] Data model is documented (ERD or written description)
+### Naming Conventions Reference
 
-**Reproducibility:**
-- [ ] `.env.example` lists ALL necessary variables
-- [ ] Variables added to root `config/.env` with `DAYXX_` prefix
-- [ ] `day[XX]_requirements.txt` documents dependencies
-- [ ] README Quick Start section works copy-paste
+**All project files use `day[XX]_` prefix for isolation.**
 
-**Quality:**
-- [ ] Code has docstrings explaining business logic
-- [ ] Basic error handling present
-- [ ] Informative logs showing progress
-
-**Naming Convention:**
-- [ ] All files have `day[XX]_` prefix
-- [ ] All variables have `day[XX]_` or `DAYXX_` prefix
-- [ ] All classes have `day[XX]_` prefix
-- [ ] All functions have `day[XX]_` prefix
-
-**Delivery:**
-- [ ] Git commit with descriptive message
-- [ ] Pushed to GitHub
-- [ ] Tested in clean environment (clone + run from README)
+See [PROMPT_project_setup.md](../../common/prompt library/PROMPT_project_setup.md) for complete naming standards.
 
 ---
 
-**Part of:** [Advent Automation 2025 - 25 Days of Data Engineering](../../README.md)
+## Links & Resources
 
-Built with care in 3 hours for portfolio demonstration.
+- **LinkedIn Post:** [URL when published]
+- **Live Demo:** [If applicable]
+- **Main Project:** [Advent Automation 2025](../../README.md)
+- **Delivery Criteria:** [MODELING_DELIVERY_CRITERIA.md](../../common/prompt library/MODELING_DELIVERY_CRITERIA.md)
+
+---
+
+**Built in 3 hours** | **Portfolio Project** | [View All 25 Days →](../../README.md)
