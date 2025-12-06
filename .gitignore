@@ -190,6 +190,7 @@ day05/data/processed/*.csv
 day05/data/processed/*.parquet
 day05/data/raw/audio/*.mp3
 *.icloud
+README.md.backup
 
 # OS-specific files
 .DS_Store

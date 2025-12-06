@@ -23,13 +23,13 @@ Each one ships with full code and documentation.
 
 | Day | Pillar | Project | Industry | Status | Code |
 |-----|--------|---------|----------|--------|------|
-| 1 | Ingestion | GA4 + Google Ads → BigQuery | Marketing | ✅ Complete | [Day 01](./day01) |
-| 2 | Ingestion | Meta Analytics & LTV | Creator Economy | ✅ Complete | [Day 02](./day02) |
-| 3 | Ingestion | GDPR Lead Ingestion Webhook | Compliance | ✅ Complete | [Day 03](./day03) |
-| 4 | Ingestion | Cardano Blockchain Transparency | Crypto | ✅ Complete | [Day 04](./day04) |
-| 5 | Ingestion | TBD | TBD | 🚧 Planned | [Day 05](./day05) |
-| 6 | Modeling | TBD | TBD | 🚧 Planned | [Day 06](./day06) |
-| 7 | Modeling | TBD | TBD | 🚧 Planned | [Day 07](./day07) |
+| 1 | Ingestion | GA4 + Google Ads → BigQuery Pipeline | Product Launch | ✅ Complete | [Day 01](./day01) |
+| 2 | Ingestion | Creator Intelligence System | TBD | ✅ Complete | [Day 02](./day02) |
+| 3 | Ingestion | TBD | TBD | ✅ Complete | [Day 03](./day03) |
+| 4 | Ingestion | TBD | TBD | ✅ Complete | [Day 04](./day04) |
+| 5 | Ingestion | Museu Ipiranga Cultural Data Pipeline | TBD | ✅ Complete | [Day 05](./day05) |
+| 6 | Modeling | TBD | TBD | 🚧 In Progress | [Day 06](./day06) |
+| 7 | Modeling | Hospitality LTV & Cohort Model | TBD | ✅ Complete | [Day 07](./day07) |
 | 8 | Modeling | TBD | TBD | 🚧 Planned | [Day 08](./day08) |
 | 9 | Modeling | TBD | TBD | 🚧 Planned | [Day 09](./day09) |
 | 10 | Modeling | TBD | TBD | 🚧 Planned | [Day 10](./day10) |
