@@ -1,0 +1,54 @@
+# Jekyll configuration for GitHub Pages
+theme: jekyll-theme-primer
+
+# Site settings
+title: Advent Automation 2025
+description: 25 Days of Data Engineering Challenges
+
+# Build settings
+markdown: kramdown
+
+# Exclude directories and files from Jekyll processing
+exclude:
+  - .git/
+  - .github/
+  - .gitignore
+  - .venv/
+  - venv/
+  - env/
+  - __pycache__/
+  - "*.py"
+  - "*.pyc"
+  - "*.pyo"
+  - "*.db"
+  - "*.sqlite"
+  - "*.sqlite3"
+  - "*.csv"
+  - "*.parquet"
+  - "*.json"
+  - "*.yaml"
+  - "*.yml"
+  - requirements.txt
+  - Pipfile
+  - Pipfile.lock
+  - common/
+  - "PROJECT 1B/"
+  - "PROJECT 5C/"
+  - "day*/data/"
+  - "day*/*.py"
+  - "day*/*.ipynb"
+  - "day*/*.db"
+  - "day*/*.sqlite"
+  - "day*/*.csv"
+  - "day*/*.json"
+  - "day*/config/"
+  - "day*/src/"
+  - "day*/scripts/"
+  - DEVELOPER_NOTES.md
+  - CLIENT_SETUP_GUIDE.md
+  - README.md.backup
+
+# Include only specific markdown files
+include:
+  - README.md
+  - "day*/README.md"
