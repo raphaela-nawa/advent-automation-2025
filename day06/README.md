@@ -27,7 +27,7 @@
 
 **Business Impact:** Reduced monthly reporting time from 4 hours (manual Excel) to 5 minutes (automated SQL queries), enabling weekly instead of quarterly reviews of key SaaS metrics.
 
-**For:** Murilo (Simetryk SaaS Founder) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** SaaS Executive (C-level) | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
@@ -52,7 +52,7 @@
 
 ### The Challenge
 
-Murilo runs a SaaS company (Simetryk) and was tracking MRR in spreadsheets, manually calculating churn rates monthly, and had no visibility into which customer cohorts were performing best. Without automated cohort analysis, he couldn't identify retention problems until months after signup, missing early intervention opportunities.
+A SaaS executive was tracking MRR in spreadsheets, manually calculating churn rates monthly, and had no visibility into which customer cohorts were performing best. Without automated cohort analysis, the company couldn't identify retention problems until months after signup, missing early intervention opportunities.
 
 **Why This Matters:**
 - **Stakeholder Impact:** Manual reporting consumes 4h/month that could be spent on customer success or product development
@@ -137,7 +137,7 @@ Synthetic SaaS Data → SQL Views (Window Functions) → Dashboard-Ready Tables
 
 ## Recommendations
 
-### For Murilo
+### For SaaS Executives
 
 **Immediate Next Steps (Week 1):**
 1. **Integrate with Stripe API** - Replace synthetic data with real subscription history (Day 1-3 Ingestion project)

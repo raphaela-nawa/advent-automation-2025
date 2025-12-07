@@ -3,7 +3,7 @@
 -- ============================================================================
 --
 -- Purpose: Analyze customer health based on LTV/CAC ratio
--- Stakeholder: Murilo (Simetryk SaaS)
+-- Stakeholder: SaaS Executive (C-level)
 -- Dashboard: Day 19 - Customer Health Distribution
 --
 -- Usage:

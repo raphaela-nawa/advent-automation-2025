@@ -3,7 +3,7 @@
 -- ============================================================================
 --
 -- Purpose: Analyze churn rates by cohort and plan tier
--- Stakeholder: Murilo (Simetryk SaaS)
+-- Stakeholder: SaaS Executive (C-level)
 -- Dashboard: Day 19 - Churn Heatmap
 --
 -- Usage:

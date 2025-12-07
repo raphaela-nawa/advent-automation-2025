@@ -2,7 +2,7 @@
 -- Day 06: SaaS Health Metrics Foundation - Analytical Views
 -- ============================================================================
 --
--- Stakeholder: Murilo (Simetryk SaaS)
+-- Stakeholder: SaaS Executive (C-level)
 -- Purpose: Create 4 analytical views ready for dashboard consumption (Day 19)
 --
 -- Views:

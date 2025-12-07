@@ -2,12 +2,12 @@
 """
 Synthetic Data Generator for Day 06: SaaS Health Metrics Foundation
 
-This script generates realistic SaaS subscription data for Murilo's dashboard:
+This script generates realistic SaaS subscription data for executive dashboards:
 - 500 customers across 24 months
 - Subscription history with upgrades/downgrades/churn
 - Pre-aggregated MRR movements for waterfall analysis
 
-Stakeholder: Murilo (Simetryk SaaS)
+Stakeholder: SaaS Executive (C-level)
 Use Case: MRR tracking, churn analysis, cohort retention, customer health scoring
 
 Usage:

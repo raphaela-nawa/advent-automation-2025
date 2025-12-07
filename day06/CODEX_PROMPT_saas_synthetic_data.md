@@ -1,7 +1,7 @@
 # Codex Prompt: Generate Synthetic SaaS Health Metrics Data
 
 ## Context
-Generate synthetic data for a SaaS company's health metrics tracking system (Simetryk SaaS - Murilo's use case). This data will be used to calculate MRR movements, churn rates, cohort retention, and customer health scores for dashboard visualization.
+Generate synthetic data for a SaaS company's health metrics tracking system. This data will be used to calculate MRR movements, churn rates, cohort retention, and customer health scores for dashboard visualization.
 
 ## Requirements
 
@@ -108,12 +108,12 @@ Generate Python code using SQLite3 that:
 """
 Synthetic Data Generator for Day 06: SaaS Health Metrics Foundation
 
-This script generates realistic SaaS subscription data for Murilo's dashboard:
+This script generates realistic SaaS subscription data for executive dashboards:
 - 500 customers across 24 months
 - Subscription history with upgrades/downgrades/churn
 - Pre-aggregated MRR movements for waterfall analysis
 
-Stakeholder: Murilo (Simetryk SaaS)
+Stakeholder: SaaS Executive (C-level)
 Use Case: MRR tracking, churn analysis, cohort retention, customer health scoring
 
 Usage:
@@ -295,4 +295,4 @@ This data will feed into 4 SQL views:
 
 ---
 
-**IMPORTANT**: This data should look realistic enough to demonstrate to Murilo how SaaS health metrics work in practice. Focus on creating meaningful patterns that will result in interesting dashboard visualizations on Day 19.
+**IMPORTANT**: This data should look realistic enough to demonstrate how SaaS health metrics work in practice. Focus on creating meaningful patterns that will result in interesting dashboard visualizations on Day 19.

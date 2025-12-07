@@ -3,7 +3,7 @@
 -- ============================================================================
 --
 -- Purpose: Analyze MRR movements over time for waterfall chart
--- Stakeholder: Murilo (Simetryk SaaS)
+-- Stakeholder: SaaS Executive (C-level)
 -- Dashboard: Day 19 - MRR Waterfall Chart
 --
 -- Usage:

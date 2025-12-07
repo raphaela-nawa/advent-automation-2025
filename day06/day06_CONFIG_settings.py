@@ -5,7 +5,7 @@ Configuration settings for Day 06: SaaS Health Metrics Foundation
 This module centralizes all configuration values for the SaaS metrics project.
 All variables use day-scoped naming (DAY06_*) to prevent conflicts.
 
-Stakeholder: Murilo (Simetryk SaaS)
+Stakeholder: SaaS Executive (C-level)
 Use Case: MRR tracking, churn analysis, cohort retention, customer health scoring
 """
 

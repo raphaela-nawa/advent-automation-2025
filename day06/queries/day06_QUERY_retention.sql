@@ -3,7 +3,7 @@
 -- ============================================================================
 --
 -- Purpose: Analyze cohort retention curves over time
--- Stakeholder: Murilo (Simetryk SaaS)
+-- Stakeholder: SaaS Executive (C-level)
 -- Dashboard: Day 19 - Retention Line Chart
 --
 -- Usage:
