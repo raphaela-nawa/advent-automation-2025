@@ -89,65 +89,255 @@
 
 ## 🎯 PROJECT-SPECIFIC CRITERIA
 
-### **Day 6 (Zé/Gui - Financial Consulting Metrics Layer)**
+### **Day 6 (Murilo - SaaS Health Metrics Foundation)**
+
+**Stakeholder:** Murilo (Simetryk SaaS - originally Day 24)
+
+**Project:** SaaS Health Metrics Foundation (SQL)
+
+**Focus:** Churn, MRR, Retention - dados prontos para dashboard
 
 **Data Sources:**
-- Synthetic data (projects, timesheets, expenses tables)
+- Synthetic SaaS data (customers, subscriptions, MRR movements)
+- 500 customers, 24 months history
+- 3 plan tiers: Starter/Pro/Enterprise
 
 **Mandatory Output:**
-- [ ] SQLite database with 3 tables: `dayXX_projects`, `dayXX_timesheets`, `dayXX_expenses`
-- [ ] SQL file with key metrics:
-  - **Utilization Rate**: % billable hours vs. total hours
-  - **Project Profitability**: Revenue - Costs per project
-  - **Client ROI**: Value delivered vs. client investment
-  - **Burn Rate**: Spending vs. billing rate
-- [ ] Looker Studio connection prepared (or mockup)
-- [ ] README explaining each metric
+- [ ] SQLite database with 3 tables:
+  - `day06_customers` (customer_id, signup_date, plan_tier, mrr_current, status)
+  - `day06_subscriptions` (subscription_id, customer_id, start_date, end_date, mrr, plan_tier)
+  - `day06_mrr_movements` (month, new_mrr, expansion_mrr, contraction_mrr, churn_mrr, net_mrr)
+- [ ] 4 SQL Views ready for dashboard consumption:
+  - `day06_mrr_summary` - MRR waterfall (New, Expansion, Contraction, Churn)
+  - `day06_churn_by_cohort` - Churn rate by signup month and segment
+  - `day06_retention_curves` - Cohort-based retention analysis
+  - `day06_customer_health` - LTV/CAC and health scoring
+- [ ] Sample queries demonstrating each metric
+- [ ] README explaining each metric and connection to Dashboard (Day 19)
 
 **When to Stop:**
-- ✅ 4+ metrics calculated with CTEs
-- ✅ At least 2 window functions used (RANK, LAG, or similar)
-- ✅ Each metric has comments explaining the calculation
-- ✅ README explains "How Zé/Gui uses this to report to clients"
-- ❌ DON'T do: Build actual Looker Studio dashboard, multi-currency handling, forecasting
+- ✅ 4 views created with clear business logic
+- ✅ MRR Movement correctly calculated (New + Expansion - Contraction - Churn = Net MRR)
+- ✅ Cohort analysis with at least 12 months of data
+- ✅ Churn rate calculated monthly and by segment (plan tier)
+- ✅ Window functions used for retention curves
+- ✅ Comments explaining SaaS metric subtleties
+- ✅ README explains "How Murilo uses this for SaaS health monitoring"
+- ✅ **Dashboard Integration**: Documentation showing which views connect to Day 19 dashboard
+- ❌ DON'T do: Churn prediction (ML), real payment gateway integration, dunning management, ARR forecasting
 
 **Expected Files:**
 ```
-dayXX/
+day06/
 ├── data/
-│   └── dayXX_consulting.db (SQLite)
+│   └── day06_saas_metrics.db (SQLite)
 ├── models/
-│   └── dayXX_MODEL_metrics.sql
-├── dayXX_DATA_synthetic_generator.py
-├── dayXX_CONFIG_settings.py
-├── dayXX_requirements.txt (if needed)
+│   ├── day06_MODEL_base_tables.sql (creates 3 base tables)
+│   └── day06_MODEL_views.sql (creates 4 analytical views)
+├── queries/
+│   ├── day06_QUERY_mrr_waterfall.sql
+│   ├── day06_QUERY_churn_analysis.sql
+│   ├── day06_QUERY_retention.sql
+│   └── day06_QUERY_customer_health.sql
+├── day06_DATA_synthetic_saas.py
+├── day06_CONFIG_settings.py
+├── day06_requirements.txt (if needed)
 ├── .env.example
 └── README.md
 ```
 
+**Data Model Schema:**
+```sql
+-- Base Table 1: Customers
+CREATE TABLE day06_customers (
+    customer_id VARCHAR(50) PRIMARY KEY,
+    signup_date DATE NOT NULL,
+    plan_tier VARCHAR(20) CHECK (plan_tier IN ('Starter', 'Pro', 'Enterprise')),
+    mrr_current DECIMAL(10,2),
+    status VARCHAR(10) CHECK (status IN ('active', 'churned'))
+);
+
+-- Base Table 2: Subscriptions
+CREATE TABLE day06_subscriptions (
+    subscription_id VARCHAR(50) PRIMARY KEY,
+    customer_id VARCHAR(50),
+    start_date DATE NOT NULL,
+    end_date DATE,
+    mrr DECIMAL(10,2),
+    plan_tier VARCHAR(20) CHECK (plan_tier IN ('Starter', 'Pro', 'Enterprise')),
+    FOREIGN KEY (customer_id) REFERENCES day06_customers(customer_id)
+);
+
+-- Base Table 3: MRR Movements
+CREATE TABLE day06_mrr_movements (
+    month DATE PRIMARY KEY,
+    new_mrr DECIMAL(10,2),
+    expansion_mrr DECIMAL(10,2),
+    contraction_mrr DECIMAL(10,2),
+    churn_mrr DECIMAL(10,2),
+    net_mrr DECIMAL(10,2)
+);
+```
+
+**View Examples:**
+```sql
+-- View 1: MRR Summary (Waterfall)
+CREATE VIEW day06_mrr_summary AS
+WITH day06_monthly_changes AS (
+    SELECT
+        DATE_TRUNC('month', start_date) as month,
+        SUM(CASE WHEN start_date = signup_date THEN mrr ELSE 0 END) as new_mrr,
+        SUM(CASE WHEN start_date > signup_date AND mrr > prev_mrr THEN mrr - prev_mrr ELSE 0 END) as expansion_mrr,
+        SUM(CASE WHEN start_date > signup_date AND mrr < prev_mrr THEN prev_mrr - mrr ELSE 0 END) as contraction_mrr,
+        SUM(CASE WHEN end_date IS NOT NULL THEN mrr ELSE 0 END) as churn_mrr
+    FROM day06_subscriptions s
+    JOIN day06_customers c ON s.customer_id = c.customer_id
+)
+SELECT
+    month,
+    new_mrr,
+    expansion_mrr,
+    contraction_mrr,
+    churn_mrr,
+    (new_mrr + expansion_mrr - contraction_mrr - churn_mrr) as net_mrr
+FROM day06_monthly_changes;
+
+-- View 2: Churn by Cohort
+CREATE VIEW day06_churn_by_cohort AS
+WITH day06_cohorts AS (
+    SELECT
+        DATE_TRUNC('month', signup_date) as cohort_month,
+        plan_tier,
+        COUNT(*) as cohort_size,
+        SUM(CASE WHEN status = 'churned' THEN 1 ELSE 0 END) as churned_count
+    FROM day06_customers
+    GROUP BY DATE_TRUNC('month', signup_date), plan_tier
+)
+SELECT
+    cohort_month,
+    plan_tier,
+    cohort_size,
+    churned_count,
+    ROUND(100.0 * churned_count / cohort_size, 2) as churn_rate_pct
+FROM day06_cohorts;
+
+-- View 3: Retention Curves
+CREATE VIEW day06_retention_curves AS
+WITH day06_first_sub AS (
+    SELECT
+        customer_id,
+        DATE_TRUNC('month', MIN(start_date)) as cohort_month
+    FROM day06_subscriptions
+    GROUP BY customer_id
+),
+day06_monthly_activity AS (
+    SELECT
+        fs.cohort_month,
+        s.customer_id,
+        DATE_TRUNC('month', s.start_date) as activity_month,
+        DATEDIFF(MONTH, fs.cohort_month, DATE_TRUNC('month', s.start_date)) as months_since_signup
+    FROM day06_first_sub fs
+    JOIN day06_subscriptions s ON fs.customer_id = s.customer_id
+)
+SELECT
+    cohort_month,
+    months_since_signup,
+    COUNT(DISTINCT customer_id) as retained_customers,
+    ROUND(100.0 * COUNT(DISTINCT customer_id) /
+          FIRST_VALUE(COUNT(DISTINCT customer_id)) OVER (
+              PARTITION BY cohort_month
+              ORDER BY months_since_signup
+          ), 2) as retention_rate_pct
+FROM day06_monthly_activity
+GROUP BY cohort_month, months_since_signup;
+
+-- View 4: Customer Health Score
+CREATE VIEW day06_customer_health AS
+WITH day06_customer_metrics AS (
+    SELECT
+        c.customer_id,
+        c.plan_tier,
+        c.mrr_current,
+        DATEDIFF(MONTH, c.signup_date, CURRENT_DATE) as customer_age_months,
+        (c.mrr_current * DATEDIFF(MONTH, c.signup_date, CURRENT_DATE)) as ltv_estimate,
+        c.status
+    FROM day06_customers c
+)
+SELECT
+    customer_id,
+    plan_tier,
+    mrr_current,
+    customer_age_months,
+    ltv_estimate,
+    -- Simple CAC assumption: $500 per customer
+    ROUND(ltv_estimate / 500.0, 2) as ltv_cac_ratio,
+    CASE
+        WHEN status = 'churned' THEN 'Churned'
+        WHEN ltv_estimate / 500.0 > 3 THEN 'Healthy'
+        WHEN ltv_estimate / 500.0 > 1 THEN 'At Risk'
+        ELSE 'Critical'
+    END as health_status
+FROM day06_customer_metrics;
+```
+
+**Dashboard Integration (Day 19):**
+```markdown
+## Connection to Day 19 Dashboard
+
+The following views are designed to be consumed by the Dashboard project:
+
+1. **day06_mrr_summary** → MRR Waterfall Chart
+   - X-axis: month
+   - Y-axis: new_mrr, expansion_mrr, contraction_mrr, churn_mrr
+   - Shows monthly MRR movement breakdown
+
+2. **day06_churn_by_cohort** → Churn Heatmap
+   - Rows: cohort_month
+   - Columns: plan_tier
+   - Color: churn_rate_pct
+
+3. **day06_retention_curves** → Retention Line Chart
+   - X-axis: months_since_signup
+   - Y-axis: retention_rate_pct
+   - Series: cohort_month (different cohorts as separate lines)
+
+4. **day06_customer_health** → Health Score Distribution
+   - Pie chart: COUNT(*) GROUP BY health_status
+   - Table: Top customers by ltv_cac_ratio
+```
+
+**Complexity Assessment:**
+- **SQL Complexity:** Média (CTEs, window functions, date calculations)
+- **Business Logic:** Alta (SaaS metrics são sutis - MRR movements, cohort logic)
+- **Data Volume:** 500 customers, 24 months history (~6,000 subscription records)
+- **Time Estimate:** 3h (mais tempo em business logic que código)
+
 **Final Validation:**
 ```sql
 -- Run these queries to validate
-SELECT * FROM dayXX_utilization_rate;
-SELECT * FROM dayXX_project_profitability;
--- Should return results with no errors
+SELECT * FROM day06_mrr_summary ORDER BY month;
+SELECT * FROM day06_churn_by_cohort ORDER BY cohort_month, plan_tier;
+SELECT * FROM day06_retention_curves WHERE cohort_month = '2024-01-01';
+SELECT * FROM day06_customer_health WHERE health_status = 'Healthy';
+-- Should return results with no errors and sensible values
 ```
 
 **Naming Examples:**
 ```python
 # ✅ CORRECT
-DAYXX_DB_PATH = "data/dayXX_consulting.db"
-DAYXX_BILLABLE_RATE = 150.0
+DAY06_DB_PATH = "data/day06_saas_metrics.db"
+DAY06_DEFAULT_CAC = 500.0
+DAY06_PLAN_TIERS = ['Starter', 'Pro', 'Enterprise']
 
-class dayXX_MetricsCalculator:
+class day06_SaasMetricsGenerator:
     pass
 
-def dayXX_calculate_utilization():
+def day06_calculate_mrr_movement():
     pass
 
 # ❌ WRONG - Generic names cause conflicts
-DB_PATH = "data/database.db"  # Could conflict with Day 02
-class MetricsCalculator:  # Too generic
+DB_PATH = "data/database.db"  # Could conflict with other days
+class MetricsGenerator:  # Too generic
 ```
 
 ---
@@ -224,55 +414,106 @@ SELECT * FROM dayXX_cohort_ltv;
 
 ---
 
-### **Day 8 (Patrick - Consulting Project Pipeline with dbt)**
+### **Day 8 (Patrick - SaaS Growth Funnel & Cohort Analysis with dbt)**
+
+**Stakeholder:** Patrick (MBA, Strategy)
+
+**Project:** SaaS Growth Funnel & Cohort Analysis (dbt)
+
+**Focus:** Acquisition funnel, activation, engagement
 
 **Data Sources:**
-- Synthetic leads/projects data
+- Synthetic SaaS user events data (visits, signups, activations, subscriptions)
+- 10K users, 100K events
 
 **Mandatory Output:**
-- [ ] dbt project structure:
+- [ ] dbt project with 5 core models:
 ```
   models/
     staging/
-      stg_leads.sql
-      stg_projects.sql
+      stg_users.sql
+      stg_events.sql
+      stg_subscriptions.sql
+      sources.yml
     intermediate/
-      int_lead_to_project.sql
+      int_funnel_steps.sql
+      int_user_engagement.sql
+      int_feature_usage.sql
     marts/
-      fct_pipeline_metrics.sql
+      fct_acquisition_funnel.sql (incremental)
+      fct_engagement_cohorts.sql
+      dim_user_health.sql
 ```
-- [ ] Pipeline stages: Lead → Qualification → Proposal → Project → Delivery
-- [ ] Metrics: Conversion rate per stage, time-to-close, deal size
-- [ ] dbt tests (at least 5 tests)
-- [ ] dbt docs generated (static site)
+
+**Core Deliverables:**
+
+**dbt Models:**
+1. **Acquisition Funnel** (Visit → Signup → Activation → Paid)
+2. **Engagement Cohorts** (DAU/WAU/MAU by cohort)
+3. **Feature Adoption** (which features drive retention)
+4. **Expansion Signals** (indicators for upsell)
+5. **Activation Rate** (time to first value)
+
+**Output Models (Ready for Dashboard):**
+```sql
+-- Model 1: Funnel Conversion
+fct_acquisition_funnel
+├── cohort_month
+├── visitors
+├── signups
+├── activated
+├── paid
+└── conversion_rates
+
+-- Model 2: Engagement by Cohort
+fct_engagement_cohorts
+├── cohort_month
+├── months_since_signup
+├── dau_rate
+├── feature_adoption_rate
+└── retention_rate
+```
 
 **When to Stop:**
 - ✅ dbt project runs with `dbt run` and `dbt test`
-- ✅ At least 3 models (staging, intermediate, mart)
+- ✅ All 5 core models created and tested
+- ✅ Funnel stages clearly defined (Visit → Signup → Activation → Paid)
+- ✅ Cohort analysis with engagement metrics (DAU/WAU/MAU)
+- ✅ Feature adoption tracking implemented
+- ✅ Incremental model working (`dbt run --full-refresh` vs. `dbt run`)
 - ✅ 5+ tests passing
-- ✅ dbt docs generated and included in README (screenshot or link)
-- ✅ README explains "How Patrick uses this to prioritize leads"
-- ✅ **Architectural Decision**: "Why dbt vs. plain SQL for this?" documented
-- ❌ DON'T do: Incremental models (that's Day 9), custom macros yet, multiple sources, production deployment
+- ✅ README explains "How Patrick uses this for growth strategy"
+- ✅ **Dashboard Integration**: Documentation showing connection to Day 16 dashboard
+- ✅ **Architectural Decision**: "Why dbt + incremental models for funnel tracking?" documented
+- ❌ DON'T do: Real-time processing, complex ML predictions, multi-product handling, advanced attribution, production deployment
 
 **Expected Files:**
 ```
-dayXX/
+day08/
 ├── dbt_project.yml
 ├── profiles.yml
 ├── models/
 │   ├── staging/
-│   │   ├── stg_leads.sql
-│   │   └── stg_projects.sql
+│   │   ├── sources.yml
+│   │   ├── stg_users.sql
+│   │   ├── stg_events.sql
+│   │   └── stg_subscriptions.sql
 │   ├── intermediate/
-│   │   └── int_lead_to_project.sql
+│   │   ├── int_funnel_steps.sql
+│   │   ├── int_user_engagement.sql
+│   │   └── int_feature_usage.sql
 │   └── marts/
-│       └── fct_pipeline_metrics.sql
+│       ├── fct_acquisition_funnel.sql (incremental)
+│       ├── fct_engagement_cohorts.sql
+│       └── dim_user_health.sql
+├── macros/
+│   └── calculate_activation_time.sql
 ├── tests/
 │   └── schema.yml
 ├── data/
-│   └── dayXX_consulting_pipeline.db
-├── dayXX_DATA_synthetic_generator.py
+│   └── day08_saas_funnel.db
+├── day08_DATA_synthetic_generator.py
+├── day08_CONFIG_settings.py
 ├── .env.example
 └── README.md
 ```
@@ -280,37 +521,109 @@ dayXX/
 **dbt Naming Convention:**
 ```yaml
 # In dbt_project.yml
-name: 'dayXX_consulting_pipeline'
-profile: 'dayXX_pipeline'
+name: 'day08_saas_funnel'
+profile: 'day08_funnel'
 
 # In models
 models:
-  dayXX_consulting_pipeline:
+  day08_saas_funnel:
     staging:
+      +materialized: view
+    intermediate:
       +materialized: view
     marts:
       +materialized: table
 ```
 
-**dbt Model Example:**
+**dbt Model Examples:**
 ```sql
--- models/staging/stg_leads.sql
+-- models/staging/stg_users.sql
 {{ config(materialized='view') }}
 
 WITH source AS (
-    SELECT * FROM {{ source('dayXX_pipeline', 'raw_leads') }}
+    SELECT * FROM {{ source('day08_saas', 'raw_users') }}
 ),
 
 renamed AS (
     SELECT
-        lead_id AS dayXX_lead_id,
-        lead_name AS dayXX_lead_name,
-        stage AS dayXX_stage,
-        created_at AS dayXX_created_at
+        user_id AS day08_user_id,
+        signup_date AS day08_signup_date,
+        email AS day08_email,
+        utm_source AS day08_utm_source,
+        utm_campaign AS day08_utm_campaign
     FROM source
 )
 
 SELECT * FROM renamed
+```
+
+```sql
+-- models/marts/fct_acquisition_funnel.sql (incremental)
+{{
+  config(
+    materialized='incremental',
+    unique_key='day08_cohort_month',
+    on_schema_change='append_new_columns'
+  )
+}}
+
+WITH funnel_stages AS (
+    SELECT * FROM {{ ref('int_funnel_steps') }}
+),
+
+cohort_funnel AS (
+    SELECT
+        DATE_TRUNC('month', signup_date) as day08_cohort_month,
+        COUNT(DISTINCT CASE WHEN stage = 'visit' THEN user_id END) as day08_visitors,
+        COUNT(DISTINCT CASE WHEN stage = 'signup' THEN user_id END) as day08_signups,
+        COUNT(DISTINCT CASE WHEN stage = 'activated' THEN user_id END) as day08_activated,
+        COUNT(DISTINCT CASE WHEN stage = 'paid' THEN user_id END) as day08_paid
+    FROM funnel_stages
+    GROUP BY DATE_TRUNC('month', signup_date)
+)
+
+SELECT
+    day08_cohort_month,
+    day08_visitors,
+    day08_signups,
+    day08_activated,
+    day08_paid,
+    ROUND(100.0 * day08_signups / NULLIF(day08_visitors, 0), 2) as day08_visit_to_signup_rate,
+    ROUND(100.0 * day08_activated / NULLIF(day08_signups, 0), 2) as day08_signup_to_activation_rate,
+    ROUND(100.0 * day08_paid / NULLIF(day08_activated, 0), 2) as day08_activation_to_paid_rate
+FROM cohort_funnel
+
+{% if is_incremental() %}
+  WHERE day08_cohort_month > (SELECT MAX(day08_cohort_month) FROM {{ this }})
+{% endif %}
+```
+
+```sql
+-- models/marts/fct_engagement_cohorts.sql
+{{ config(materialized='table') }}
+
+WITH user_cohorts AS (
+    SELECT
+        user_id,
+        DATE_TRUNC('month', signup_date) as cohort_month
+    FROM {{ ref('stg_users') }}
+),
+
+engagement_metrics AS (
+    SELECT
+        uc.cohort_month as day08_cohort_month,
+        DATEDIFF(MONTH, uc.cohort_month, e.event_date) as day08_months_since_signup,
+        COUNT(DISTINCT CASE WHEN e.event_type = 'daily_active' THEN e.user_id END) /
+            NULLIF(COUNT(DISTINCT uc.user_id), 0) as day08_dau_rate,
+        COUNT(DISTINCT CASE WHEN e.event_type = 'feature_used' THEN e.user_id END) /
+            NULLIF(COUNT(DISTINCT uc.user_id), 0) as day08_feature_adoption_rate,
+        COUNT(DISTINCT e.user_id) / NULLIF(COUNT(DISTINCT uc.user_id), 0) as day08_retention_rate
+    FROM user_cohorts uc
+    LEFT JOIN {{ ref('stg_events') }} e ON uc.user_id = e.user_id
+    GROUP BY uc.cohort_month, DATEDIFF(MONTH, uc.cohort_month, e.event_date)
+)
+
+SELECT * FROM engagement_metrics
 ```
 
 **dbt Tests Example:**
@@ -319,16 +632,96 @@ SELECT * FROM renamed
 version: 2
 
 models:
-  - name: stg_leads
+  - name: stg_users
     columns:
-      - name: dayXX_lead_id
+      - name: day08_user_id
         tests:
           - unique
           - not_null
-      - name: dayXX_stage
+      - name: day08_signup_date
         tests:
-          - accepted_values:
-              values: ['lead', 'qualified', 'proposal', 'project', 'delivery']
+          - not_null
+
+  - name: stg_events
+    columns:
+      - name: day08_event_id
+        tests:
+          - unique
+          - not_null
+      - name: day08_user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: day08_user_id
+
+  - name: fct_acquisition_funnel
+    columns:
+      - name: day08_cohort_month
+        tests:
+          - unique
+          - not_null
+      - name: day08_visitors
+        tests:
+          - not_null
+```
+
+**Dashboard Integration (Day 16):**
+```markdown
+## Connection to Day 16 Dashboard
+
+The following models are designed to be consumed by the Dashboard project:
+
+1. **fct_acquisition_funnel** → Funnel Conversion Chart
+   - X-axis: cohort_month
+   - Y-axis: visitors, signups, activated, paid
+   - Conversion rates displayed as annotations
+
+2. **fct_engagement_cohorts** → Engagement Trends
+   - X-axis: months_since_signup
+   - Y-axis: dau_rate, feature_adoption_rate, retention_rate
+   - Series: cohort_month (different cohorts as separate lines)
+
+3. **dim_user_health** → User Health Segmentation
+   - Pie chart: COUNT(*) GROUP BY health_status
+   - Table: Top users by engagement score
+```
+
+**Complexity Assessment:**
+- **dbt Complexity:** Média (incremental models, macros)
+- **Business Logic:** Média (growth metrics, cohort analysis)
+- **Data Volume:** 10K users, 100K events
+- **Time Estimate:** 3h (dbt setup + models + documentation)
+
+**Final Validation:**
+```bash
+# Run dbt commands
+cd day08
+dbt run --full-refresh
+dbt test
+dbt docs generate
+
+# Validate results
+sqlite3 data/day08_saas_funnel.db "SELECT * FROM fct_acquisition_funnel ORDER BY day08_cohort_month;"
+sqlite3 data/day08_saas_funnel.db "SELECT * FROM fct_engagement_cohorts WHERE day08_cohort_month = '2024-01-01';"
+```
+
+**Naming Examples:**
+```python
+# ✅ CORRECT
+DAY08_DB_PATH = "data/day08_saas_funnel.db"
+DAY08_ACTIVATION_THRESHOLD = 3  # days
+DAY08_FUNNEL_STAGES = ['visit', 'signup', 'activated', 'paid']
+
+class day08_SaasFunnelGenerator:
+    pass
+
+def day08_calculate_activation_rate():
+    pass
+
+# ❌ WRONG - Generic names cause conflicts
+DB_PATH = "data/database.db"
+class FunnelGenerator:  # Too generic
 ```
 
 ---
