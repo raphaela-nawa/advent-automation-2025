@@ -28,7 +28,7 @@ Each one ships with full code and documentation.
 | 3 | Ingestion | TBD | TBD | ✅ Complete | [Day 03](./day03) |
 | 4 | Ingestion | TBD | TBD | ✅ Complete | [Day 04](./day04) |
 | 5 | Ingestion | Museu Ipiranga Cultural Data Pipeline | TBD | ✅ Complete | [Day 05](./day05) |
-| 6 | Modeling | TBD | TBD | 🚧 In Progress | [Day 06](./day06) |
+| 6 | Modeling | SaaS Health Metrics Foundation | TBD | ✅ Complete | [Day 06](./day06) |
 | 7 | Modeling | Hospitality LTV & Cohort Model | TBD | ✅ Complete | [Day 07](./day07) |
 | 8 | Modeling | TBD | TBD | 🚧 Planned | [Day 08](./day08) |
 | 9 | Modeling | TBD | TBD | 🚧 Planned | [Day 09](./day09) |
