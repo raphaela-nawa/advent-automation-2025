@@ -1,250 +1,252 @@
 #!/usr/bin/env python3
 """
-Configuration settings for Day 06: Financial Consulting Metrics Layer
+Configuration settings for Day 06: SaaS Health Metrics Foundation
 
-This module centralizes all configuration values for the project.
+This module centralizes all configuration values for the SaaS metrics project.
 All variables use day-scoped naming (DAY06_*) to prevent conflicts.
+
+Stakeholder: Murilo (Simetryk SaaS)
+Use Case: MRR tracking, churn analysis, cohort retention, customer health scoring
 """
 
 from pathlib import Path
+from datetime import datetime
 
 # ============================================================================
 # Database Configuration
 # ============================================================================
 
-DAY06_DB_PATH = Path(__file__).parent / "data" / "day06_consulting.db"
+DAY06_DB_PATH = Path(__file__).parent / "data" / "day06_saas_metrics.db"
 DAY06_DB_PATH_STR = str(DAY06_DB_PATH)
 
 # ============================================================================
 # Synthetic Data Generation Parameters
 # ============================================================================
 
-# Number of entities to generate
-DAY06_NUM_PROJECTS = 18
-DAY06_NUM_CONSULTANTS = 10
-DAY06_NUM_CLIENTS = 6
-DAY06_MIN_TIMESHEETS_PER_PROJECT = 5
-DAY06_MAX_TIMESHEETS_PER_PROJECT = 20
-DAY06_MIN_EXPENSES_PER_PROJECT = 1
-DAY06_MAX_EXPENSES_PER_PROJECT = 5
+# Number of customers to generate
+DAY06_NUM_CUSTOMERS = 500
 
-# Date ranges for projects
-DAY06_PROJECT_START_DATE = "2023-01-01"
-DAY06_PROJECT_END_DATE = "2024-06-01"
-
-# Financial parameters
-DAY06_MIN_PROJECT_BUDGET = 50000
-DAY06_MAX_PROJECT_BUDGET = 500000
-DAY06_MIN_HOURLY_RATE = 100
-DAY06_MAX_HOURLY_RATE = 250
-DAY06_MIN_EXPENSE_AMOUNT = 100
-DAY06_MAX_EXPENSE_AMOUNT = 15000
-
-# Business logic parameters
-DAY06_BILLABLE_PERCENTAGE = 0.75  # 75% of hours should be billable on average
-DAY06_REIMBURSABLE_PERCENTAGE = 0.60  # 60% of expenses are reimbursable
+# Time range for data generation
+DAY06_NUM_MONTHS = 24
+DAY06_START_DATE = datetime(2023, 1, 1)
+DAY06_END_DATE = datetime(2024, 12, 31)
 
 # ============================================================================
-# Consultant Performance Tiers
+# SaaS Plan Tiers and Pricing
 # ============================================================================
 
-# Define different utilization profiles for realistic data
-DAY06_CONSULTANT_TIERS = {
-    "high_performer": {
-        "count": 3,
-        "billable_rate": (0.80, 0.85),  # 80-85% billable
-        "hourly_rate_range": (180, 250)
-    },
-    "average": {
-        "count": 5,
-        "billable_rate": (0.60, 0.70),  # 60-70% billable
-        "hourly_rate_range": (130, 180)
-    },
-    "below_target": {
-        "count": 2,
-        "billable_rate": (0.40, 0.50),  # 40-50% billable
-        "hourly_rate_range": (100, 130)
-    }
+DAY06_PLAN_TIERS = ['Starter', 'Pro', 'Enterprise']
+
+# MRR ranges for each plan tier (min, max)
+DAY06_PLAN_PRICING = {
+    'Starter': (29, 99),
+    'Pro': (199, 499),
+    'Enterprise': (999, 2999)
+}
+
+# Distribution of customers across plan tiers
+DAY06_PLAN_DISTRIBUTION = {
+    'Starter': 0.50,      # 50% of customers
+    'Pro': 0.35,          # 35% of customers
+    'Enterprise': 0.15    # 15% of customers
 }
 
 # ============================================================================
-# Project Types
+# SaaS Metrics - Business Logic Parameters
 # ============================================================================
 
-DAY06_PROJECT_NAMES = [
-    "Marketing Strategy Overhaul",
-    "Digital Transformation Roadmap",
-    "Brand Positioning Study",
-    "Customer Experience Enhancement",
-    "Market Entry Strategy",
-    "Competitive Analysis Deep Dive",
-    "Product Launch Campaign",
-    "Sales Process Optimization",
-    "Channel Partner Strategy",
-    "Content Marketing Framework",
-    "Social Media Presence Build",
-    "Customer Segmentation Analysis",
-    "Pricing Strategy Review",
-    "Growth Hacking Initiative",
-    "Marketing Automation Setup",
-    "Lead Generation System",
-    "Conversion Rate Optimization",
-    "Marketing Analytics Dashboard",
-    "Influencer Marketing Campaign",
-    "Email Marketing Revamp"
+# Churn and Retention
+DAY06_MONTHLY_CHURN_RATE = 0.06  # 6% monthly churn rate (realistic SaaS benchmark)
+
+# Retention curve targets (by months since signup)
+DAY06_RETENTION_CURVE = {
+    0: 1.00,   # Month 0: 100% retention (signup)
+    1: 0.92,   # Month 1: 92% retention
+    3: 0.82,   # Month 3: 82% retention
+    6: 0.72,   # Month 6: 72% retention
+    12: 0.62,  # Month 12: 62% retention
+    24: 0.52   # Month 24: 52% retention
+}
+
+# Upgrade and Downgrade probabilities
+DAY06_UPGRADE_PROBABILITY = 0.18    # 18% of customers upgrade
+DAY06_DOWNGRADE_PROBABILITY = 0.08  # 8% of customers downgrade
+
+# ============================================================================
+# MRR Growth Targets
+# ============================================================================
+
+DAY06_STARTING_MRR = 50000   # Starting MRR in month 1: $50K
+DAY06_ENDING_MRR = 200000    # Target MRR in month 24: $200K (4x growth)
+
+# ============================================================================
+# Customer Health Scoring
+# ============================================================================
+
+# Customer Acquisition Cost (CAC) assumption
+DAY06_DEFAULT_CAC = 500.0  # $500 per customer
+
+# LTV/CAC ratio thresholds for health scoring
+DAY06_HEALTH_THRESHOLDS = {
+    'Healthy': 3.0,      # LTV/CAC > 3 = Healthy
+    'At Risk': 1.0,      # LTV/CAC > 1 = At Risk
+    'Critical': 0.0      # LTV/CAC <= 1 = Critical
+}
+
+# ============================================================================
+# Data Generation Helpers
+# ============================================================================
+
+# Customer ID format (Stripe-style)
+DAY06_CUSTOMER_ID_PREFIX = "cus_"
+DAY06_CUSTOMER_ID_LENGTH = 16
+
+# Subscription ID format (Stripe-style)
+DAY06_SUBSCRIPTION_ID_PREFIX = "sub_"
+DAY06_SUBSCRIPTION_ID_LENGTH = 16
+
+# Email domains for synthetic data
+DAY06_EMAIL_DOMAINS = [
+    'gmail.com',
+    'yahoo.com',
+    'outlook.com',
+    'techcorp.com',
+    'startup.io',
+    'enterprise.com',
+    'business.net',
+    'company.org'
 ]
 
-DAY06_CONTRACT_TYPES = ["Fixed Price", "Time & Materials"]
-DAY06_PROJECT_STATUSES = ["Active", "Completed", "On Hold"]
+# First names for synthetic customers
+DAY06_FIRST_NAMES = [
+    'John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa',
+    'James', 'Mary', 'William', 'Patricia', 'Richard', 'Jennifer', 'Thomas',
+    'Linda', 'Charles', 'Elizabeth', 'Daniel', 'Barbara', 'Matthew', 'Susan',
+    'Anthony', 'Jessica', 'Mark', 'Karen', 'Donald', 'Nancy', 'Steven', 'Betty'
+]
 
-# ============================================================================
-# Expense Types
-# ============================================================================
-
-DAY06_EXPENSE_TYPES = [
-    "Travel",
-    "Software Licenses",
-    "Subcontractor",
-    "Marketing",
-    "Office Supplies"
+# Last names for synthetic customers
+DAY06_LAST_NAMES = [
+    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller',
+    'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez',
+    'Wilson', 'Anderson', 'Thomas', 'Taylor', 'Moore', 'Jackson', 'Martin',
+    'Lee', 'Perez', 'Thompson', 'White', 'Harris', 'Sanchez', 'Clark',
+    'Ramirez', 'Lewis', 'Robinson'
 ]
 
 # ============================================================================
-# Task Descriptions (for timesheets)
+# Random Seed for Reproducibility
 # ============================================================================
 
-DAY06_TASK_DESCRIPTIONS = [
-    "Client workshop facilitation",
-    "Data analysis and insights",
-    "Report writing and documentation",
-    "Stakeholder interviews",
-    "Market research",
-    "Strategy development",
-    "Presentation preparation",
-    "Project management",
-    "Internal review and QA",
-    "Training and knowledge transfer",
-    "Team collaboration meeting",
-    "Proposal development",
-    "Risk assessment",
-    "Performance tracking",
-    "Client status call"
+DAY06_RANDOM_SEED = 42  # For consistent data generation across runs
+
+# ============================================================================
+# SQL Model Paths
+# ============================================================================
+
+DAY06_MODEL_BASE_TABLES = Path(__file__).parent / "models" / "day06_MODEL_base_tables.sql"
+DAY06_MODEL_VIEWS = Path(__file__).parent / "models" / "day06_MODEL_views.sql"
+
+# ============================================================================
+# Query Paths
+# ============================================================================
+
+DAY06_QUERIES_DIR = Path(__file__).parent / "queries"
+DAY06_QUERY_MRR_WATERFALL = DAY06_QUERIES_DIR / "day06_QUERY_mrr_waterfall.sql"
+DAY06_QUERY_CHURN_ANALYSIS = DAY06_QUERIES_DIR / "day06_QUERY_churn_analysis.sql"
+DAY06_QUERY_RETENTION = DAY06_QUERIES_DIR / "day06_QUERY_retention.sql"
+DAY06_QUERY_CUSTOMER_HEALTH = DAY06_QUERIES_DIR / "day06_QUERY_customer_health.sql"
+
+# ============================================================================
+# Dashboard Integration (Day 19)
+# ============================================================================
+
+DAY06_DASHBOARD_VIEWS = [
+    'day06_mrr_summary',        # MRR Waterfall Chart
+    'day06_churn_by_cohort',    # Churn Heatmap
+    'day06_retention_curves',   # Retention Line Chart
+    'day06_customer_health'     # Health Score Distribution
 ]
 
 # ============================================================================
-# Metric Thresholds
+# Validation Thresholds
 # ============================================================================
 
-# Utilization rate categories
-DAY06_UTILIZATION_HIGH = 80  # % - High performer threshold
-DAY06_UTILIZATION_AVERAGE = 60  # % - Average performer threshold
+# Data integrity checks
+DAY06_MIN_SUBSCRIPTIONS_PER_CUSTOMER = 1
+DAY06_MAX_SUBSCRIPTIONS_PER_CUSTOMER = 5  # Most customers have 1-2, some have up to 5
 
-# Profit margin categories
-DAY06_MARGIN_HIGH = 30  # % - High margin threshold
-DAY06_MARGIN_HEALTHY = 15  # % - Healthy margin threshold
+DAY06_MIN_ACTIVE_CUSTOMERS_PERCENT = 0.50  # At least 50% should be active
+DAY06_MAX_ACTIVE_CUSTOMERS_PERCENT = 0.80  # At most 80% should be active
 
-# Client ROI categories
-DAY06_CLIENT_ROI_STRATEGIC = 200  # % - Strategic partner threshold
-DAY06_CLIENT_ROI_HIGH = 100  # % - High value threshold
-DAY06_CLIENT_ROI_STANDARD = 50  # % - Standard threshold
-
-# Budget burn alert thresholds
-DAY06_BUDGET_CRITICAL = 90  # % - Critical alert
-DAY06_BUDGET_WARNING = 75  # % - Warning alert
-DAY06_BUDGET_WATCH = 50  # % - Watch alert
+# MRR validation
+DAY06_MIN_TOTAL_MRR = 100000   # Minimum total MRR across all time
+DAY06_MAX_TOTAL_MRR = 5000000  # Maximum total MRR across all time
 
 # ============================================================================
-# Display Configuration
+# Logging Configuration
 # ============================================================================
 
-DAY06_CURRENCY_SYMBOL = "$"
-DAY06_CURRENCY_FORMAT = "{symbol}{amount:,.2f}"
-DAY06_PERCENTAGE_FORMAT = "{value:.2f}%"
+DAY06_LOG_LEVEL = "INFO"
+DAY06_LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 # ============================================================================
-# Validation Rules
+# Helper Functions
 # ============================================================================
 
-DAY06_MIN_HOURS_PER_DAY = 2
-DAY06_MAX_HOURS_PER_DAY = 10
-DAY06_MIN_PROJECT_DURATION_DAYS = 30
-DAY06_MAX_PROJECT_DURATION_DAYS = 180
-
-
-def day06_format_currency(amount: float) -> str:
+def day06_get_plan_mrr_range(plan_tier: str) -> tuple:
     """
-    Format currency value with proper symbol and decimals.
+    Get the MRR range (min, max) for a given plan tier.
 
     Args:
-        amount: Numeric amount in USD
+        plan_tier: One of 'Starter', 'Pro', 'Enterprise'
 
     Returns:
-        Formatted currency string (e.g., "$1,234.56")
+        Tuple of (min_mrr, max_mrr)
     """
-    return DAY06_CURRENCY_FORMAT.format(
-        symbol=DAY06_CURRENCY_SYMBOL,
-        amount=amount
-    )
+    if plan_tier not in DAY06_PLAN_PRICING:
+        raise ValueError(f"Invalid plan tier: {plan_tier}")
+    return DAY06_PLAN_PRICING[plan_tier]
 
 
-def day06_format_percentage(value: float) -> str:
+def day06_get_health_status(ltv_cac_ratio: float) -> str:
     """
-    Format percentage value with 2 decimal places.
+    Determine customer health status based on LTV/CAC ratio.
 
     Args:
-        value: Numeric percentage value
+        ltv_cac_ratio: Lifetime Value / Customer Acquisition Cost ratio
 
     Returns:
-        Formatted percentage string (e.g., "75.50%")
+        One of 'Healthy', 'At Risk', 'Critical', 'Churned'
     """
-    return DAY06_PERCENTAGE_FORMAT.format(value=value)
+    if ltv_cac_ratio > DAY06_HEALTH_THRESHOLDS['Healthy']:
+        return 'Healthy'
+    elif ltv_cac_ratio > DAY06_HEALTH_THRESHOLDS['At Risk']:
+        return 'At Risk'
+    else:
+        return 'Critical'
 
 
-def day06_validate_date_range(start_date: str, end_date: str) -> bool:
+def day06_validate_date_range(date_obj: datetime) -> bool:
     """
-    Validate that end_date is after start_date.
+    Validate that a date is within the valid range for this project.
 
     Args:
-        start_date: ISO format date string (YYYY-MM-DD)
-        end_date: ISO format date string (YYYY-MM-DD)
+        date_obj: datetime object to validate
 
     Returns:
         True if valid, False otherwise
     """
-    from datetime import datetime
-
-    try:
-        start = datetime.fromisoformat(start_date)
-        end = datetime.fromisoformat(end_date)
-        return end > start
-    except (ValueError, TypeError):
-        return False
-
-
-# ============================================================================
-# Export Configuration Summary
-# ============================================================================
-
-def day06_print_config_summary():
-    """Print configuration summary for verification."""
-    print("="*60)
-    print("Day 06 Configuration Summary")
-    print("="*60)
-    print(f"Database: {DAY06_DB_PATH}")
-    print(f"\nData Generation:")
-    print(f"  - Projects: {DAY06_NUM_PROJECTS}")
-    print(f"  - Consultants: {DAY06_NUM_CONSULTANTS}")
-    print(f"  - Clients: {DAY06_NUM_CLIENTS}")
-    print(f"\nFinancial Parameters:")
-    print(f"  - Project Budget: {day06_format_currency(DAY06_MIN_PROJECT_BUDGET)} - {day06_format_currency(DAY06_MAX_PROJECT_BUDGET)}")
-    print(f"  - Hourly Rate: {day06_format_currency(DAY06_MIN_HOURLY_RATE)} - {day06_format_currency(DAY06_MAX_HOURLY_RATE)}")
-    print(f"\nMetric Thresholds:")
-    print(f"  - High Utilization: ≥{DAY06_UTILIZATION_HIGH}%")
-    print(f"  - High Margin: ≥{DAY06_MARGIN_HIGH}%")
-    print(f"  - Strategic Client ROI: ≥{DAY06_CLIENT_ROI_STRATEGIC}%")
-    print("="*60)
+    return DAY06_START_DATE <= date_obj <= DAY06_END_DATE
 
 
 if __name__ == "__main__":
-    # Print configuration when run directly
-    day06_print_config_summary()
+    print("Day 06: SaaS Health Metrics Foundation - Configuration")
+    print("=" * 60)
+    print(f"Database Path: {DAY06_DB_PATH}")
+    print(f"Number of Customers: {DAY06_NUM_CUSTOMERS}")
+    print(f"Date Range: {DAY06_START_DATE.date()} to {DAY06_END_DATE.date()}")
+    print(f"Plan Tiers: {', '.join(DAY06_PLAN_TIERS)}")
+    print(f"Monthly Churn Rate: {DAY06_MONTHLY_CHURN_RATE * 100:.1f}%")
+    print(f"Target MRR Growth: ${DAY06_STARTING_MRR:,} → ${DAY06_ENDING_MRR:,}")
+    print("=" * 60)
