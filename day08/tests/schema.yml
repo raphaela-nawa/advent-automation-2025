@@ -1,0 +1,163 @@
+version: 2
+
+models:
+  # Staging Models Tests
+  - name: stg_users
+    description: Cleaned and standardized user data
+    columns:
+      - name: day08_user_id
+        description: Unique user identifier
+        tests:
+          - unique
+          - not_null
+
+      - name: day08_signup_date
+        description: Date user signed up
+        tests:
+          - not_null
+
+      - name: day08_cohort_month
+        description: Cohort month (first day of signup month)
+        tests:
+          - not_null
+
+  - name: stg_events
+    description: Cleaned and standardized event tracking data
+    columns:
+      - name: day08_event_id
+        description: Unique event identifier
+        tests:
+          - unique
+          - not_null
+
+      - name: day08_user_id
+        description: User who triggered the event
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: day08_user_id
+
+      - name: day08_event_type
+        description: Type of event
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['visit', 'signup', 'activated', 'paid', 'daily_active', 'feature_used']
+
+      - name: day08_event_date
+        description: Date the event occurred
+        tests:
+          - not_null
+
+  - name: stg_subscriptions
+    description: Cleaned and standardized subscription data
+    columns:
+      - name: day08_subscription_id
+        description: Unique subscription identifier
+        tests:
+          - unique
+          - not_null
+
+      - name: day08_user_id
+        description: User who owns the subscription
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: day08_user_id
+
+      - name: day08_plan_name
+        description: Subscription plan
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Starter', 'Pro', 'Enterprise']
+
+      - name: day08_mrr
+        description: Monthly Recurring Revenue
+        tests:
+          - not_null
+
+      - name: day08_status
+        description: Subscription status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['active', 'cancelled', 'trial']
+
+  # Marts Models Tests
+  - name: fct_acquisition_funnel
+    description: Funnel conversion metrics by cohort (incremental)
+    columns:
+      - name: day08_cohort_month
+        description: Cohort month
+        tests:
+          - unique
+          - not_null
+
+      - name: day08_visitors
+        description: Number of visitors
+        tests:
+          - not_null
+
+      - name: day08_signups
+        description: Number of signups
+        tests:
+          - not_null
+
+      - name: day08_visit_to_signup_rate
+        description: Visit to signup conversion rate
+        tests:
+          - not_null
+
+  - name: fct_engagement_cohorts
+    description: Engagement metrics by cohort over time
+    columns:
+      - name: day08_cohort_month
+        description: Cohort month
+        tests:
+          - not_null
+
+      - name: day08_months_since_signup
+        description: Months since signup
+        tests:
+          - not_null
+
+      - name: day08_cohort_size
+        description: Size of the cohort
+        tests:
+          - not_null
+
+      - name: day08_retention_rate
+        description: Retention rate percentage
+        tests:
+          - not_null
+
+  - name: dim_user_health
+    description: User health scoring and segmentation
+    columns:
+      - name: day08_user_id
+        description: Unique user identifier
+        tests:
+          - unique
+          - not_null
+
+      - name: day08_overall_health_score
+        description: Overall health score (0-100)
+        tests:
+          - not_null
+
+      - name: day08_health_status
+        description: Health status category
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Not Paid', 'Healthy', 'Engaged', 'At Risk', 'Churning']
+
+      - name: day08_upsell_candidate
+        description: Flag for upsell opportunity
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]

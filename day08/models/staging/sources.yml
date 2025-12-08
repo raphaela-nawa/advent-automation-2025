@@ -1,0 +1,92 @@
+version: 2
+
+sources:
+  - name: day08_saas
+    description: Raw SaaS funnel data for growth analysis
+    database: main
+    schema: main
+    tables:
+      - name: raw_users
+        description: User signup and attribution data
+        columns:
+          - name: user_id
+            description: Unique user identifier
+            tests:
+              - unique
+              - not_null
+          - name: signup_date
+            description: Date user signed up
+            tests:
+              - not_null
+          - name: email
+            description: User email address
+          - name: utm_source
+            description: Marketing source (google, facebook, etc.)
+          - name: utm_campaign
+            description: Marketing campaign name
+          - name: first_visit_date
+            description: Date of first visit to the product
+
+      - name: raw_events
+        description: User event tracking across the funnel
+        columns:
+          - name: event_id
+            description: Unique event identifier
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: User who triggered the event
+            tests:
+              - not_null
+          - name: event_type
+            description: Type of event (visit, signup, activated, paid, daily_active, feature_used)
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['visit', 'signup', 'activated', 'paid', 'daily_active', 'feature_used']
+          - name: event_date
+            description: Date the event occurred
+            tests:
+              - not_null
+          - name: event_timestamp
+            description: Timestamp of the event
+            tests:
+              - not_null
+          - name: feature_name
+            description: Feature used (for feature_used events)
+
+      - name: raw_subscriptions
+        description: Subscription and payment data
+        columns:
+          - name: subscription_id
+            description: Unique subscription identifier
+            tests:
+              - unique
+              - not_null
+          - name: user_id
+            description: User who owns the subscription
+            tests:
+              - not_null
+          - name: plan_name
+            description: Subscription plan (Starter, Pro, Enterprise)
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['Starter', 'Pro', 'Enterprise']
+          - name: start_date
+            description: Subscription start date
+            tests:
+              - not_null
+          - name: end_date
+            description: Subscription end date (null if active)
+          - name: mrr
+            description: Monthly Recurring Revenue
+            tests:
+              - not_null
+          - name: status
+            description: Subscription status
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['active', 'cancelled', 'trial']

@@ -1,0 +1,48 @@
+# Day 08 - SaaS Growth Funnel & Cohort Analysis
+# dbt Project Configuration for Patrick's Growth Strategy
+
+name: 'day08_saas_funnel'
+version: '1.0.0'
+config-version: 2
+
+profile: 'day08_funnel'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  day08_saas_funnel:
+    # Staging models - ephemeral or views
+    staging:
+      +materialized: view
+      +tags: ['staging']
+      +docs:
+        node_color: "#f0e68c"  # khaki
+
+    # Intermediate models - views for transformations
+    intermediate:
+      +materialized: view
+      +tags: ['intermediate']
+      +docs:
+        node_color: "#87ceeb"  # skyblue
+
+    # Marts models - tables for analytics
+    marts:
+      +materialized: table
+      +tags: ['marts']
+      +docs:
+        node_color: "#90ee90"  # lightgreen
+
+vars:
+  activation_threshold_days: 7
+  cohort_start_date: '2023-01-01'
+  cohort_end_date: '2024-12-31'

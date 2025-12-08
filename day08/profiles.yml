@@ -1,0 +1,15 @@
+# Day 08 - SaaS Growth Funnel & Cohort Analysis
+# dbt Profile Configuration for dbt-sqlite 1.10.0
+
+day08_funnel:
+  outputs:
+    dev:
+      type: sqlite
+      threads: 4
+      database: 'day08_saas_funnel'
+      schema: 'main'
+      schema_directory: 'data'
+      schemas_and_paths:
+        main: 'data/day08_saas_funnel.db'
+
+  target: dev
