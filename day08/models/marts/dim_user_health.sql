@@ -143,13 +143,16 @@ SELECT
     END AS day08_health_status,
 
     -- Expansion signals
-    CASE
-        WHEN day08_is_paid = 1
-             AND day08_features_adopted >= 4
-             AND day08_total_active_days >= 20
-             AND day08_plan_name = 'Starter'
-        THEN 1
-        ELSE 0
-    END AS day08_upsell_candidate
+    COALESCE(
+        CASE
+            WHEN day08_is_paid = 1
+                 AND day08_features_adopted >= 4
+                 AND day08_total_active_days >= 20
+                 AND day08_plan_name = 'Starter'
+            THEN 1
+            ELSE 0
+        END,
+        0
+    ) AS day08_upsell_candidate
 
 FROM user_health
