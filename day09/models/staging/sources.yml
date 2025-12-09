@@ -1,0 +1,113 @@
+version: 2
+
+sources:
+  # All sources from the single SQLite database
+  - name: day09_sources
+    description: "Property management data sources from all platforms"
+    tables:
+      # Airbnb Platform
+      - name: airbnb_inquiries
+        description: "Guest inquiries from Airbnb platform"
+        loaded_at_field: inquiry_timestamp
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+          - name: inquiry_id
+            description: "Unique inquiry identifier"
+          - name: guest_id
+            description: "Airbnb guest identifier"
+          - name: property_id
+            description: "Property identifier"
+          - name: inquiry_timestamp
+            description: "When the inquiry was made"
+
+      - name: airbnb_bookings
+        description: "Confirmed bookings from Airbnb platform"
+        loaded_at_field: booking_timestamp
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 12, period: hour}
+        columns:
+          - name: booking_id
+            description: "Unique booking identifier"
+          - name: guest_id
+            description: "Airbnb guest identifier"
+          - name: property_id
+            description: "Property identifier"
+          - name: booking_timestamp
+            description: "When the booking was confirmed"
+          - name: total_price
+            description: "Total booking price"
+          - name: net_revenue
+            description: "Revenue after Airbnb fees"
+
+      # Booking.com Platform
+      - name: booking_com_inquiries
+        description: "Guest inquiries from Booking.com platform (OTA schema)"
+        loaded_at_field: created_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+          - name: reservation_inquiry_id
+            description: "Unique inquiry identifier"
+          - name: guest_email
+            description: "Guest email (used as identifier)"
+          - name: property_code
+            description: "Property code"
+          - name: created_at
+            description: "When the inquiry was created"
+
+      - name: booking_com_bookings
+        description: "Confirmed reservations from Booking.com platform (OTA schema)"
+        loaded_at_field: booking_timestamp
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 12, period: hour}
+        columns:
+          - name: booking_id
+            description: "Unique booking identifier"
+          - name: guest_email
+            description: "Guest email (used as identifier)"
+          - name: property_code
+            description: "Property code"
+          - name: booking_timestamp
+            description: "When the reservation was confirmed"
+          - name: total_amount
+            description: "Total reservation amount"
+          - name: host_payout
+            description: "Host payout after commission"
+
+      # Unified Operations
+      - name: stays
+        description: "Unified guest stays across all platforms"
+        loaded_at_field: check_in_timestamp
+        columns:
+          - name: stay_id
+            description: "Unique stay identifier"
+          - name: booking_id
+            description: "Reference to booking"
+          - name: platform
+            description: "Platform (airbnb or booking_com)"
+          - name: property_id
+            description: "Property identifier"
+          - name: check_in_timestamp
+            description: "Actual check-in time"
+          - name: check_out_timestamp
+            description: "Actual check-out time"
+
+      - name: reviews
+        description: "Guest reviews across all platforms"
+        loaded_at_field: review_timestamp
+        columns:
+          - name: review_id
+            description: "Unique review identifier"
+          - name: stay_id
+            description: "Reference to stay"
+          - name: platform
+            description: "Platform (airbnb or booking_com)"
+          - name: rating
+            description: "Review rating (1-5 stars)"
+          - name: review_timestamp
+            description: "When the review was submitted"

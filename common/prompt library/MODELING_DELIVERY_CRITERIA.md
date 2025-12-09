@@ -726,71 +726,546 @@ class FunnelGenerator:  # Too generic
 
 ---
 
-### **Day 9 (Jo - Hospitality Operations Funnel with dbt)**
+### **Day 9 (Jo - Property Manager Operations Data Warehouse with dbt)**
+
+**Stakeholder:** Jo (Property Manager - 6 houseboats)
+
+**Project:** Multi-Platform Property Management Data Warehouse Foundation
+
+**Focus:** Unified operations funnel tracking across booking platforms (Airbnb + Booking.com), conversion optimization, and portfolio performance metrics
 
 **Data Sources:**
-- Synthetic inquiry/booking/stay/review data (Airbnb-style)
+- Synthetic multi-platform reservation data (Airbnb + Booking.com)
+- Complete guest journey: Inquiry → Booking → Check-in → Check-out → Review
+- 500+ reservations, 12+ months history
 
-**Mandatory Output:**
-- [ ] dbt project with advanced features:
+---
+
+## 📋 Public vs Private Deliverables
+
+### **What Goes on GitHub (Public Portfolio)**
+✅ **Technical implementation** (dbt models, SQL, macros)
+✅ **Architecture documentation** (why dbt, why incremental models)
+✅ **Portfolio metrics** (presented as "demonstration of multi-platform data unification")
+✅ **Business problem framing** ("Property managers need unified analytics across platforms")
+✅ **How to run locally** (setup instructions, sample queries)
+✅ **Technical learning objectives** (dbt features demonstrated)
+
+❌ **ANY mention of**: MicroSaaS, commercial plans, product roadmap, MVP, "Phase 1/2/3", business model, pricing, or competitive analysis
+
+### **What Stays Local (Product Development)**
+📝 **PRIVATE_PRODUCT_NOTES.md** (NOT in public repo):
+- MicroSaaS vision and 3-phase roadmap
+- Why this schema powers the commercial product
+- Migration path from SQLite → Supabase (production DB)
+- Which tables power which SaaS features
+- Competitive analysis vs. Guesty/Hostaway
+- Technical debt and production hardening notes
+
+🔒 **Add to .gitignore**:
+```
+PRIVATE_PRODUCT_NOTES.md
+MICROSAAS_ROADMAP.md
+/business_plan/
+/pricing_research/
+/competitor_analysis/
+*.private.*
+```
+
+---
+
+## 📄 Licensing Strategy
+
+**Use MIT License with Commercial Use Restriction**
+
+**Why this approach:**
+- Shows confidence in code quality (industry-standard MIT base)
+- Protects commercial opportunity (prevents direct cloning for profit)
+- Allows educational/portfolio use (helps you get hired)
+- Standard for "open core" SaaS models
+
+**LICENSE file to include:**
+```
+MIT License (Modified for Portfolio Use)
+
+Copyright (c) 2025 [Your Name]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use,
+copy, modify, merge, and distribute the Software for NON-COMMERCIAL purposes,
+subject to the following conditions:
+
+[Standard MIT License conditions...]
+
+COMMERCIAL USE RESTRICTION:
+Commercial use of this software (defined as use in a business, product, or
+service that generates revenue) requires explicit written permission from
+the copyright holder.
+
+For portfolio/educational use: Freely available
+For commercial licensing inquiries: [your contact email]
+```
+
+**Alternative:** Use "Commons Clause" addon to MIT for stronger protection
+
+---
+
+## 🎯 Mandatory Output
+
+**Core dbt Project Structure:**
+- [ ] dbt project with production-ready architecture:
 ```
   models/
     staging/
-      stg_inquiries.sql (source declaration)
-      stg_bookings.sql
-      stg_stays.sql
-      stg_reviews.sql
+      stg_airbnb_inquiries.sql
+      stg_airbnb_bookings.sql
+      stg_booking_com_inquiries.sql
+      stg_booking_com_bookings.sql
+      stg_stays.sql (unified across platforms)
+      stg_reviews.sql (unified)
+      sources.yml (with freshness tests)
     intermediate/
-      int_funnel_events.sql (union all stages)
+      int_unified_reservations.sql (platform unification logic)
+      int_funnel_events.sql (all stages)
+      int_property_performance.sql
     marts/
       fct_funnel_conversion.sql (incremental!)
+      fct_reservations_unified.sql
+      metrics_portfolio_public.sql (powers public-facing portfolio page)
+      dim_platform_comparison.sql
 ```
-- [ ] Complete funnel: Inquiry → Booking → Check-in → Check-out → Review
-- [ ] Metrics: Conversion rate per stage, drop-off points, time between stages
-- [ ] Incremental processing (only new events)
-- [ ] Custom macro (e.g., `calculate_stage_duration()`)
 
-**When to Stop:**
+**Critical Business Requirements:**
+- [ ] **Multi-Platform Unification**: Airbnb + Booking.com data merged with platform tracking
+- [ ] **Complete Operations Funnel**: Inquiry → Booking → Check-in → Check-out → Review
+- [ ] **Portfolio Metrics Mart**: Occupancy rate, ADR (Average Daily Rate), RevPAR, platform mix
+- [ ] **Conversion Metrics**: Stage-by-stage conversion rates, drop-off analysis, time-to-conversion
+- [ ] **Incremental Processing**: Only new events processed (production-ready pattern)
+- [ ] **Custom Business Logic Macros**: `calculate_stage_duration()`, `calculate_occupancy_rate()`, `unify_platform_data()`
+
+---
+
+## ⏱️ When to Stop
+
+### **Technical Completeness:**
 - ✅ Incremental model working (`dbt run --full-refresh` vs. `dbt run`)
-- ✅ At least 1 custom macro created and used
-- ✅ Sources declared with freshness tests
-- ✅ Complete funnel with 4+ stages
-- ✅ README explains "How Jo uses this to optimize conversion"
-- ✅ **Architectural Decision**: "Why incremental models?" documented
-- ❌ DON'T do: Real-time processing, complex orchestration, external API calls, ML predictions
+- ✅ At least 2 custom macros created and used (stage duration + one business logic macro)
+- ✅ Sources declared with freshness tests (both Airbnb + Booking.com sources)
+- ✅ Complete funnel with 5 stages (inquiry/booking/check-in/check-out/review)
+- ✅ Multi-platform unification logic working (Airbnb + Booking.com unified)
+- ✅ 5+ dbt tests passing (unique, not_null, relationships, custom)
 
-**Expected Files:**
+### **Business Requirements Met:**
+- ✅ Portfolio metrics mart created (`metrics_portfolio_public.sql`)
+- ✅ Platform comparison dimension showing Airbnb vs Booking.com performance
+- ✅ Occupancy rate calculated correctly (nights booked / nights available)
+- ✅ ADR and RevPAR metrics accurate
+
+### **Documentation Complete:**
+- ✅ **PUBLIC README** (portfolio-focused, no commercial mentions)
+- ✅ **PRIVATE_PRODUCT_NOTES.md** (strategic context for your eyes only)
+- ✅ **Architectural Decision**: "Why incremental models for operations data?" documented
+- ✅ **Architectural Decision**: "Multi-platform unification strategy" documented
+- ✅ Clear separation: Public vs Private documentation
+
+### **What NOT to Build:**
+- ❌ Real-time processing (batch is fine for portfolio)
+- ❌ Complex orchestration (Airflow/Dagster)
+- ❌ External API calls (use synthetic data)
+- ❌ ML predictions (churn/pricing models)
+- ❌ Production deployment (keep local SQLite for portfolio)
+- ❌ Real booking platform integrations
+
+---
+
+## 📁 Expected Files
+
 ```
-dayXX/
+day09/
 ├── dbt_project.yml
 ├── profiles.yml
 ├── models/
 │   ├── staging/
-│   │   ├── sources.yml
-│   │   ├── stg_inquiries.sql
-│   │   ├── stg_bookings.sql
+│   │   ├── sources.yml (both platforms declared)
+│   │   ├── stg_airbnb_inquiries.sql
+│   │   ├── stg_airbnb_bookings.sql
+│   │   ├── stg_booking_com_inquiries.sql
+│   │   ├── stg_booking_com_bookings.sql
 │   │   ├── stg_stays.sql
 │   │   └── stg_reviews.sql
 │   ├── intermediate/
-│   │   └── int_funnel_events.sql
+│   │   ├── int_unified_reservations.sql (★ CRITICAL: platform unification)
+│   │   ├── int_funnel_events.sql
+│   │   └── int_property_performance.sql
 │   └── marts/
-│       └── fct_funnel_conversion.sql (incremental)
+│       ├── fct_funnel_conversion.sql (incremental)
+│       ├── fct_reservations_unified.sql
+│       ├── metrics_portfolio_public.sql (★ CRITICAL: portfolio metrics)
+│       └── dim_platform_comparison.sql
 ├── macros/
-│   └── calculate_stage_duration.sql
+│   ├── calculate_stage_duration.sql
+│   ├── calculate_occupancy_rate.sql
+│   └── unify_platform_data.sql
+├── tests/
+│   └── schema.yml (5+ tests)
 ├── data/
-│   └── dayXX_hospitality_funnel.db
-├── dayXX_DATA_synthetic_generator.py
+│   └── day09_property_operations.db
+├── day09_DATA_synthetic_generator.py
+├── day09_CONFIG_settings.py
 ├── .env.example
-└── README.md
+├── LICENSE (MIT with commercial restriction)
+├── README.md (PUBLIC - portfolio focus)
+└── PRIVATE_PRODUCT_NOTES.md (LOCAL ONLY - not in git)
 ```
 
-**Incremental Model Example:**
+---
+
+## 📖 Documentation Requirements
+
+### **PUBLIC README Structure (day09/README.md)**
+
+**Purpose:** Portfolio demonstration
+**Audience:** Recruiters, hiring managers, data engineering community
+**Tone:** Educational, technical, portfolio-focused
+
+**Required Sections:**
+```markdown
+# Day 9: Multi-Platform Property Management Data Warehouse
+
+## Business Problem
+Independent property managers use multiple booking platforms (Airbnb, Booking.com)
+but lack unified analytics. This project demonstrates data unification techniques
+and dbt best practices for building a production-ready data warehouse.
+
+## Technical Architecture
+[Explain dbt project structure, incremental models, multi-platform unification strategy]
+
+## Key Features Demonstrated
+- Multi-source data integration (Airbnb + Booking.com)
+- Incremental processing for efficient updates
+- Custom business logic macros (occupancy, ADR, stage duration)
+- Source freshness monitoring
+- Comprehensive dbt testing strategy
+
+## Data Models
+
+### Staging Layer
+[Describe source declarations and initial transformations]
+
+### Intermediate Layer
+[Explain platform unification logic]
+
+### Marts Layer
+[Document final business-ready models]
+
+## Metrics Delivered
+- Occupancy Rate (nights booked / nights available)
+- Average Daily Rate (ADR)
+- Revenue Per Available Room (RevPAR)
+- Funnel conversion rates (inquiry → review)
+- Platform performance comparison
+
+## How to Run Locally
+[Step-by-step setup instructions]
+
+## Architecture Decisions
+
+### Why Incremental Models?
+[Explain: production-ready pattern, efficient processing, scalable]
+
+### Multi-Platform Unification Strategy
+[Explain: common schema, platform tracking, unified metrics]
+
+## Learning Outcomes
+- dbt project architecture
+- Incremental materialization patterns
+- Custom macro development
+- Multi-source data integration
+- Hospitality industry metrics
+
+---
+Built as part of a 25-day data engineering portfolio project
+```
+
+**❌ DO NOT INCLUDE in Public README:**
+- MicroSaaS vision or product plans
+- Commercial opportunity mentions
+- MVP or "Phase 1/2/3" language
+- Pricing model considerations
+- Competitive analysis (Guesty/Hostaway)
+- Production migration plans (SQLite → Supabase)
+
+---
+
+### **PRIVATE PRODUCT NOTES Structure (day09/PRIVATE_PRODUCT_NOTES.md)**
+
+**Purpose:** Internal product development documentation
+**Audience:** Only you (and future co-founders/investors)
+**Location:** Keep local, add to .gitignore
+
+**Required Sections:**
+```markdown
+# Day 9: Property Manager Data Warehouse - Product Context
+
+## MicroSaaS Vision (CONFIDENTIAL)
+
+### Target Market
+- Independent property managers (1-15 properties)
+- Currently underserved by enterprise PMS (Guesty charges $30-50/property/month)
+- Need unified analytics across Airbnb + Booking.com
+- Jo (6 houseboats) = first real user / design partner
+
+### Product Roadmap
+**Phase 1 (MVP):** Portfolio Builder
+- Public-facing property showcase page
+- Unified availability calendar
+- Performance metrics dashboard
+- Powered by: metrics_portfolio_public.sql
+
+**Phase 2:** Direct Booking Engine
+- iCal sync with Airbnb/Booking.com
+- Direct booking flow (bypass platform fees)
+- Payment processing integration
+
+**Phase 3:** Operations Automation
+- Automated guest messages
+- Cleaning/maintenance scheduling
+- Dynamic pricing suggestions
+
+### How This dbt Project Supports the SaaS
+
+#### Tables → SaaS Features Mapping
+- `fct_reservations_unified` → Calendar sync + availability management
+- `metrics_portfolio_public` → Public portfolio page (Phase 1 MVP)
+- `dim_platform_comparison` → Platform performance analytics
+- `fct_funnel_conversion` → Conversion optimization insights
+
+#### Production Migration Path
+- **Current:** SQLite (portfolio demonstration)
+- **Phase 1 Production:** Supabase (Postgres + Auth + Storage)
+- **Migration Strategy:** dbt profiles.yml switch, no code changes needed
+- **Timeline:** 2 days after first paying customer
+
+### Competitive Analysis
+**vs. Guesty ($30-50/property/month):**
+- Guesty: Enterprise-focused, complex, expensive for small operators
+- Us: Lightweight, affordable ($10-15/property/month), independent-host-focused
+
+**vs. Hostaway ($25-35/property/month):**
+- Hostaway: Good mid-market option, still pricey for 1-10 properties
+- Us: Better pricing for micro-operators, simpler UX
+
+### Technical Debt / Production Hardening Needed
+- [ ] Add proper error handling in dbt models
+- [ ] Implement data quality monitoring (Great Expectations)
+- [ ] Add CI/CD for dbt runs (GitHub Actions)
+- [ ] Set up incremental backfill strategy
+- [ ] Migrate from SQLite to Supabase
+- [ ] Add multi-tenancy (property_manager_id in all tables)
+- [ ] Implement RBAC (owner vs guest access)
+
+### Pricing Model (Initial Thinking)
+- $10/property/month (base tier - analytics only)
+- $15/property/month (pro tier - direct booking)
+- $20/property/month (automation tier - messages/scheduling)
+- Target: 100 properties by Month 6 = $1-2K MRR
+
+### Next Steps After Portfolio Delivery
+1. User interview with Jo (validate metrics, get feedback)
+2. Design Figma mockups for portfolio page
+3. Set up Supabase project
+4. Migrate dbt to Supabase profiles
+5. Build Next.js frontend for Phase 1 MVP
+```
+
+**🔒 CRITICAL:** This file NEVER goes on GitHub. Keep local only.
+
+---
+
+## 💻 Code Examples
+
+### **dbt Project Configuration**
+
+```yaml
+# dbt_project.yml
+name: 'day09_property_ops'
+profile: 'day09_property_ops'
+version: '1.0.0'
+
+models:
+  day09_property_ops:
+    staging:
+      +materialized: view
+      +tags: ['staging']
+    intermediate:
+      +materialized: view
+      +tags: ['intermediate']
+    marts:
+      +materialized: table
+      +tags: ['marts']
+      fct_funnel_conversion:
+        +materialized: incremental
+        +unique_key: 'day09_event_id'
+```
+
+---
+
+### **Staging: Multi-Platform Sources**
+
+```yaml
+# models/staging/sources.yml
+version: 2
+
+sources:
+  - name: day09_airbnb
+    database: day09_property_operations
+    schema: raw
+    tables:
+      - name: airbnb_inquiries
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+      - name: airbnb_bookings
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 12, period: hour}
+
+  - name: day09_booking_com
+    database: day09_property_operations
+    schema: raw
+    tables:
+      - name: booking_com_inquiries
+        freshness:
+          warn_after: {count: 12, period: hour}
+      - name: booking_com_bookings
+        freshness:
+          warn_after: {count: 6, period: hour}
+
+  - name: day09_operations
+    database: day09_property_operations
+    schema: raw
+    tables:
+      - name: stays
+      - name: reviews
+```
+
+```sql
+-- models/staging/stg_airbnb_inquiries.sql
+{{ config(materialized='view') }}
+
+WITH source AS (
+    SELECT * FROM {{ source('day09_airbnb', 'airbnb_inquiries') }}
+),
+
+renamed AS (
+    SELECT
+        inquiry_id AS day09_inquiry_id,
+        'airbnb' AS day09_platform,
+        guest_id AS day09_guest_id,
+        property_id AS day09_property_id,
+        inquiry_timestamp AS day09_inquiry_timestamp,
+        check_in_date AS day09_check_in_date,
+        check_out_date AS day09_check_out_date,
+        num_guests AS day09_num_guests,
+        status AS day09_status
+    FROM source
+)
+
+SELECT * FROM renamed
+```
+
+```sql
+-- models/staging/stg_booking_com_inquiries.sql
+{{ config(materialized='view') }}
+
+WITH source AS (
+    SELECT * FROM {{ source('day09_booking_com', 'booking_com_inquiries') }}
+),
+
+renamed AS (
+    SELECT
+        reservation_inquiry_id AS day09_inquiry_id,
+        'booking_com' AS day09_platform,
+        guest_email AS day09_guest_id,  -- Unification: use email as guest_id
+        property_code AS day09_property_id,
+        created_at AS day09_inquiry_timestamp,
+        arrival_date AS day09_check_in_date,
+        departure_date AS day09_check_out_date,
+        guest_count AS day09_num_guests,
+        inquiry_status AS day09_status
+    FROM source
+)
+
+SELECT * FROM renamed
+```
+
+---
+
+### **Intermediate: Platform Unification**
+
+```sql
+-- models/intermediate/int_unified_reservations.sql
+{{ config(materialized='view') }}
+
+WITH airbnb AS (
+    SELECT * FROM {{ ref('stg_airbnb_bookings') }}
+),
+
+booking_com AS (
+    SELECT * FROM {{ ref('stg_booking_com_bookings') }}
+),
+
+unified AS (
+    SELECT
+        day09_booking_id,
+        day09_platform,
+        day09_guest_id,
+        day09_property_id,
+        day09_check_in_date,
+        day09_check_out_date,
+        day09_num_guests,
+        day09_total_price,
+        day09_platform_fee,
+        day09_net_revenue,
+        day09_booking_timestamp,
+        day09_status
+    FROM airbnb
+
+    UNION ALL
+
+    SELECT
+        day09_booking_id,
+        day09_platform,
+        day09_guest_id,
+        day09_property_id,
+        day09_check_in_date,
+        day09_check_out_date,
+        day09_num_guests,
+        day09_total_price,
+        day09_platform_fee,
+        day09_net_revenue,
+        day09_booking_timestamp,
+        day09_status
+    FROM booking_com
+)
+
+SELECT
+    *,
+    DATEDIFF(day, day09_check_in_date, day09_check_out_date) AS day09_nights,
+    day09_total_price / NULLIF(DATEDIFF(day, day09_check_in_date, day09_check_out_date), 0) AS day09_adr
+FROM unified
+```
+
+---
+
+### **Marts: Incremental Funnel Conversion**
+
 ```sql
 -- models/marts/fct_funnel_conversion.sql
 {{
   config(
     materialized='incremental',
-    unique_key='dayXX_event_id',
+    unique_key='day09_event_id',
     on_schema_change='append_new_columns'
   )
 }}
@@ -800,50 +1275,239 @@ WITH funnel_events AS (
 )
 
 SELECT
-    dayXX_event_id,
-    dayXX_user_id,
-    dayXX_stage,
-    dayXX_event_timestamp,
-    {{ calculate_stage_duration('dayXX_event_timestamp', 'dayXX_stage') }} as dayXX_time_in_stage
+    day09_event_id,
+    day09_guest_id,
+    day09_property_id,
+    day09_platform,
+    day09_stage,
+    day09_event_timestamp,
+    {{ calculate_stage_duration('day09_event_timestamp', 'day09_stage', 'day09_guest_id') }} AS day09_time_in_stage_hours,
+    day09_converted_to_next_stage,
+    day09_final_booking_value
 FROM funnel_events
 
 {% if is_incremental() %}
-  WHERE dayXX_event_timestamp > (SELECT MAX(dayXX_event_timestamp) FROM {{ this }})
+  WHERE day09_event_timestamp > (SELECT MAX(day09_event_timestamp) FROM {{ this }})
 {% endif %}
 ```
 
-**Custom Macro Example:**
+---
+
+### **Marts: Portfolio Metrics (Powers Public Page)**
+
+```sql
+-- models/marts/metrics_portfolio_public.sql
+{{ config(materialized='table') }}
+
+WITH reservations AS (
+    SELECT * FROM {{ ref('fct_reservations_unified') }}
+),
+
+property_nights AS (
+    SELECT
+        day09_property_id,
+        COUNT(*) AS day09_total_nights_booked,
+        SUM(day09_total_price) AS day09_total_revenue,
+        SUM(day09_net_revenue) AS day09_total_net_revenue,
+        AVG(day09_adr) AS day09_avg_daily_rate
+    FROM reservations
+    WHERE day09_status = 'completed'
+    GROUP BY day09_property_id
+),
+
+-- Calculate available nights (365 days per property for portfolio demo)
+property_metrics AS (
+    SELECT
+        pn.day09_property_id,
+        pn.day09_total_nights_booked,
+        365 AS day09_nights_available,  -- Simplified for portfolio
+        ROUND(100.0 * pn.day09_total_nights_booked / 365, 2) AS day09_occupancy_rate_pct,
+        pn.day09_avg_daily_rate,
+        ROUND(pn.day09_avg_daily_rate * (pn.day09_total_nights_booked / 365.0), 2) AS day09_revpar,
+        pn.day09_total_revenue,
+        pn.day09_total_net_revenue
+    FROM property_nights pn
+)
+
+SELECT * FROM property_metrics
+```
+
+---
+
+### **Custom Macros**
+
 ```sql
 -- macros/calculate_stage_duration.sql
-{% macro calculate_stage_duration(timestamp_col, stage_col) %}
-    LAG({{ timestamp_col }}) OVER (
-        PARTITION BY {{ stage_col }}
-        ORDER BY {{ timestamp_col }}
-    ) as previous_timestamp,
+{% macro calculate_stage_duration(timestamp_col, stage_col, partition_col) %}
     TIMESTAMPDIFF(
         HOUR,
-        LAG({{ timestamp_col }}) OVER (PARTITION BY {{ stage_col }} ORDER BY {{ timestamp_col }}),
+        LAG({{ timestamp_col }}) OVER (
+            PARTITION BY {{ partition_col }}, {{ stage_col }}
+            ORDER BY {{ timestamp_col }}
+        ),
         {{ timestamp_col }}
-    ) as duration_hours
+    )
 {% endmacro %}
 ```
 
-**Sources Declaration:**
+```sql
+-- macros/calculate_occupancy_rate.sql
+{% macro calculate_occupancy_rate(nights_booked_col, nights_available_col) %}
+    ROUND(100.0 * {{ nights_booked_col }} / NULLIF({{ nights_available_col }}, 0), 2)
+{% endmacro %}
+```
+
+```sql
+-- macros/unify_platform_data.sql
+{% macro unify_platform_data(airbnb_col, booking_com_col, airbnb_default, booking_com_default) %}
+    CASE
+        WHEN platform = 'airbnb' THEN COALESCE({{ airbnb_col }}, {{ airbnb_default }})
+        WHEN platform = 'booking_com' THEN COALESCE({{ booking_com_col }}, {{ booking_com_default }})
+        ELSE NULL
+    END
+{% endmacro %}
+```
+
+---
+
+### **dbt Tests**
+
 ```yaml
-# models/staging/sources.yml
+# tests/schema.yml
 version: 2
 
-sources:
-  - name: dayXX_funnel
-    database: dayXX_hospitality_funnel
-    tables:
-      - name: raw_inquiries
-        freshness:
-          warn_after: {count: 12, period: hour}
-          error_after: {count: 24, period: hour}
-      - name: raw_bookings
-      - name: raw_stays
-      - name: raw_reviews
+models:
+  - name: stg_airbnb_inquiries
+    columns:
+      - name: day09_inquiry_id
+        tests:
+          - unique
+          - not_null
+      - name: day09_platform
+        tests:
+          - accepted_values:
+              values: ['airbnb', 'booking_com']
+
+  - name: fct_reservations_unified
+    columns:
+      - name: day09_booking_id
+        tests:
+          - unique
+          - not_null
+      - name: day09_property_id
+        tests:
+          - not_null
+      - name: day09_platform
+        tests:
+          - accepted_values:
+              values: ['airbnb', 'booking_com']
+      - name: day09_adr
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+  - name: metrics_portfolio_public
+    columns:
+      - name: day09_property_id
+        tests:
+          - unique
+          - not_null
+      - name: day09_occupancy_rate_pct
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "BETWEEN 0 AND 100"
+```
+
+---
+
+## 🎯 Complexity Assessment
+
+- **dbt Complexity:** High (incremental models, multi-source unification, custom macros)
+- **Business Logic:** High (hospitality metrics, multi-platform reconciliation)
+- **Data Volume:** 500+ reservations, 12 months history, 2 platforms
+- **Time Estimate:** 3h (dbt setup 30min, models 90min, testing/docs 60min)
+
+---
+
+## ✅ Final Validation
+
+```bash
+# Navigate to project
+cd day09
+
+# Full refresh (builds from scratch)
+dbt run --full-refresh
+
+# Incremental run (only new data)
+dbt run
+
+# Run tests
+dbt test
+
+# Generate documentation
+dbt docs generate
+dbt docs serve
+
+# Validate key metrics
+sqlite3 data/day09_property_operations.db "SELECT * FROM metrics_portfolio_public;"
+sqlite3 data/day09_property_operations.db "SELECT * FROM fct_funnel_conversion ORDER BY day09_event_timestamp DESC LIMIT 10;"
+```
+
+**Success Criteria:**
+- ✅ All dbt models run without errors
+- ✅ Incremental model only processes new events on second run
+- ✅ Occupancy rates between 0-100%
+- ✅ ADR and RevPAR values are realistic ($50-300/night range)
+- ✅ Platform unification works (Airbnb + Booking.com in same tables)
+- ✅ 5+ tests passing
+- ✅ Public README is portfolio-focused (no commercial mentions)
+- ✅ Private notes contain strategic context
+- ✅ LICENSE file included with commercial restriction
+
+---
+
+## 🔐 Pre-Commit Checklist
+
+**Before pushing to GitHub:**
+- [ ] `PRIVATE_PRODUCT_NOTES.md` is in `.gitignore`
+- [ ] No mentions of "MicroSaaS", "MVP", "product roadmap" in public README
+- [ ] LICENSE file includes commercial use restriction
+- [ ] All code uses `day09_` prefix consistently
+- [ ] dbt docs generated and models documented
+- [ ] Tests passing (`dbt test`)
+- [ ] Public README focuses on portfolio/learning objectives only
+- [ ] No business model, pricing, or competitive analysis in public files
+
+---
+
+## 📊 Naming Examples
+
+```python
+# ✅ CORRECT
+DAY09_DB_PATH = "data/day09_property_operations.db"
+DAY09_PLATFORMS = ['airbnb', 'booking_com']
+DAY09_FUNNEL_STAGES = ['inquiry', 'booking', 'check_in', 'check_out', 'review']
+
+class day09_PropertyDataGenerator:
+    pass
+
+def day09_calculate_occupancy_rate():
+    pass
+
+# ❌ WRONG - Generic names cause conflicts
+DB_PATH = "data/database.db"
+class PropertyGenerator:  # Too generic
+```
+
+```sql
+-- ✅ CORRECT (dbt models)
+CREATE VIEW day09_stg_airbnb_inquiries AS ...
+CREATE TABLE day09_fct_reservations_unified AS ...
+
+-- ❌ WRONG
+CREATE VIEW stg_inquiries AS ...  -- Too generic
 ```
 
 ---

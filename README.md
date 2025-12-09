@@ -31,7 +31,7 @@ Each one ships with full code and documentation.
 | 6 | Modeling | SaaS Health Metrics Foundation | TBD | ✅ Complete | [Day 06](./day06) |
 | 7 | Modeling | Hospitality LTV & Cohort Model | TBD | ✅ Complete | [Day 07](./day07) |
 | 8 | Modeling | SaaS Growth Funnel & Cohort Analysis (dbt) | TBD | ✅ Complete | [Day 08](./day08) |
-| 9 | Modeling | TBD | TBD | 🚧 Planned | [Day 09](./day09) |
+| 9 | Modeling | Property Operations Data Warehouse (dbt) | TBD | ✅ Complete | [Day 09](./day09) |
 | 10 | Modeling | TBD | TBD | 🚧 Planned | [Day 10](./day10) |
 | 11 | Orchestration | TBD | TBD | 🚧 Planned | [Day 11](./day11) |
 | 12 | Orchestration | TBD | TBD | 🚧 Planned | [Day 12](./day12) |

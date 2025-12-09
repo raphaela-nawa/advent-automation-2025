@@ -1,0 +1,39 @@
+name: 'day09_property_ops'
+version: '1.0.0'
+config-version: 2
+profile: 'day09_property_ops'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+models:
+  day09_property_ops:
+    # Staging models (views for transformation)
+    staging:
+      +materialized: view
+      +tags: ['staging']
+
+    # Intermediate models (views for business logic)
+    intermediate:
+      +materialized: view
+      +tags: ['intermediate']
+
+    # Marts models (tables for final consumption)
+    marts:
+      +materialized: table
+      +tags: ['marts']
+
+      # Incremental model configuration
+      fct_funnel_conversion:
+        +materialized: incremental
+        +unique_key: 'day09_event_id'
+        +on_schema_change: 'append_new_columns'

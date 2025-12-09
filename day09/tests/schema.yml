@@ -1,0 +1,168 @@
+version: 2
+
+models:
+  # Staging Models Tests
+  - name: stg_airbnb_inquiries
+    description: "Airbnb inquiries staging model with data quality tests"
+    columns:
+      - name: day09_inquiry_id
+        description: "Unique inquiry identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: day09_platform
+        description: "Platform identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['airbnb']
+
+  - name: stg_booking_com_inquiries
+    description: "Booking.com inquiries staging model with data quality tests"
+    columns:
+      - name: day09_inquiry_id
+        description: "Unique inquiry identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: day09_platform
+        description: "Platform identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['booking_com']
+
+  # Unified Reservations Tests
+  - name: fct_reservations_unified
+    description: "Unified reservations fact table with comprehensive tests"
+    columns:
+      - name: day09_booking_id
+        description: "Unique booking identifier across all platforms"
+        tests:
+          - unique
+          - not_null
+
+      - name: day09_platform
+        description: "Platform identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['airbnb', 'booking_com']
+
+      - name: day09_property_id
+        description: "Property identifier"
+        tests:
+          - not_null
+
+      - name: day09_total_price
+        description: "Total booking price"
+        tests:
+          - not_null
+
+      - name: day09_net_revenue
+        description: "Revenue after platform fees"
+        tests:
+          - not_null
+
+      - name: day09_adr
+        description: "Average Daily Rate"
+        tests:
+          - not_null
+
+      - name: day09_nights
+        description: "Number of nights"
+        tests:
+          - not_null
+
+  # Funnel Conversion Tests (Incremental Model)
+  - name: fct_funnel_conversion
+    description: "Funnel conversion fact table (incremental) with event validation"
+    columns:
+      - name: day09_event_id
+        description: "Unique event identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: day09_platform
+        description: "Platform identifier"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['airbnb', 'booking_com']
+
+      - name: day09_stage
+        description: "Funnel stage"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['inquiry', 'booking', 'check_in', 'check_out', 'review']
+
+      - name: day09_event_timestamp
+        description: "Event timestamp"
+        tests:
+          - not_null
+
+      - name: day09_stage_order
+        description: "Stage ordering for funnel analysis"
+        tests:
+          - not_null
+
+  # Portfolio Metrics Tests (CRITICAL MODEL)
+  - name: metrics_portfolio_public
+    description: "Portfolio metrics mart with KPI validation"
+    columns:
+      - name: day09_property_id
+        description: "Property identifier"
+        tests:
+          - unique
+          - not_null
+
+      - name: day09_occupancy_rate_pct
+        description: "Occupancy rate percentage (0-100)"
+        tests:
+          - not_null
+
+      - name: day09_avg_daily_rate
+        description: "Average Daily Rate"
+        tests:
+          - not_null
+
+      - name: day09_revpar
+        description: "Revenue Per Available Room"
+        tests:
+          - not_null
+
+      - name: day09_total_revenue
+        description: "Total revenue"
+        tests:
+          - not_null
+
+  # Platform Comparison Tests
+  - name: dim_platform_comparison
+    description: "Platform comparison dimension with performance metrics"
+    columns:
+      - name: day09_platform
+        description: "Platform identifier"
+        tests:
+          - unique
+          - not_null
+          - accepted_values:
+              values: ['airbnb', 'booking_com']
+
+      - name: total_bookings
+        description: "Total bookings per platform"
+        tests:
+          - not_null
+
+      - name: total_revenue
+        description: "Total revenue per platform"
+        tests:
+          - not_null
+
+      - name: day09_commission_rate_pct
+        description: "Effective commission rate"
+        tests:
+          - not_null
