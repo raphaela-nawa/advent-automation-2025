@@ -1,0 +1,43 @@
+MIT License with Commercial Use Restriction
+
+Copyright (c) 2025 Raphael Anawa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction for NON-COMMERCIAL purposes, including
+without limitation the rights to use, copy, modify, merge, publish, and
+distribute copies of the Software for personal, educational, and portfolio
+purposes, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+COMMERCIAL USE RESTRICTION:
+Commercial use, including but not limited to offering the Software as a
+hosted service, reselling, or incorporating the Software into a commercial
+product or service, requires a separate commercial license agreement.
+
+For commercial licensing inquiries, please contact the copyright holder.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+DEFINITIONS:
+- "Commercial use" means any use of the Software where monetary compensation
+  is received, including but not limited to SaaS offerings, consulting services
+  using the Software, or integration into commercial products.
+- "Personal use" means use for individual learning, portfolio demonstration,
+  or non-profit educational purposes.
+- "Educational use" means use in academic settings for teaching or research
+  without commercial benefit.
+
+ATTRIBUTION REQUIREMENT:
+Any use of this Software must include attribution to the original author and
+a link to the source repository.

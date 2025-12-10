@@ -1,0 +1,61 @@
+# Private/Commercial Documentation
+PRIVATE_PRODUCT_NOTES.md
+COMMERCIAL_LICENSE.md
+STRATEGIC_NOTES.md
+*PRIVATE*.md
+*COMMERCIAL*.md
+
+# dbt artifacts
+target/
+dbt_packages/
+logs/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database files (optional - uncomment if you don't want to commit the SQLite DB)
+# data/*.db
+# data/*.sqlite
+# data/*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
