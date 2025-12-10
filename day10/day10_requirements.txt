@@ -1,0 +1,33 @@
+# ==============================================================================
+# Day 10: Family Office Data Warehouse - Python Dependencies
+# ==============================================================================
+# Purpose: Synthetic data generation for Kimball star schema
+# Database: SQLite (no external DB required)
+# ==============================================================================
+
+# Core data manipulation
+pandas==2.1.4              # Data frame operations for synthetic data generation
+numpy==1.26.2              # Numerical operations for value generation
+
+# Date/time utilities (built-in datetime module used primarily, but pandas handles dates too)
+
+# Database (SQLite is built-in to Python, no external dependency needed)
+# sqlite3 - Built-in Python module
+
+# ==============================================================================
+# OPTIONAL: For enhanced data generation (not required for core functionality)
+# ==============================================================================
+# Faker==20.1.0            # Generate realistic fake data (not used in current implementation)
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+# 1. This project uses SQLite (built-in), so no PostgreSQL or database drivers needed
+# 2. No visualization libraries required (SQL queries only)
+# 3. No dbt dependency (plain SQL models)
+# 4. Minimal dependencies keep setup time <2 minutes
+#
+# To install:
+#   pip install -r day10_requirements.txt
+#
+# Expected install time: <30 seconds

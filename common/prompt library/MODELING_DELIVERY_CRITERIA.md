@@ -1512,243 +1512,224 @@ CREATE VIEW stg_inquiries AS ...  -- Too generic
 
 ---
 
-### **Day 10 (Rafael - Family Office Data Warehouse Kimball)**
+# PROJETO DAY 10: FAMILY OFFICE DATA WAREHOUSE (RAFAEL)
 
-**Data Sources:**
-- Synthetic family office data (assets, accounts, clients, transactions)
+## CONTEXTO
+Rafael é especialista em cross-border wealth planning. Este projeto demonstra arquitetura de dados para family offices que gerenciam patrimônio multi-jurisdicional.
 
-**Mandatory Output:**
-- [ ] Star schema with:
-  - **Fact Table**: `dayXX_fct_asset_holdings` (grain: asset-date-account)
-  - **Dim Tables**: `dayXX_dim_assets` (SCD Type 2), `dayXX_dim_accounts`, `dayXX_dim_clients`, `dayXX_dim_date`
-- [ ] SCD Type 2 implementation on `dayXX_dim_assets`:
-  - Columns: `asset_key`, `asset_id`, `asset_name`, `asset_class`, `valid_from`, `valid_to`, `is_current`
-- [ ] Surrogate keys on all dimensions
-- [ ] Date dimension with 5+ years of data
-- [ ] SQL queries demonstrating:
-  - Total portfolio value per client
-  - Asset class allocation over time
-  - Historical tracking (SCD Type 2 in action)
+**CRITICAL:** Uma das famílias no portfólio possui uma manufacturing company europeia. Os ativos operacionais dessa empresa (equipamentos, IPs, certificações) serão reutilizados no Day 16 (dashboard de compliance para Luna).
 
-**When to Stop:**
-- ✅ Star schema documented (ERD diagram - can be text-based)
-- ✅ SCD Type 2 implemented and tested (show historical changes)
-- ✅ Surrogate keys on all dimensions
-- ✅ Date dimension with useful attributes (is_weekend, fiscal_quarter, etc.)
-- ✅ 3+ analytical queries demonstrating the DW in use
-- ✅ README explains "How Rafael uses this for family office reporting"
-- ✅ **Architectural Decision**: "Why Kimball vs. Data Vault?" documented
-- ❌ DON'T do: Real-time portfolio tracking, complex financial calculations (IRR, Sharpe ratio), multi-currency handling, Bloomberg/Reuters integration
+## MANDATORY OUTPUTS
 
-**Expected Files:**
-```
-dayXX/
-├── data/
-│   └── dayXX_family_office_dw.db
-├── models/
-│   ├── dayXX_MODEL_star_schema.sql (creates all tables)
-│   ├── dayXX_MODEL_dim_date.sql
-│   ├── dayXX_MODEL_dim_assets_scd2.sql
-│   └── dayXX_MODEL_fact_holdings.sql
-├── queries/
-│   ├── dayXX_QUERY_portfolio_value.sql
-│   ├── dayXX_QUERY_asset_allocation.sql
-│   └── dayXX_QUERY_historical_tracking.sql
-├── docs/
-│   └── dayXX_ERD_star_schema.md (or .png)
-├── dayXX_DATA_synthetic_generator.py
-├── dayXX_CONFIG_settings.py
-├── .env.example
-└── README.md
-```
-
-**Star Schema Structure:**
+### 1. KIMBALL STAR SCHEMA
 ```sql
 -- Fact Table
-CREATE TABLE dayXX_fct_asset_holdings (
+CREATE TABLE fct_holdings (
     holding_key INTEGER PRIMARY KEY,
+    client_key INTEGER,
     asset_key INTEGER,
     account_key INTEGER,
-    client_key INTEGER,
     date_key INTEGER,
     quantity DECIMAL(18,4),
     market_value DECIMAL(18,2),
-    cost_basis DECIMAL(18,2),
-    FOREIGN KEY (asset_key) REFERENCES dayXX_dim_assets(asset_key),
-    FOREIGN KEY (account_key) REFERENCES dayXX_dim_accounts(account_key),
-    FOREIGN KEY (client_key) REFERENCES dayXX_dim_clients(client_key),
-    FOREIGN KEY (date_key) REFERENCES dayXX_dim_date(date_key)
+    cost_basis DECIMAL(18,2)
 );
 
--- SCD Type 2 Dimension
-CREATE TABLE dayXX_dim_assets (
-    asset_key INTEGER PRIMARY KEY,  -- Surrogate key
-    asset_id VARCHAR(50),            -- Natural key
-    asset_name VARCHAR(200),
-    asset_class VARCHAR(50),
-    valid_from DATE,
-    valid_to DATE,
-    is_current BOOLEAN
-);
-
--- Date Dimension
-CREATE TABLE dayXX_dim_date (
-    date_key INTEGER PRIMARY KEY,
-    full_date DATE,
-    year INTEGER,
-    quarter INTEGER,
-    month INTEGER,
-    day_of_month INTEGER,
-    day_of_week INTEGER,
-    is_weekend BOOLEAN,
-    fiscal_quarter INTEGER,
-    fiscal_year INTEGER
-);
-
--- Other Dimensions
-CREATE TABLE dayXX_dim_clients (
+-- Dimensions
+CREATE TABLE dim_clients (
     client_key INTEGER PRIMARY KEY,
     client_id VARCHAR(50),
     client_name VARCHAR(200),
     client_type VARCHAR(50)
 );
 
-CREATE TABLE dayXX_dim_accounts (
+CREATE TABLE dim_assets (
+    asset_key INTEGER PRIMARY KEY,
+    asset_id VARCHAR(50),
+    asset_name VARCHAR(200),
+    asset_class VARCHAR(50),  -- 'Equity', 'Equipment', 'IP', 'Certification'
+    asset_type VARCHAR(50),
+    valid_from DATE,
+    valid_to DATE,
+    is_current BOOLEAN
+);
+
+CREATE TABLE dim_accounts (
     account_key INTEGER PRIMARY KEY,
     account_id VARCHAR(50),
     account_name VARCHAR(200),
-    account_type VARCHAR(50)
+    account_type VARCHAR(50),
+    parent_client_key INTEGER
+);
+
+CREATE TABLE dim_date (
+    date_key INTEGER PRIMARY KEY,
+    full_date DATE,
+    year INTEGER,
+    quarter INTEGER,
+    month INTEGER,
+    fiscal_quarter INTEGER,
+    fiscal_year INTEGER
 );
 ```
 
-**SCD Type 2 Logic Example:**
+### 2. SYNTHETIC DATA - DISTRIBUTION
+
+**5 Families (Clients):**
+1. Smith Family - traditional investments
+2. Johnson Family - real estate focus
+3. **MFG Owner Family** ← THIS ONE! Owns European manufacturing company
+4. Lee Family - tech investments
+5. Garcia Family - diversified
+
+**100 Total Assets:**
+- 50 financial assets (stocks, bonds, funds) - distributed across all families
+- 20 operating company stakes
+- **30 MFG Company operational assets (CRITICAL FOR DAY 16):**
+  * **10 Equipment:**
+    - EQ_MFG_001: "CNC Machine Haas VF-2" (UK, €85k)
+    - EQ_MFG_002: "3D Printer HP Multi Jet" (Netherlands, €120k)
+    - EQ_MFG_003: "Injection Molding Machine" (Germany, €200k)
+    - EQ_MFG_004-010: Similar industrial equipment across EMEA
+  * **10 IP Assets:**
+    - IP_MFG_001: "Patent EP12345 - Rapid Tooling Method" (€500k)
+    - IP_MFG_002: "Trademark MFG QuickFab" (€50k)
+    - IP_MFG_003-010: Patents, trademarks across EU jurisdictions
+  * **10 Certifications:**
+    - CERT_MFG_001: "CE Marking - Product Line A" (€10k)
+    - CERT_MFG_002: "ISO 9001 - UK Facility" (€15k)
+    - CERT_MFG_003: "REACH Compliance - DE Operations" (€8k)
+    - CERT_MFG_004-010: Various regulatory certifications
+
+**Accounts:**
+- Each family has 2-3 accounts
+- **MFG Owner Family must have:** "MFG Company Operating Account"
+
+**Time Range:** 24 months of holdings data
+
+### 3. SCD TYPE 2 - REQUIRED EXAMPLES
+
+Demonstrate SCD Type 2 with at least 2 historical changes:
+
+**Example 1: Asset reclassification**
 ```sql
--- dayXX_MODEL_dim_assets_scd2.sql
-
--- Insert new asset (first time)
-INSERT INTO dayXX_dim_assets (asset_key, asset_id, asset_name, asset_class, valid_from, valid_to, is_current)
-VALUES (1, 'AAPL', 'Apple Inc.', 'Equity', '2020-01-01', NULL, TRUE);
-
--- Update existing asset (asset class changes)
--- 1. Close current record
-UPDATE dayXX_dim_assets
-SET
-    valid_to = '2023-06-30',
-    is_current = FALSE
-WHERE asset_id = 'AAPL' AND is_current = TRUE;
-
--- 2. Insert new record with updated information
-INSERT INTO dayXX_dim_assets (asset_key, asset_id, asset_name, asset_class, valid_from, valid_to, is_current)
-VALUES (2, 'AAPL', 'Apple Inc.', 'Technology Equity', '2023-07-01', NULL, TRUE);
+-- Equipment lifecycle change
+asset_key | asset_id    | asset_name         | asset_class  | valid_from | valid_to   | is_current
+----------|-------------|--------------------|--------------|------------|------------|------------
+1         | EQ_MFG_001  | "CNC Machine..."   | "Active"     | 2023-01-01 | 2024-06-30 | FALSE
+2         | EQ_MFG_001  | "CNC Machine..."   | "Maintenance"| 2024-07-01 | 2024-09-30 | FALSE
+3         | EQ_MFG_001  | "CNC Machine..."   | "Active"     | 2024-10-01 | NULL       | TRUE
 ```
 
-**Analytical Query Examples:**
+**Example 2: Regulatory change**
 ```sql
--- dayXX_QUERY_portfolio_value.sql
--- Total portfolio value per client
-SELECT
-    c.client_name,
-    SUM(f.market_value) as total_portfolio_value,
-    COUNT(DISTINCT f.asset_key) as number_of_assets
-FROM dayXX_fct_asset_holdings f
-JOIN dayXX_dim_clients c ON f.client_key = c.client_key
-JOIN dayXX_dim_date d ON f.date_key = d.date_key
-WHERE d.full_date = (SELECT MAX(full_date) FROM dayXX_dim_date)
-GROUP BY c.client_name
-ORDER BY total_portfolio_value DESC;
+-- Certification renewal/update
+asset_key | asset_id      | asset_name      | requirements      | valid_from | valid_to   | is_current
+----------|---------------|-----------------|-------------------|------------|------------|------------
+10        | CERT_MFG_001  | "CE Marking..." | "Standard v1.0"   | 2023-01-01 | 2024-12-31 | FALSE
+11        | CERT_MFG_001  | "CE Marking..." | "Standard v2.0"   | 2025-01-01 | NULL       | TRUE
+```
 
--- dayXX_QUERY_asset_allocation.sql
--- Asset class allocation over time
+### 4. ANALYTICAL QUERIES (4 REQUIRED)
+
+**Query 1:** Total portfolio value per client
+**Query 2:** Asset allocation by class (show Equipment, IP, Certification separately)
+**Query 3:** **MFG Company assets only (CRITICAL - this will be reused in Day 16!)**
+```sql
+-- Filter for Luna's future dashboard
 SELECT
-    d.year,
-    d.quarter,
+    a.asset_name,
     a.asset_class,
-    SUM(f.market_value) as total_value,
-    ROUND(100.0 * SUM(f.market_value) / SUM(SUM(f.market_value)) OVER (PARTITION BY d.year, d.quarter), 2) as allocation_pct
-FROM dayXX_fct_asset_holdings f
-JOIN dayXX_dim_assets a ON f.asset_key = a.asset_key
-JOIN dayXX_dim_date d ON f.date_key = d.date_key
-GROUP BY d.year, d.quarter, a.asset_class
-ORDER BY d.year, d.quarter, allocation_pct DESC;
+    a.asset_type,
+    h.market_value,
+    acc.account_name
+FROM fct_holdings h
+JOIN dim_assets a ON h.asset_key = a.asset_key
+JOIN dim_accounts acc ON h.account_key = acc.account_key
+JOIN dim_clients c ON acc.parent_client_key = c.client_key
+WHERE c.client_name = 'MFG Owner Family'
+  AND a.asset_class IN ('Equipment', 'IP', 'Certification')
+  AND h.date_key = (SELECT MAX(date_key) FROM dim_date);
+```
+**Query 4:** Historical tracking (SCD Type 2 demo)
 
--- dayXX_QUERY_historical_tracking.sql
--- SCD Type 2 in action - show historical changes
-SELECT
-    asset_id,
-    asset_name,
-    asset_class,
-    valid_from,
-    valid_to,
-    is_current,
-    CASE
-        WHEN valid_to IS NULL THEN 'Current'
-        ELSE 'Historical'
-    END as record_status
-FROM dayXX_dim_assets
-WHERE asset_id = 'AAPL'
-ORDER BY valid_from;
+### 5. FOLDER STRUCTURE
+```
+day10/
+├── data/
+│   └── day10_family_office_dw.db
+├── models/
+│   ├── day10_MODEL_star_schema.sql
+│   ├── day10_MODEL_dim_assets_scd2.sql
+│   └── day10_MODEL_fact_holdings.sql
+├── queries/
+│   ├── day10_QUERY_portfolio_value.sql
+│   ├── day10_QUERY_asset_allocation.sql
+│   ├── day10_QUERY_mfg_assets_filter.sql ← CRITICAL FOR DAY 16
+│   └── day10_QUERY_historical_tracking.sql
+├── docs/
+│   └── day10_ERD_star_schema.md
+├── day10_DATA_synthetic_generator.py
+└── README.md
 ```
 
-**ERD Documentation (Text-based):**
+### 6. README STRUCTURE
 ```markdown
-# dayXX_ERD_star_schema.md
+# Family Office Asset Management Data Warehouse
 
-## Star Schema - Family Office Data Warehouse
+⚠️ **DISCLAIMER:** Educational portfolio project with 100% synthetic data. Inspired by conversations with Rafael (cross-border wealth planning specialist) but does not represent any real system.
 
-### Fact Table: dayXX_fct_asset_holdings
-- **Grain**: One row per asset per account per date
-- **Keys**:
-  - holding_key (PK)
-  - asset_key (FK to dim_assets)
-  - account_key (FK to dim_accounts)
-  - client_key (FK to dim_clients)
-  - date_key (FK to dim_date)
-- **Measures**:
-  - quantity
-  - market_value
-  - cost_basis
+## Problem Statement
+Family offices managing multi-jurisdictional UHNW portfolios face challenges tracking assets across borders, tax treatments, and regulatory changes.
 
-### Dimensions:
+## Solution Architecture
+Kimball star schema with SCD Type 2 for historical compliance.
 
-#### dayXX_dim_assets (SCD Type 2)
-- asset_key (PK - surrogate)
-- asset_id (natural key)
-- asset_name
-- asset_class
-- valid_from
-- valid_to
-- is_current
+## Use Case (Fictional)
+5 UHNW families, 100+ assets, one family owns a European manufacturing company (operational assets will be analyzed separately in Day 16).
 
-#### dayXX_dim_clients
-- client_key (PK)
-- client_id
-- client_name
-- client_type
+## What This Demonstrates
+- Dimensional modeling for wealth structures
+- SCD Type 2 for audit trails
+- Conformed dimensions (preparing for Day 16 reuse)
+- Cross-border asset tracking
 
-#### dayXX_dim_accounts
-- account_key (PK)
-- account_id
-- account_name
-- account_type
+## For Rafael
+Technical demonstration of architectural patterns for complex wealth management. Focus on cross-border tracking and historical compliance.
 
-#### dayXX_dim_date
-- date_key (PK)
-- full_date
-- year, quarter, month
-- is_weekend
-- fiscal_quarter, fiscal_year
-
-### Relationships:
+**Note:** Day 16 will create a compliance dashboard consuming these MFG operational assets.
 ```
-          dayXX_dim_assets (SCD Type 2)
-                    |
-                    v
-dayXX_dim_clients ---> dayXX_fct_asset_holdings <--- dayXX_dim_date
-                    ^
-                    |
-          dayXX_dim_accounts
-```
-```
+
+## QUANDO PARAR
+✅ Star schema with 5 tables implemented
+✅ 5 families, 100 assets (30 MFG operational assets clearly labeled)
+✅ SCD Type 2 with 2+ examples
+✅ 24 months of holdings data
+✅ 4 analytical queries (including MFG filter query)
+✅ ERD documented
+✅ README with disclaimer and Day 16 connection note
+❌ DON'T: Real-time tracking, Bloomberg integration, IRR calculations, tax optimization
+
+## ARCHITECTURAL NOTES TO DOCUMENT
+1. Why Kimball? (Performance for cross-family analysis)
+2. Why SCD Type 2? (Audit trails: "What was the classification on [date]?")
+3. Why include operational assets in family office DW? (Consolidated wealth view + prepares for departmental analytics)
+4. Conformed dimensions strategy: dim_date, dim_assets will be reused in Day 16
+
+## SUCCESS CRITERIA
+- Can answer: "Total portfolio value for MFG Owner Family?"
+- Can answer: "What was EQ_MFG_001 classification on June 15, 2024?"
+- Can filter ONLY MFG operational assets (Equipment, IP, Certification)
+- Database ready to be consumed by Day 16 dashboard
+
+**Gere o projeto completo priorizando CLAREZA na identificação dos MFG assets.**
+
+**O que garante que Luna vai poder usar:**
+✅ 30 MFG assets claramente identificados (EQ_MFG_*, IP_MFG_*, CERT_MFG_*)
+✅ Query específica já pronta (day10_QUERY_mfg_assets_filter.sql)
+✅ Account específico: "MFG Company Operating Account"
+✅ Client específico: "MFG Owner Family"
+✅ README menciona explicitamente: "Day 16 will reuse these assets"
 
 ---
 
