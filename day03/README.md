@@ -1,6 +1,22 @@
-# Day 03 - GDPR Lead Ingestion Pipeline
+# Day 03: GDPR Lead Ingestion Pipeline
 
-**Project 1C**: Flask webhook that receives GDPR-compliant lead data and stores it in BigQuery with proper retention date calculations.
+> **One-line pitch:** Webhook server that validates GDPR-compliant lead data and automatically calculates retention dates before loading to BigQuery.
+
+**Part of:** [Advent Automation 2025 - 25 Days of Data Engineering](../README.md)
+
+---
+
+## Executive Summary
+
+**Business Problem:** Legal/compliance teams need to ensure marketing leads are collected with proper GDPR consent tracking and automatic data retention date calculations.
+
+**Solution Delivered:** Flask webhook API that validates lead data, calculates GDPR retention dates (30 days without consent, 1 year with consent), and stores in BigQuery with full audit trail.
+
+**Business Impact:** Automated compliance enforcement reduces legal risk and ensures 100% of leads have documented consent status and retention dates.
+
+**For:** Legal/Compliance Team | **Time:** 3 hours | **Status:** ✅ Complete
+
+---
 
 ## Overview
 

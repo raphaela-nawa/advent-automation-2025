@@ -126,20 +126,36 @@ class ReadmeUpdater:
                     readme_content = f.read()
 
                 # Extract project title (first # header)
-                title_match = re.search(r'^#\s+Day\s+\d+:\s+(.+)$', readme_content, re.MULTILINE)
+                # Support both "Day XX:" and "Day XX -" formats, and remove emojis
+                title_match = re.search(r'^#\s+Day\s+\d+\s*[-:]\s*(.+)$', readme_content, re.MULTILINE)
                 if title_match:
-                    project_name = title_match.group(1).strip()
+                    # Remove emojis and clean up
+                    project_name = re.sub(r'[^\w\s\-&→+()/,.]', '', title_match.group(1)).strip()
 
-                # Extract industry (look for "Industry:" or "Built For:" section)
+                # Extract industry (look for various patterns)
                 industry_patterns = [
+                    # Pattern 1: **For:** Role/Industry | (highest priority, new template format)
+                    r'\*\*For:\*\*\s*(.+?)\s*\|',
+                    # Pattern 2: **For:** Name (Role/Industry)
+                    r'\*\*For:\*\*\s*[^(]+\(([^)]+)\)',
+                    # Pattern 3: **Stakeholder:** Name - Role/Industry
+                    r'\*\*Stakeholder:\*\*\s*[^-]+-\s*([^(]+?)(?:\s+who\s+|$)',
+                    # Pattern 4: **Industry:** or **Industry **
                     r'\*\*Industry[:\s]+\*\*\s*(.+)',
+                    # Pattern 5: **Built For:** ... **Role/Context:**
                     r'\*\*Built For[:\s]+\*\*[^\n]*\n\*\*Role/Context[:\s]+\*\*\s*(.+)',
-                    r'\|\s*\d+\s*\|\s*\w+\s*\|\s*[^|]+\|\s*(.+?)\s*\|'  # From table format
+                    # Pattern 6: Table format
+                    r'\|\s*\d+\s*\|\s*\w+\s*\|\s*[^|]+\|\s*(.+?)\s*\|',
+                    # Pattern 7: One-line pitch or business problem with industry context
+                    r'\*\*Business Problem:\*\*\s*([^.]+)',
                 ]
                 for pattern in industry_patterns:
                     industry_match = re.search(pattern, readme_content, re.IGNORECASE)
                     if industry_match:
                         industry = industry_match.group(1).strip()
+                        # Clean up common prefixes/suffixes
+                        industry = re.sub(r'^(Cultural\s+)', '', industry)
+                        industry = re.sub(r'\s+(needs|requires|lacks).*$', '', industry)
                         break
 
             except Exception as e:

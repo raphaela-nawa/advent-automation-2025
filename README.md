@@ -23,16 +23,16 @@ Each one ships with full code and documentation.
 
 | Day | Pillar | Project | Industry | Status | Code |
 |-----|--------|---------|----------|--------|------|
-| 1 | Ingestion | GA4 + Google Ads → BigQuery Pipeline | Product Launch | ✅ Complete | [Day 01](./day01) |
+| 1 | Ingestion | GA4 + Google Ads → BigQuery Pipeline | Marketing consultant | ✅ Complete | [Day 01](./day01) |
 | 2 | Ingestion | Creator Intelligence System | TBD | ✅ Complete | [Day 02](./day02) |
-| 3 | Ingestion | TBD | TBD | ✅ Complete | [Day 03](./day03) |
-| 4 | Ingestion | TBD | TBD | ✅ Complete | [Day 04](./day04) |
-| 5 | Ingestion | Museu Ipiranga Cultural Data Pipeline | TBD | ✅ Complete | [Day 05](./day05) |
-| 6 | Modeling | SaaS Health Metrics Foundation | TBD | ✅ Complete | [Day 06](./day06) |
-| 7 | Modeling | Hospitality LTV & Cohort Model | TBD | ✅ Complete | [Day 07](./day07) |
-| 8 | Modeling | SaaS Growth Funnel & Cohort Analysis (dbt) | TBD | ✅ Complete | [Day 08](./day08) |
-| 9 | Modeling | Property Operations Data Warehouse (dbt) | TBD | ✅ Complete | [Day 09](./day09) |
-| 10 | Modeling | Family Office Asset Management Data Warehouse | TBD | ✅ Complete | [Day 10](./day10) |
+| 3 | Ingestion | GDPR Lead Ingestion Pipeline | Legal/Compliance Team | ✅ Complete | [Day 03](./day03) |
+| 4 | Ingestion | Cardano Blockchain Transparency Pipeline | Blockchain/Crypto Analyst | ✅ Complete | [Day 04](./day04) |
+| 5 | Ingestion | Museu Ipiranga Cultural Data Pipeline | Paula (Cultural Data Analyst) | ✅ Complete | [Day 05](./day05) |
+| 6 | Modeling | SaaS Health Metrics Foundation | SaaS Executive (C-level) | ✅ Complete | [Day 06](./day06) |
+| 7 | Modeling | Hospitality LTV & Cohort Model | Carol (Pousada Owner) | ✅ Complete | [Day 07](./day07) |
+| 8 | Modeling | SaaS Growth Funnel & Cohort Analysis (dbt) | Patrick (MBA, Strategy) | ✅ Complete | [Day 08](./day08) |
+| 9 | Modeling | Property Operations Data Warehouse (dbt) | Jo (Independent Property Manager) | ✅ Complete | [Day 09](./day09) |
+| 10 | Modeling | Family Office Asset Management Data Warehouse | Rafael (Cross-Border Wealth Planning Specialist) | ✅ Complete | [Day 10](./day10) |
 | 11 | Orchestration | TBD | TBD | 🚧 Planned | [Day 11](./day11) |
 | 12 | Orchestration | TBD | TBD | 🚧 Planned | [Day 12](./day12) |
 | 13 | Orchestration | TBD | TBD | 🚧 Planned | [Day 13](./day13) |

@@ -1,6 +1,22 @@
-# Day 04 - Cardano Blockchain Transparency Pipeline 🔗
+# Day 04: Cardano Blockchain Transparency Pipeline
 
-**Extract, containerize, and analyze on-chain transparency metrics from Cardano blockchain**
+> **One-line pitch:** Dockerized data pipeline that extracts on-chain transparency metrics from Cardano blockchain via Blockfrost API and loads to BigQuery for verifiable analysis.
+
+**Part of:** [Advent Automation 2025 - 25 Days of Data Engineering](../README.md)
+
+---
+
+## Executive Summary
+
+**Business Problem:** Crypto/blockchain teams need verifiable on-chain data to prove network decentralization, fee transparency, and real adoption metrics beyond marketing claims.
+
+**Solution Delivered:** Containerized Python pipeline extracting Cardano network metrics (3000+ stake pools, $0.17 avg fees, transaction volumes) from Blockfrost API to BigQuery with full transparency trail.
+
+**Business Impact:** Enables data-driven verification of blockchain values - decentralization proof (3000 pools vs Bitcoin's 5), accessibility proof (avg $0.17 fees vs Ethereum's $5-50), and real adoption metrics.
+
+**For:** Blockchain/Crypto Analyst | **Time:** 3 hours | **Status:** ✅ Complete
+
+---
 
 ## Why Transparency Matters
 
