@@ -1,0 +1,127 @@
+{
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "\ud83d\udcca Daily Retail Performance Report",
+        "emoji": true
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "\ud83d\udcc5 *Report Period:* 2025-10-27 to 2025-11-25 (30 days)"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*\ud83c\udf10 Website Traffic (GA4)*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Total Sessions:*\n198,611"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Conversions:*\n6,941"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Avg Bounce Rate:*\n44.0%"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Top Source:*\nGoogle (64,063 sessions)"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*\ud83d\udcb0 Paid Advertising (Google Ads)*"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Total Spend:*\n$67,306.60"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Conversions:*\n3,421"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Cost per Conversion:*\n$19.67"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Avg CPC:*\n$1.05"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Clicks:*\n64,264"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Impressions:*\n2,123,463"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*CTR:*\n3.03%"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Top Campaign:*\nBrand Campaign"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*\ud83c\udfc6 Best Performing Campaign*\n*Brand Campaign* generated *946* conversions with $16178.13 spend"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "\u2713 Using REAL data from Day 01 CSV files | Generated at 2025-12-11 19:23:09 UTC"
+        }
+      ]
+    }
+  ],
+  "text": "Daily Performance Report: 2025-10-27 to 2025-11-25"
+}

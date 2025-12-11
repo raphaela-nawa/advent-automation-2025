@@ -1,0 +1,25 @@
+# Day 11 - n8n Workflow Automation - Retail Daily Performance Report
+# Python dependencies for automated reporting system
+
+# Core Dependencies
+pandas>=2.1.0                    # Data manipulation and analysis
+python-dotenv>=1.0.0             # Environment variable management
+requests>=2.31.0                 # HTTP requests for Slack webhooks
+
+# Google Cloud (for BigQuery data fetching)
+google-cloud-bigquery>=3.12.0    # BigQuery Python client
+google-auth>=2.23.0              # Google Cloud authentication
+
+# Scheduling
+APScheduler>=3.10.4              # Advanced Python Scheduler
+pytz>=2023.3                     # Timezone support
+
+# Email Support (optional)
+secure-smtplib>=0.1.1            # Secure SMTP for email sending (optional)
+
+# Data Generation (for synthetic data fallback)
+Faker>=19.6.0                    # Generate realistic synthetic data
+
+# Testing and Development
+pytest>=7.4.0                    # Testing framework
+pytest-cov>=4.1.0                # Code coverage for tests

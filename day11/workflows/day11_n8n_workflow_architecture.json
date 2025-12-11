@@ -1,0 +1,181 @@
+{
+  "name": "Day 11 - Retail Daily Performance Report",
+  "description": "Automated daily performance report workflow that fetches GA4 and Google Ads data, calculates metrics, and sends formatted reports to Slack",
+  "architecture": {
+    "workflow_type": "scheduled_batch",
+    "trigger": "cron",
+    "nodes": [
+      {
+        "node_id": "1",
+        "type": "Schedule Trigger",
+        "name": "Daily at 8am UTC",
+        "config": {
+          "cron": "0 8 * * *",
+          "timezone": "UTC"
+        },
+        "outputs": ["2"]
+      },
+      {
+        "node_id": "2",
+        "type": "Function",
+        "name": "Check Weekend",
+        "description": "Skip execution on weekends if configured",
+        "outputs": ["3", "error"]
+      },
+      {
+        "node_id": "3",
+        "type": "HTTP Request",
+        "name": "Fetch GA4 Data",
+        "description": "Fetch GA4 session data from BigQuery or CSV",
+        "method": "GET",
+        "outputs": ["4", "error"]
+      },
+      {
+        "node_id": "4",
+        "type": "HTTP Request",
+        "name": "Fetch Google Ads Data",
+        "description": "Fetch Google Ads campaign data",
+        "method": "GET",
+        "outputs": ["5", "error"]
+      },
+      {
+        "node_id": "5",
+        "type": "Function",
+        "name": "Calculate Metrics",
+        "description": "Calculate KPIs from raw data",
+        "logic": {
+          "operations": [
+            "Sum total sessions",
+            "Calculate average bounce rate",
+            "Sum total spend",
+            "Calculate cost per conversion",
+            "Identify top campaign",
+            "Identify top traffic source"
+          ]
+        },
+        "outputs": ["6"]
+      },
+      {
+        "node_id": "6",
+        "type": "Function",
+        "name": "Format Slack Message",
+        "description": "Format metrics into Slack Block Kit message",
+        "outputs": ["7"]
+      },
+      {
+        "node_id": "7",
+        "type": "Slack",
+        "name": "Send to Slack",
+        "description": "Send formatted report to Slack channel",
+        "config": {
+          "channel": "#marketing-reports",
+          "message_type": "blocks"
+        },
+        "outputs": ["8"]
+      },
+      {
+        "node_id": "8",
+        "type": "Function",
+        "name": "Log Success",
+        "description": "Log execution details for audit",
+        "outputs": []
+      },
+      {
+        "node_id": "error",
+        "type": "Error Handler",
+        "name": "Handle Errors",
+        "description": "Send error notification to Slack",
+        "outputs": []
+      }
+    ]
+  },
+  "implementation_notes": {
+    "reason_for_python": "This workflow is implemented in Python instead of n8n GUI because:",
+    "reasons": [
+      "Better version control and code review capabilities",
+      "Easier to test locally without n8n instance",
+      "More flexible data transformation logic",
+      "Can be deployed anywhere (cron, Docker, cloud functions)",
+      "Easier to integrate with existing Day 01 codebase"
+    ],
+    "n8n_equivalent": "The Python implementation follows n8n's node-based architecture pattern with separate modules for each responsibility"
+  },
+  "data_flow": {
+    "1_trigger": "Schedule triggers at 8am UTC daily",
+    "2_weekend_check": "Check if today is weekend and if should skip",
+    "3_fetch_ga4": "Fetch GA4 sessions data (BigQuery -> CSV -> Synthetic fallback)",
+    "4_fetch_ads": "Fetch Google Ads campaigns data (BigQuery -> CSV -> Synthetic fallback)",
+    "5_calculate": "Calculate aggregated metrics and KPIs",
+    "6_format": "Format into Slack Block Kit message with markdown",
+    "7_send": "POST to Slack webhook URL",
+    "8_log": "Write execution log for audit trail",
+    "error_handler": "Catch errors and send notification"
+  },
+  "error_handling": {
+    "retry_logic": {
+      "max_attempts": 3,
+      "delay_seconds": 10,
+      "exponential_backoff": true
+    },
+    "fallback_strategies": [
+      "If BigQuery fails, try local CSV",
+      "If CSV fails, use synthetic data",
+      "If Slack fails, log to file",
+      "Always log execution for audit"
+    ],
+    "error_notifications": {
+      "enabled": true,
+      "destination": "Slack",
+      "include_stacktrace": false,
+      "include_context": true
+    }
+  },
+  "idempotency": {
+    "strategy": "Daily reports are naturally idempotent",
+    "details": "Re-running the same day produces the same report. No side effects or state changes."
+  },
+  "monitoring": {
+    "logs": {
+      "location": "day11/logs/day11_orchestration.log",
+      "level": "INFO",
+      "includes": [
+        "Execution start/end times",
+        "Data source used",
+        "Row counts fetched",
+        "Key metrics calculated",
+        "Slack send status",
+        "Error messages"
+      ]
+    },
+    "metrics": {
+      "execution_duration": "Logged in seconds",
+      "data_freshness": "Date range of data used",
+      "success_rate": "Track in log files"
+    }
+  },
+  "deployment_options": {
+    "cron": {
+      "command": "cd day11 && python day11_ORCHESTRATOR_main.py",
+      "schedule": "0 8 * * *",
+      "notes": "Simplest deployment, works on any Unix system"
+    },
+    "scheduler_daemon": {
+      "command": "python day11_SCHEDULER_daemon.py",
+      "notes": "Python-based scheduler, no cron access needed"
+    },
+    "docker": {
+      "image": "python:3.11-slim",
+      "notes": "Containerized deployment with cron inside"
+    },
+    "cloud_function": {
+      "platforms": ["AWS Lambda", "Google Cloud Functions", "Azure Functions"],
+      "notes": "Serverless deployment with cloud scheduler trigger"
+    }
+  },
+  "testing": {
+    "test_mode": "DAY11_TEST_MODE=true sends test message",
+    "dry_run": "DAY11_DRY_RUN=true logs without sending",
+    "local_testing": "Uses synthetic data by default",
+    "slack_test": "python day11_ORCHESTRATOR_main.py test"
+  }
+}
