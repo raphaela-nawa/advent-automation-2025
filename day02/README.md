@@ -2,6 +2,8 @@
 
 **Instagram Business Analytics & Growth Intelligence Platform**
 
+**Industry:** Creator Economy/Social Media
+
 An end-to-end analytics system for Instagram creators, built to help a 100K-follower account reach 200K in 6 months through data-driven insights and AI-powered recommendations.
 
 ---

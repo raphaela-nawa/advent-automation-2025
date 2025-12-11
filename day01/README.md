@@ -2,6 +2,7 @@
 
 **Project 1A - Ingestion Pillar**
 **Stakeholder:** Daud - Marketing consultant who needs automated GA4 + Google Ads reports for agency clients
+**Industry:** Marketing/Advertising
 
 ## 📋 Overview
 

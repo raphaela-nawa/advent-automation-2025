@@ -27,7 +27,7 @@
 
 **Business Impact:** Portfolio metrics and funnel stages are available from a single SQLite database with repeatable dbt runs—no manual CSV merges—turning weekly reconciliation into a single query.
 
-**For:** Jo (Independent Property Manager) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Jo (Independent Property Manager) | **Industry:** Hospitality/Property Management | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

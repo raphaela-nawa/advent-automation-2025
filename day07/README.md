@@ -8,7 +8,7 @@
 
 **Business Impact:** Identified that top 10% of guests generate 3-5x more revenue, with winter cohorts showing 25% higher retention than summer cohorts. System enables data-driven decisions on marketing budget allocation and VIP engagement.
 
-**For:** Carol (Pousada Owner) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Carol (Pousada Owner) | **Industry:** Hospitality/Travel | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

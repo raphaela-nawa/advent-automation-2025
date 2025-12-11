@@ -27,7 +27,7 @@
 
 **Business Impact:** Reduced artifact research time from 4+ hours of manual listening to 5 minutes of querying structured data, enabling cultural metadata enrichment and content-catalog linking.
 
-**For:** Paula (Cultural Data Analyst) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Paula (Cultural Data Analyst) | **Industry:** Cultural Heritage/Museums | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

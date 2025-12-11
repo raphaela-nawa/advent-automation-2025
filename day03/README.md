@@ -14,7 +14,7 @@
 
 **Business Impact:** Automated compliance enforcement reduces legal risk and ensures 100% of leads have documented consent status and retention dates.
 
-**For:** Legal/Compliance Team | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Legal/Compliance Team | **Industry:** Legal/Compliance | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

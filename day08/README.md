@@ -27,7 +27,7 @@
 
 **Business Impact:** Automated cohort analysis reduces weekly reporting time from 4 hours (manual SQL + spreadsheets) to 2 minutes (single dbt run), enabling daily instead of weekly growth reviews.
 
-**For:** Patrick (MBA, Strategy) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Patrick (MBA, Strategy) | **Industry:** SaaS/Software | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

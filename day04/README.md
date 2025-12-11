@@ -14,7 +14,7 @@
 
 **Business Impact:** Enables data-driven verification of blockchain values - decentralization proof (3000 pools vs Bitcoin's 5), accessibility proof (avg $0.17 fees vs Ethereum's $5-50), and real adoption metrics.
 
-**For:** Blockchain/Crypto Analyst | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Blockchain/Crypto Analyst | **Industry:** Crypto/Blockchain | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

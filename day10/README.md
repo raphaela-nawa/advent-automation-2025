@@ -38,7 +38,7 @@
 
 **Business Impact:** Enables "as-of" date analysis for regulatory compliance (e.g., "What was the portfolio composition on 2023-06-30?") and consolidated cross-asset reporting for wealth planning decisions.
 
-**For:** Rafael (Cross-Border Wealth Planning Specialist) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Rafael (Cross-Border Wealth Planning Specialist) | **Industry:** Wealth Management/Finance | **Time:** 3 hours | **Status:** ✅ Complete
 
 **🔗 Connection to Day 16:** One family in this portfolio owns a European manufacturing company. The 30 operational assets (equipment, IP, certifications) from this company will be consumed by Luna's compliance dashboard in Day 16.
 

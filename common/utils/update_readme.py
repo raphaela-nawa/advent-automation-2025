@@ -134,20 +134,12 @@ class ReadmeUpdater:
 
                 # Extract industry (look for various patterns)
                 industry_patterns = [
-                    # Pattern 1: **For:** Role/Industry | (highest priority, new template format)
-                    r'\*\*For:\*\*\s*(.+?)\s*\|',
-                    # Pattern 2: **For:** Name (Role/Industry)
-                    r'\*\*For:\*\*\s*[^(]+\(([^)]+)\)',
-                    # Pattern 3: **Stakeholder:** Name - Role/Industry
-                    r'\*\*Stakeholder:\*\*\s*[^-]+-\s*([^(]+?)(?:\s+who\s+|$)',
-                    # Pattern 4: **Industry:** or **Industry **
-                    r'\*\*Industry[:\s]+\*\*\s*(.+)',
-                    # Pattern 5: **Built For:** ... **Role/Context:**
-                    r'\*\*Built For[:\s]+\*\*[^\n]*\n\*\*Role/Context[:\s]+\*\*\s*(.+)',
-                    # Pattern 6: Table format
+                    # Pattern 1: **Industry:** Explicit field (highest priority)
+                    r'\*\*Industry:\*\*\s*([^|\n]+)',
+                    # Pattern 2: **For:** ... | **Industry:** ...
+                    r'\*\*Industry:\*\*\s*(.+?)\s*\|',
+                    # Pattern 3: Table format
                     r'\|\s*\d+\s*\|\s*\w+\s*\|\s*[^|]+\|\s*(.+?)\s*\|',
-                    # Pattern 7: One-line pitch or business problem with industry context
-                    r'\*\*Business Problem:\*\*\s*([^.]+)',
                 ]
                 for pattern in industry_patterns:
                     industry_match = re.search(pattern, readme_content, re.IGNORECASE)

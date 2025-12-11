@@ -27,7 +27,7 @@
 
 **Business Impact:** Reduced monthly reporting time from 4 hours (manual Excel) to 5 minutes (automated SQL queries), enabling weekly instead of quarterly reviews of key SaaS metrics.
 
-**For:** SaaS Executive (C-level) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** SaaS Executive (C-level) | **Industry:** SaaS/Software | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
