@@ -84,9 +84,10 @@ def day12b_create_cloud_datasource(context):
         else:
             logger.info(f"Creating new datasource: {DAY12B_DATASOURCE_NAME}")
 
-            # Create pandas datasource for CSV files
-            datasource = context.sources.add_pandas(
-                name=DAY12B_DATASOURCE_NAME
+            # For GE Cloud 1.x, we use add_pandas_filesystem datasource
+            datasource = context.add_pandas_filesystem(
+                name=DAY12B_DATASOURCE_NAME,
+                base_directory=str(DAY12B_SECURITY_EVENTS_PATH.parent)
             )
 
             logger.info(f"✅ Created datasource: {DAY12B_DATASOURCE_NAME}")
@@ -94,14 +95,14 @@ def day12b_create_cloud_datasource(context):
         # Add or update data asset
         logger.info(f"Adding data asset: {DAY12B_DATA_ASSET_NAME}")
 
-        # Read CSV to create batch
+        # Read CSV to verify it exists
         df = pd.read_csv(DAY12B_SECURITY_EVENTS_PATH)
         logger.info(f"📊 Loaded {len(df)} records from {DAY12B_SECURITY_EVENTS_PATH.name}")
 
-        # Add CSV asset
+        # Add CSV asset using filesystem datasource
         data_asset = datasource.add_csv_asset(
             name=DAY12B_DATA_ASSET_NAME,
-            filepath_or_buffer=str(DAY12B_SECURITY_EVENTS_PATH)
+            filepath_or_buffer=DAY12B_SECURITY_EVENTS_PATH.name  # Just filename, base_directory is set
         )
 
         logger.info(f"✅ Added data asset: {DAY12B_DATA_ASSET_NAME}")
