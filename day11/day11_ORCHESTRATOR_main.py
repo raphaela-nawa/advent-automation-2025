@@ -11,7 +11,6 @@ This is the main entry point that:
 
 Can be run manually or via scheduler (cron/APScheduler)
 
-Author: Gleyson - Retail Marketing Automation Specialist
 """
 
 import logging

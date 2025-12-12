@@ -1,0 +1,362 @@
+{
+  "name": "Day 11 - Retail Daily Performance Report",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily at 8am UTC",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if today is weekend and should skip\nconst today = new Date();\nconst dayOfWeek = today.getDay(); // 0=Sunday, 6=Saturday\nconst isWeekend = dayOfWeek === 0 || dayOfWeek === 6;\n\nconst runOnWeekends = $env.DAY11_RUN_ON_WEEKENDS === 'true';\n\nif (isWeekend && !runOnWeekends) {\n  // Skip execution on weekends\n  return {\n    skip: true,\n    message: 'Skipping execution: Weekend'\n  };\n}\n\nreturn {\n  skip: false,\n  date: today.toISOString().split('T')[0],\n  dayOfWeek: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dayOfWeek]\n};"
+      },
+      "id": "check-weekend",
+      "name": "Check Weekend",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.skip }}",
+              "value2": false
+            }
+          ]
+        }
+      },
+      "id": "should-run",
+      "name": "Should Run?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:5000/api/day01/ga4",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "fetch-ga4",
+      "name": "Fetch GA4 Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        200
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "=http://localhost:5000/api/day01/ads",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "fetch-ads",
+      "name": "Fetch Google Ads Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        400
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fallback: Read local CSV files if API fails\nconst fs = require('fs');\nconst path = require('path');\n\ntry {\n  const ga4Path = path.join(process.env.HOME, 'Desktop/advent2025/repo/advent-automation-2025/day01/data/processed/ga4_sessions.csv');\n  const adsPath = path.join(process.env.HOME, 'Desktop/advent2025/repo/advent-automation-2025/day01/data/processed/ads_campaigns.csv');\n  \n  const ga4Data = fs.readFileSync(ga4Path, 'utf8');\n  const adsData = fs.readFileSync(adsPath, 'utf8');\n  \n  return {\n    ga4: ga4Data,\n    ads: adsData,\n    source: 'CSV Fallback',\n    success: true\n  };\n} catch (error) {\n  return {\n    ga4: null,\n    ads: null,\n    source: 'Fallback Failed',\n    success: false,\n    error: error.message\n  };\n}"
+      },
+      "id": "fallback-csv",
+      "name": "Fallback: Load CSV",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calculate metrics from GA4 and Google Ads data\nconst ga4Data = $input.first().json.ga4;\nconst adsData = $input.first().json.ads;\n\n// Parse CSV data (simplified)\nfunction parseCSV(csvText) {\n  const lines = csvText.split('\\n');\n  const headers = lines[0].split(',');\n  return lines.slice(1).map(line => {\n    const values = line.split(',');\n    return headers.reduce((obj, header, i) => {\n      obj[header.trim()] = values[i]?.trim();\n      return obj;\n    }, {});\n  }).filter(row => row.date);\n}\n\nconst ga4Rows = parseCSV(ga4Data);\nconst adsRows = parseCSV(adsData);\n\n// Calculate GA4 metrics\nconst totalSessions = ga4Rows.reduce((sum, row) => sum + parseInt(row.sessions || 0), 0);\nconst totalConversionsGA4 = ga4Rows.reduce((sum, row) => sum + parseInt(row.conversions || 0), 0);\nconst avgBounceRate = ga4Rows.reduce((sum, row) => sum + parseFloat(row.bounce_rate || 0), 0) / ga4Rows.length;\n\n// Top source\nconst sourceMap = {};\nga4Rows.forEach(row => {\n  sourceMap[row.source] = (sourceMap[row.source] || 0) + parseInt(row.sessions || 0);\n});\nconst topSource = Object.keys(sourceMap).reduce((a, b) => sourceMap[a] > sourceMap[b] ? a : b);\n\n// Calculate Ads metrics\nconst totalSpend = adsRows.reduce((sum, row) => sum + parseFloat(row.spend || 0), 0);\nconst totalClicks = adsRows.reduce((sum, row) => sum + parseInt(row.clicks || 0), 0);\nconst totalImpressions = adsRows.reduce((sum, row) => sum + parseInt(row.impressions || 0), 0);\nconst totalConversionsAds = adsRows.reduce((sum, row) => sum + parseInt(row.conversions || 0), 0);\n\nconst avgCTR = (totalClicks / totalImpressions * 100).toFixed(2);\nconst avgCPC = (totalSpend / totalClicks).toFixed(2);\nconst costPerConversion = (totalSpend / totalConversionsAds).toFixed(2);\n\n// Top campaign\nconst campaignMap = {};\nadsRows.forEach(row => {\n  if (!campaignMap[row.campaign_name]) {\n    campaignMap[row.campaign_name] = { conversions: 0, spend: 0 };\n  }\n  campaignMap[row.campaign_name].conversions += parseInt(row.conversions || 0);\n  campaignMap[row.campaign_name].spend += parseFloat(row.spend || 0);\n});\n\nconst topCampaign = Object.keys(campaignMap).reduce((a, b) => {\n  const roasA = campaignMap[a].conversions / campaignMap[a].spend;\n  const roasB = campaignMap[b].conversions / campaignMap[b].spend;\n  return roasA > roasB ? a : b;\n});\n\n// Date range\nconst dates = ga4Rows.map(r => r.date).sort();\nconst startDate = dates[0];\nconst endDate = dates[dates.length - 1];\n\nreturn {\n  total_sessions: totalSessions,\n  total_conversions_ga4: totalConversionsGA4,\n  avg_bounce_rate: avgBounceRate.toFixed(2),\n  top_source: topSource,\n  top_source_sessions: sourceMap[topSource],\n  total_spend: totalSpend.toFixed(2),\n  total_clicks: totalClicks,\n  total_impressions: totalImpressions,\n  total_conversions_ads: totalConversionsAds,\n  avg_ctr: avgCTR,\n  avg_cpc: avgCPC,\n  cost_per_conversion: costPerConversion,\n  top_campaign: topCampaign,\n  top_campaign_conversions: campaignMap[topCampaign].conversions,\n  top_campaign_spend: campaignMap[topCampaign].spend.toFixed(2),\n  start_date: startDate,\n  end_date: endDate,\n  days_in_period: dates.length\n};"
+      },
+      "id": "calculate-metrics",
+      "name": "Calculate Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1340,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format Slack Block Kit message\nconst metrics = $input.first().json;\n\nconst blocks = [\n  {\n    \"type\": \"header\",\n    \"text\": {\n      \"type\": \"plain_text\",\n      \"text\": \"📊 Daily Retail Performance Report\",\n      \"emoji\": true\n    }\n  },\n  {\n    \"type\": \"context\",\n    \"elements\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `📅 *Report Period:* ${metrics.start_date} to ${metrics.end_date} (${metrics.days_in_period} days)`\n      }\n    ]\n  },\n  {\n    \"type\": \"divider\"\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": \"*🌐 Website Traffic (GA4)*\"\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"fields\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Total Sessions:*\\n${parseInt(metrics.total_sessions).toLocaleString()}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Conversions:*\\n${parseInt(metrics.total_conversions_ga4).toLocaleString()}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Avg Bounce Rate:*\\n${(parseFloat(metrics.avg_bounce_rate) * 100).toFixed(1)}%`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Top Source:*\\n${metrics.top_source} (${parseInt(metrics.top_source_sessions).toLocaleString()} sessions)`\n      }\n    ]\n  },\n  {\n    \"type\": \"divider\"\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": \"*💰 Paid Advertising (Google Ads)*\"\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"fields\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Total Spend:*\\n$${parseFloat(metrics.total_spend).toLocaleString()}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Conversions:*\\n${parseInt(metrics.total_conversions_ads).toLocaleString()}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Cost per Conversion:*\\n$${metrics.cost_per_conversion}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Avg CPC:*\\n$${metrics.avg_cpc}`\n      }\n    ]\n  },\n  {\n    \"type\": \"divider\"\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*🏆 Best Performing Campaign*\\n*${metrics.top_campaign}* generated *${metrics.top_campaign_conversions}* conversions with $${metrics.top_campaign_spend} spend`\n    }\n  },\n  {\n    \"type\": \"divider\"\n  },\n  {\n    \"type\": \"context\",\n    \"elements\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `✓ Data from n8n workflow | Generated at ${new Date().toISOString()}`\n      }\n    ]\n  }\n];\n\nreturn {\n  blocks: blocks,\n  text: `Daily Performance Report: ${metrics.start_date} to ${metrics.end_date}`\n};"
+      },
+      "id": "format-slack",
+      "name": "Format Slack Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "method": "POST",
+        "url": "={{ $env.DAY11_SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "blocks",
+              "value": "={{ $json.blocks }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "send-slack",
+      "name": "Send to Slack",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1780,
+        300
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "fileId": {
+          "__rl": true,
+          "value": "day11_execution_log",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "status": "=success",
+            "total_sessions": "={{ $json.total_sessions }}",
+            "total_spend": "={{ $json.total_spend }}",
+            "data_source": "={{ $json.source }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "log-execution",
+      "name": "Log Execution",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2000,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Error handler - format error notification\nconst error = $input.first().json.error || $input.first().json;\n\nconst errorBlocks = [\n  {\n    \"type\": \"header\",\n    \"text\": {\n      \"type\": \"plain_text\",\n      \"text\": \"❌ Report Generation Failed\",\n      \"emoji\": true\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*Error:* ${error.message || 'Unknown error'}\\n*Step:* ${error.node || 'Unknown'}`\n    }\n  },\n  {\n    \"type\": \"context\",\n    \"elements\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `Failed at ${new Date().toISOString()}`\n      }\n    ]\n  }\n];\n\nreturn {\n  blocks: errorBlocks,\n  text: `Report generation failed: ${error.message}`\n};"
+      },
+      "id": "format-error",
+      "name": "Format Error Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "method": "POST",
+        "url": "={{ $env.DAY11_SLACK_WEBHOOK_URL }}",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "blocks",
+              "value": "={{ $json.blocks }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        }
+      },
+      "id": "send-error-slack",
+      "name": "Send Error to Slack",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1780,
+        500
+      ]
+    }
+  ],
+  "connections": {
+    "Daily at 8am UTC": {
+      "main": [
+        [
+          {
+            "node": "Check Weekend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Weekend": {
+      "main": [
+        [
+          {
+            "node": "Should Run?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Run?": {
+      "main": [
+        [
+          {
+            "node": "Fetch GA4 Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Google Ads Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch GA4 Data": {
+      "main": [
+        [
+          {
+            "node": "Fallback: Load CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Google Ads Data": {
+      "main": [
+        [
+          {
+            "node": "Fallback: Load CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback: Load CSV": {
+      "main": [
+        [
+          {
+            "node": "Calculate Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Metrics": {
+      "main": [
+        [
+          {
+            "node": "Format Slack Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Slack Message": {
+      "main": [
+        [
+          {
+            "node": "Send to Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Slack": {
+      "main": [
+        [
+          {
+            "node": "Log Execution",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-12-11T00:00:00.000Z",
+      "updatedAt": "2025-12-11T00:00:00.000Z",
+      "id": "1",
+      "name": "Day 11 - Orchestration"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-11T00:00:00.000Z",
+  "versionId": "1"
+}
