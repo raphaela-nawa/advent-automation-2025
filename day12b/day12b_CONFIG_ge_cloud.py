@@ -9,8 +9,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from config/.env
+load_dotenv(Path(__file__).parent.parent / "config" / ".env")
 
 # ============================================================================
 # DAY 12B CONFIGURATION - GREAT EXPECTATIONS CLOUD
