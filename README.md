@@ -34,7 +34,7 @@ Each one ships with full code and documentation.
 | 9 | Modeling | Property Operations Data Warehouse (dbt) | Hospitality/Property Management | ✅ Complete | [Day 09](./day09) |
 | 10 | Modeling | Family Office Asset Management Data Warehouse | Wealth Management/Finance | ✅ Complete | [Day 10](./day10) |
 | 11 | Orchestration | Retail Daily Performance Report Automation | TBD | ✅ Complete | [Day 11](./day11) |
-| 12 | Orchestration | TBD | TBD | 🚧 Planned | [Day 12](./day12) |
+| 12 | Orchestration | Cybersecurity Data Quality Framework | TBD | ✅ Complete | [Day 12](./day12) |
 | 13 | Orchestration | TBD | TBD | 🚧 Planned | [Day 13](./day13) |
 | 14 | Orchestration | TBD | TBD | 🚧 Planned | [Day 14](./day14) |
 | 15 | Orchestration | TBD | TBD | 🚧 Planned | [Day 15](./day15) |
