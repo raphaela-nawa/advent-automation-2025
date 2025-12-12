@@ -6,6 +6,34 @@
 
 ---
 
+## 🎯 Two Implementations: A/B Comparison
+
+This project demonstrates **two approaches** to data quality validation, showcasing both custom framework development and enterprise tool expertise:
+
+| Aspect | **Day 12A** (Custom Framework) | **Day 12B** (GE Cloud) |
+|--------|--------------------------------|------------------------|
+| **Location** | [`day12/`](.) | [`day12b/`](../day12b) |
+| **Approach** | Custom validation framework | Great Expectations Cloud |
+| **When to Use** | Dependency issues, air-gapped environments, learning GE concepts | Production enterprise deployments, team collaboration |
+| **Dependencies** | Minimal (pandas, faker) | Full GE Cloud SDK |
+| **Data Docs** | Local HTML generation | Cloud-hosted at app.greatexpectations.io |
+| **Expectations** | Custom Python classes (10 expectations) | Native GE expectations (8 native) |
+| **Validation Results** | Local JSON files | GE Cloud storage + UI |
+| **Team Collaboration** | Single developer | Multi-user with GE Cloud |
+| **Setup Time** | <5 minutes | ~15 minutes (Cloud account required) |
+| **Portfolio Message** | "Can build validation frameworks from scratch" | "Can use enterprise data quality tools" |
+
+**💡 Why Both?**
+- **Day 12A** demonstrates problem-solving when dependencies fail (applied PIVOT RULE)
+- **Day 12B** shows proper enterprise GE Cloud integration for production use
+- Together they prove both **deep conceptual understanding** AND **practical tool expertise**
+
+**👉 Quick Start:**
+- **For Custom Framework:** Continue reading below, or jump to [Day 12A Quick Start](#how-to-use-this-project)
+- **For GE Cloud:** See [Day 12B Setup Guide](../day12b/README_12B.md)
+
+---
+
 ## Navigation
 
 ### Quick Access (By Role)
