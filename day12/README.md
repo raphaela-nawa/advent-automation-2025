@@ -55,7 +55,7 @@ This project demonstrates **two approaches** to data quality validation, showcas
 
 **Business Impact:** Prevents bad data from reaching production, reduces false positive alerts by ~30%, and provides audit-ready validation reports for compliance requirements (HIPAA, PCI-DSS, SOX).
 
-**For:** Sal (Cybersecurity Analyst) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Sal (Cybersecurity Expert) | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
@@ -217,7 +217,7 @@ Security Logs (CSV)
 
 | Limitation | Impact | Mitigation Path |
 |------------|--------|-----------------|
-| **Simplified GE Implementation** | Not using full Great Expectations library due to dependency issues | Migrate to full GE 1.0+ once Python 3.13 compatibility resolved |
+| **Simplified GE Implementation** | Not using full Great Expectations library due to dependency issues | Migrate to full GE 1.0+ once Python 3.13 compatibility resolved or adapt code to older versions |
 | **Synthetic Data Only** | Cannot validate real-world patterns | Test with 30 days production logs before rollout |
 | **No Real-Time Streaming** | Batch validation only | Integrate with Kafka/Kinesis for real-time validation |
 | **Email-Only PII Detection** | Misses phone numbers, SSNs, credit cards | Expand regex patterns, consider NLP-based PII detection |
@@ -847,7 +847,7 @@ Applicable to: SOC operations, security log validation, compliance auditing, dat
 
 ## Contact & Links
 
-**Author:** Claude (AI Assistant) for Advent Automation 2025
+**Author:** Raphaela Nawa for Advent Automation 2025
 **Project:** Day 12 of 25 - Orchestration Week
 **GitHub:** [advent-automation-2025/day12](https://github.com/yourusername/advent-automation-2025/tree/main/day12)
 **LinkedIn Post:** [Link to be added]
