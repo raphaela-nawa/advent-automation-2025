@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "timestamp": "2025-12-12T20:28:38.388471",
+  "checkpoint_name": "csv-4e86d15c438 KO8USG - GX-Managed Checkpoint",
+  "persisted_to_cloud": true,
+  "run_id": "{\n  \"run_name\": null,\n  \"run_time\": \"2025-12-12T20:28:33.517017+01:00\"\n}"
+}

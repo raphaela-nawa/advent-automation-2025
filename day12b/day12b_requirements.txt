@@ -1,0 +1,17 @@
+# Day 12B - Great Expectations Cloud Integration
+# Full GE Cloud setup with native expectations
+
+# Great Expectations with Cloud support
+great-expectations[cloud]==0.18.19
+
+# Core dependencies
+pandas>=2.2.0
+sqlalchemy==2.0.23
+python-dotenv==1.0.0
+
+# For data generation (reuses Day 12A data)
+faker==22.0.0
+
+# Additional GE Cloud dependencies
+requests>=2.31.0
+pydantic==1.10.13

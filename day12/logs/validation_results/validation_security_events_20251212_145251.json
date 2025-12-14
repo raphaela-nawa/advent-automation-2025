@@ -1,0 +1,69 @@
+{
+  "dataset": "security_events",
+  "timestamp": "2025-12-12T14:52:51.880802",
+  "total_rows": 1000,
+  "expectations": [
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "event_id",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "timestamp",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "event_type",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "severity",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "source_system",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "action_taken",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "username",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "source_ip",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "risk_score",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_to_exist",
+      "column": "status",
+      "success": true,
+      "severity": "critical"
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "column": "event_id",
+      "success": 

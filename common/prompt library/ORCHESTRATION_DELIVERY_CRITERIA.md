@@ -215,27 +215,78 @@ Christmas Data Advent 2025 - Days 11-15 (Orchestration Week)
 
 ## 📖 DOCUMENTATION STANDARDS
 
-Each project must include (via separate README generation script):
+### README Structure
 
-### 6.1 Architecture Diagram
+**CRITICAL:** All project READMEs must follow the [TEMPLATE_PROJECT_README.md](TEMPLATE_PROJECT_README.md) structure.
+
+**Key adaptations for Orchestration projects:**
+
+1. **Executive Summary** - Focus on automation value:
+   - "Automates [PROCESS] reducing manual effort from [X hours] to [Y minutes]"
+   - Reliability metrics: "99.X% success rate over [N] executions"
+
+2. **Solution Overview** - Emphasize orchestration pattern:
+   ```
+   [TRIGGER] → [ORCHESTRATION] → [DESTINATION]
+        ↓              ↓                ↓
+   [Schedule/Event] [Tool: n8n/Python] [Slack/Email/DB]
+   ```
+
+3. **Key Results** - Automation-specific metrics:
+   - Execution success rate
+   - Average execution time
+   - Number of errors handled gracefully
+   - Time saved vs manual process
+
+4. **Technical Deep Dive** - Include orchestration specifics:
+   - **Scheduling/Triggering:** Cron expressions, event sources
+   - **Error Handling:** Retry logic, dead-letter queues, notifications
+   - **Idempotency:** How duplicate runs are prevented
+   - **Monitoring:** Logging strategy, metrics collected
+
+5. **Adaptation Guide** - Orchestration-specific changes:
+   - How to modify schedule/triggers
+   - How to add new data sources
+   - How to change notification destinations
+   - How to customize error handling
+
+### Required Documentation Sections (Beyond Template)
+
+#### 6.1 Architecture Diagram
 - Visual representation of orchestration flow
 - Source → Processing → Destination
 - Error handling paths
+- **Example:** Include workflow canvas screenshots (for n8n) or flow diagrams
 
-### 6.2 Configuration Guide
+#### 6.2 Configuration Guide
 - Required environment variables
-- Credentials setup instructions
-- Scheduling configuration
+- Credentials setup instructions (with .env.example)
+- Scheduling configuration (cron expressions explained)
+- Notification endpoint setup
 
-### 6.3 Testing Instructions
-- How to run locally
+#### 6.3 Testing Instructions
+- How to run locally without triggering production systems
 - Mock/test mode instructions
-- Expected outputs
+- Expected outputs (with screenshots)
+- How to test error scenarios
 
-### 6.4 Monitoring Guide
-- Where to find logs
-- Key metrics to watch
-- What "success" looks like
+#### 6.4 Monitoring Guide
+- Where to find logs (file paths, log format)
+- Key metrics to watch (execution time, success rate)
+- What "success" looks like (expected outputs)
+- How to debug failures (common issues and solutions)
+
+### README Checklist
+
+Before finalizing README:
+- [ ] Follows TEMPLATE_PROJECT_README.md structure
+- [ ] Executive Summary emphasizes automation value
+- [ ] Architecture diagram shows orchestration flow
+- [ ] Configuration guide has all env vars documented
+- [ ] Testing instructions include mock/dry-run mode
+- [ ] Monitoring section explains where to find logs
+- [ ] Screenshots/evidence of successful execution included
+- [ ] Upwork positioning clear (automation skills demonstrated)
 
 ---
 
@@ -304,7 +355,7 @@ Applicable to: [list of industries/use cases]
 - [ ] **Workflow Exports:** n8n JSON, Airflow DAGs, etc (if applicable)
 - [ ] **Data Docs:** Great Expectations HTML (if applicable)
 - [ ] **Audit Logs:** Sample logs showing orchestration in action
-- [ ] **README Prep:** Notes for README generation script
+- [ ] **README:** Following [TEMPLATE_PROJECT_README.md](TEMPLATE_PROJECT_README.md) structure (see Documentation Standards section above)
 - [ ] **LinkedIn Post:** Draft highlighting orchestration pattern demonstrated
 
 ---
@@ -604,6 +655,122 @@ The goal is to demonstrate:
 - ❌ Production-ready at scale
 
 **Focus: Functional > Perfect. Documented > Complex. Delivered > Ideal. Isolated > Shared.**
+
+---
+
+## 📄 ORCHESTRATION README EXAMPLE
+
+### Quick Reference: Adapting TEMPLATE_PROJECT_README.md for Orchestration
+
+When using [TEMPLATE_PROJECT_README.md](TEMPLATE_PROJECT_README.md), make these orchestration-specific adaptations:
+
+#### Executive Summary Example:
+```markdown
+## Executive Summary
+
+**Business Problem:** Manual daily reporting requires 2 hours of analyst time to pull Google Ads and GA4 data, calculate KPIs, and send to stakeholders.
+
+**Solution Delivered:** Automated n8n workflow that fetches data, calculates 18 KPIs, and sends formatted Slack report daily at 8am UTC.
+
+**Business Impact:** Reduces reporting time from 2 hours to 5 minutes (96% time savings). Ensures consistent delivery and eliminates weekend delays.
+
+**For:** Gleyson (Retail Marketing) | **Time:** 3 hours | **Status:** ✅ Complete
+```
+
+#### Solution Overview Example:
+```markdown
+## Solution Overview
+
+### What It Does
+
+| Capability | Business Outcome |
+|------------|------------------|
+| **Scheduled Data Collection** | Automatically pulls GA4 and Google Ads data daily |
+| **Multi-Source Integration** | Combines analytics and advertising metrics in single report |
+| **Intelligent Fallback** | Uses local CSV if API unavailable (99.9% uptime) |
+| **Smart Formatting** | Slack Block Kit formatting for mobile-friendly reading |
+| **Error Notifications** | Team alerted within 60 seconds if workflow fails |
+
+### Architecture at a Glance
+```
+[TRIGGER] → [ORCHESTRATION] → [DESTINATION]
+    ↓              ↓                ↓
+Schedule (8am) → n8n Workflow → Slack Channel
+                   │
+                   ├─ Fetch GA4 (HTTP)
+                   ├─ Fetch Ads (HTTP)
+                   ├─ Calculate KPIs (Code)
+                   ├─ Format Message (Code)
+                   └─ Error Handler → Alert
+```
+```
+
+#### Key Results Example:
+```markdown
+## Key Results & Insights
+
+### Automation Metrics (Production)
+
+| Metric | Result | Implication |
+|--------|--------|-------------|
+| **Success Rate** | 99.2% (122/123 executions) | Highly reliable for daily operations |
+| **Avg Execution Time** | 47 seconds | 97% faster than manual process |
+| **Errors Handled** | 8 API failures → CSV fallback | Zero missed reports in 30 days |
+| **Time Saved** | 60 hours/month | Analyst can focus on insights vs data collection |
+
+### Analytical Capabilities Demonstrated
+
+- ✅ **Schedule-based automation** - Cron triggers with timezone handling
+- ✅ **Multi-source data integration** - GA4 + Google Ads unified
+- ✅ **Graceful degradation** - CSV fallback prevents silent failures
+- ✅ **Rich notifications** - Slack Block Kit with 13 formatted sections
+- ✅ **Error monitoring** - Immediate alerts on workflow failures
+```
+
+#### Architectural Decisions Example:
+```markdown
+### Architectural Decisions
+
+#### Decision 1: n8n vs Python Script for Orchestration
+
+**Context:** Need daily automation with error handling and monitoring
+
+**Options Evaluated:**
+
+| Option | Pros | Cons | Decision |
+|--------|------|------|----------|
+| **Pure Python + Cron** | Version control, portable, free | No visual monitoring, harder debugging | ❌ Rejected |
+| **n8n Workflow** | Visual editor, built-in error handling, execution history | Requires n8n instance, harder version control | ✅ **Chosen** |
+| **Airflow** | Enterprise-grade, powerful | Overkill for single workflow, complex setup | ❌ Rejected |
+
+**Rationale:** n8n provides best balance of ease-of-use and features for single daily workflow. Visual canvas helps stakeholders understand process. Built-in execution history aids debugging.
+
+**Tradeoffs Accepted:**
+- ✅ **Gained:** Visual monitoring, built-in retry logic, stakeholder transparency
+- ⚠️ **Sacrificed:** Pure code version control, infrastructure portability
+
+**Generalization:** Use n8n for <10 simple workflows with non-technical stakeholders. Scale to Airflow when >20 workflows or complex dependencies needed.
+```
+
+#### Risks & Limitations Example:
+```markdown
+## Risks & Limitations
+
+### Current Limitations
+
+| Limitation | Impact | Mitigation Path |
+|------------|--------|-----------------|
+| **Single Slack channel** | All stakeholders get same report | Add routing logic based on department |
+| **No data validation** | Bad data propagates to report | Add Great Expectations checkpoint before send |
+| **Daily only** | Cannot handle urgent ad-hoc requests | Add Slack slash command trigger (/report-now) |
+| **CSV fallback local only** | Won't work in cloud deployment | Store CSVs in S3/Google Drive instead |
+
+### Assumptions Made
+
+1. **API availability >95%** - Google Ads/GA4 APIs assumed stable (CSV fallback mitigates)
+2. **Slack always available** - No email fallback if Slack down (acceptable for internal tool)
+3. **Weekday reporting sufficient** - Weekend skip logic assumes Mon-Fri business (configurable)
+```
 
 ---
 
