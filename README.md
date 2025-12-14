@@ -35,7 +35,7 @@ Each one ships with full code and documentation.
 | 10 | Modeling | Family Office Asset Management Data Warehouse | Wealth Management/Finance | ✅ Complete | [Day 10](./day10) |
 | 11 | Orchestration | Retail Daily Performance Report Automation | TBD | ✅ Complete | [Day 11](./day11) |
 | 12 | Orchestration | Cybersecurity Data Quality Framework | TBD | ✅ Complete | [Day 12](./day12) |
-| 13 | Orchestration | TBD | TBD | ✅ Complete | [Day 13](./day13) |
+| 13 | Orchestration | Alert Triage Orchestrator (Finance Compliance) | TBD | ✅ Complete | [Day 13](./day13) |
 | 14 | Orchestration | TBD | TBD | 🚧 Planned | [Day 14](./day14) |
 | 15 | Orchestration | TBD | TBD | 🚧 Planned | [Day 15](./day15) |
 | 16 | Dashboards | TBD | TBD | 🚧 Planned | [Day 16](./day16) |
