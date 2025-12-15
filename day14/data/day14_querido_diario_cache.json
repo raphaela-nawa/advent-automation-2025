@@ -1,0 +1,892 @@
+{
+  "kpis": {
+    "new_regulations": 24,
+    "active_municipalities": 8,
+    "compliance_mentions": 35,
+    "safety_incidents": 12,
+    "timestamp": "2025-12-15T21:13:32.387995",
+    "cities_monitored": 10
+  },
+  "date_range": {
+    "since": "2025-12-14",
+    "until": "2025-12-15"
+  },
+  "raw_data": {
+    "transport": {
+      "Sao_Paulo": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Rio_de_Janeiro": {
+        "total_gazettes": 2,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "128",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3304557",
+            "territory_name": "Rio de Janeiro",
+            "url": "https://queridodiario.ok.org.br/gazettes/3304557-2025-12-15",
+            "excerpts": [
+              "Licitação para concessão de transporte coletivo. O Departamento de Trânsito comunica à população sobre licitação para concessão de transporte coletivo. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "396",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "624",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3304557",
+            "territory_name": "Rio de Janeiro",
+            "url": "https://queridodiario.ok.org.br/gazettes/3304557-2025-12-15",
+            "excerpts": [
+              "Regulamentação de estacionamento rotativo. Decreto Municipal determina normas para regulamentação de estacionamento rotativo. fiscalização será intensificada. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "253",
+            "processed": true
+          }
+        ]
+      },
+      "Brasilia": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "505",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Subsídios para tarifa de transporte público. O Departamento de Trânsito comunica à população sobre subsídios para tarifa de transporte público. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "369",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "850",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Concessão de alvarás para táxis. A Secretaria Municipal de Transportes estabelece novas diretrizes para concessão de alvarás para táxis. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "42",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "832",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Criação de novas linhas de transporte. Decreto Municipal determina normas para criação de novas linhas de transporte. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "355",
+            "processed": true
+          }
+        ]
+      },
+      "Salvador": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "535",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2927408",
+            "territory_name": "Salvador",
+            "url": "https://queridodiario.ok.org.br/gazettes/2927408-2025-12-15",
+            "excerpts": [
+              "Implementação de ciclovias e ciclofaixas. Decreto Municipal determina normas para implementação de ciclovias e ciclofaixas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "334",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "122",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2927408",
+            "territory_name": "Salvador",
+            "url": "https://queridodiario.ok.org.br/gazettes/2927408-2025-12-15",
+            "excerpts": [
+              "Política de mobilidade urbana sustentável. Decreto Municipal determina normas para política de mobilidade urbana sustentável. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "44",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "119",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2927408",
+            "territory_name": "Salvador",
+            "url": "https://queridodiario.ok.org.br/gazettes/2927408-2025-12-15",
+            "excerpts": [
+              "Regulamentação de estacionamento rotativo. Fica regulamentado no município de acordo com a Lei Municipal nº 6095/2025. medidas de segurança viária reforçadas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "110",
+            "processed": true
+          }
+        ]
+      },
+      "Fortaleza": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Belo_Horizonte": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "573",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Alteração de itinerário de linhas de ônibus. A Secretaria Municipal de Transportes estabelece novas diretrizes para alteração de itinerário de linhas de ônibus. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "332",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "292",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Concessão de alvarás para táxis. Decreto Municipal determina normas para concessão de alvarás para táxis. medidas de segurança viária reforçadas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "483",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "399",
+            "is_extra_edition": true,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Licitação para concessão de transporte coletivo. A Secretaria Municipal de Transportes estabelece novas diretrizes para licitação para concessão de transporte coletivo. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "72",
+            "processed": true
+          }
+        ]
+      },
+      "Manaus": {
+        "total_gazettes": 2,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "934",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "1302603",
+            "territory_name": "Manaus",
+            "url": "https://queridodiario.ok.org.br/gazettes/1302603-2025-12-15",
+            "excerpts": [
+              "Alteração de itinerário de linhas de ônibus. Decreto Municipal determina normas para alteração de itinerário de linhas de ônibus. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "17",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "130",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "1302603",
+            "territory_name": "Manaus",
+            "url": "https://queridodiario.ok.org.br/gazettes/1302603-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. O Departamento de Trânsito comunica à população sobre regulamentação de transporte público municipal. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "121",
+            "processed": true
+          }
+        ]
+      },
+      "Curitiba": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "535",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Licitação para concessão de transporte coletivo. Decreto Municipal determina normas para licitação para concessão de transporte coletivo. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "107",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "467",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Fiscalização de veículos de transporte escolar. Decreto Municipal determina normas para fiscalização de veículos de transporte escolar. redução de acidentes em 15%. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "171",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "198",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Fiscalização de veículos de transporte escolar. A Secretaria Municipal de Transportes estabelece novas diretrizes para fiscalização de veículos de transporte escolar. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "276",
+            "processed": true
+          }
+        ]
+      },
+      "Recife": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "901",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Concessão de alvarás para táxis. A Secretaria Municipal de Transportes estabelece novas diretrizes para concessão de alvarás para táxis. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "206",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "196",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Fiscalização de veículos de transporte escolar. Fica regulamentado no município de acordo com a Lei Municipal nº 9715/2025. prazo final: 31 de dezembro. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "461",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "971",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Normas de segurança viária. A Secretaria Municipal de Transportes estabelece novas diretrizes para normas de segurança viária. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "94",
+            "processed": true
+          }
+        ]
+      },
+      "Porto_Alegre": {
+        "total_gazettes": 5,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "348",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Normas de segurança viária. O Departamento de Trânsito comunica à população sobre normas de segurança viária. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "455",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "969",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Normas de segurança viária. A Secretaria Municipal de Transportes estabelece novas diretrizes para normas de segurança viária. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "405",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "694",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Fiscalização de transporte irregular. O Departamento de Trânsito comunica à população sobre fiscalização de transporte irregular. responsabilização por descumprimento. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "153",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "599",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Implementação de ciclovias e ciclofaixas. Fica regulamentado no município de acordo com a Lei Municipal nº 3235/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "280",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "650",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de aplicativos de transporte. Decreto Municipal determina normas para regulamentação de aplicativos de transporte. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "114",
+            "processed": true
+          }
+        ]
+      }
+    },
+    "compliance": {
+      "Sao_Paulo": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "236",
+            "is_extra_edition": true,
+            "state_code": "BR",
+            "territory_id": "3550308",
+            "territory_name": "Sao Paulo",
+            "url": "https://queridodiario.ok.org.br/gazettes/3550308-2025-12-15",
+            "excerpts": [
+              "Política de mobilidade urbana sustentável. Fica regulamentado no município de acordo com a Lei Municipal nº 1659/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "259",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "377",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3550308",
+            "territory_name": "Sao Paulo",
+            "url": "https://queridodiario.ok.org.br/gazettes/3550308-2025-12-15",
+            "excerpts": [
+              "Subsídios para tarifa de transporte público. Fica regulamentado no município de acordo com a Lei Municipal nº 2574/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "326",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "171",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3550308",
+            "territory_name": "Sao Paulo",
+            "url": "https://queridodiario.ok.org.br/gazettes/3550308-2025-12-15",
+            "excerpts": [
+              "Normas de segurança viária. A Secretaria Municipal de Transportes estabelece novas diretrizes para normas de segurança viária. medidas de segurança viária reforçadas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "121",
+            "processed": true
+          }
+        ]
+      },
+      "Rio_de_Janeiro": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Brasilia": {
+        "total_gazettes": 4,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "237",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Concessão de alvarás para táxis. Fica regulamentado no município de acordo com a Lei Municipal nº 9939/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "364",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "162",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Alteração de itinerário de linhas de ônibus. A Secretaria Municipal de Transportes estabelece novas diretrizes para alteração de itinerário de linhas de ônibus. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "450",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "566",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Implementação de faixas exclusivas para ônibus. O Departamento de Trânsito comunica à população sobre implementação de faixas exclusivas para ônibus. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "265",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "399",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Política de mobilidade urbana sustentável. Decreto Municipal determina normas para política de mobilidade urbana sustentável. medidas de segurança viária reforçadas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "109",
+            "processed": true
+          }
+        ]
+      },
+      "Salvador": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Fortaleza": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Belo_Horizonte": {
+        "total_gazettes": 3,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "535",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. O Departamento de Trânsito comunica à população sobre regulamentação de transporte público municipal. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "263",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "345",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. O Departamento de Trânsito comunica à população sobre regulamentação de transporte público municipal. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "336",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "301",
+            "is_extra_edition": true,
+            "state_code": "BR",
+            "territory_id": "3106200",
+            "territory_name": "Belo Horizonte",
+            "url": "https://queridodiario.ok.org.br/gazettes/3106200-2025-12-15",
+            "excerpts": [
+              "Licitação para concessão de transporte coletivo. Fica regulamentado no município de acordo com a Lei Municipal nº 8473/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "458",
+            "processed": true
+          }
+        ]
+      },
+      "Manaus": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Curitiba": {
+        "total_gazettes": 5,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "711",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de estacionamento rotativo. Decreto Municipal determina normas para regulamentação de estacionamento rotativo. fiscalização preventiva e corretiva. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "386",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "145",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de aplicativos de transporte. Decreto Municipal determina normas para regulamentação de aplicativos de transporte. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "333",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "582",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de aplicativos de transporte. A Secretaria Municipal de Transportes estabelece novas diretrizes para regulamentação de aplicativos de transporte. segurança de pedestres e ciclistas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "289",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "389",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Concessão de alvarás para táxis. A Secretaria Municipal de Transportes estabelece novas diretrizes para concessão de alvarás para táxis. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "184",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "829",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4106902",
+            "territory_name": "Curitiba",
+            "url": "https://queridodiario.ok.org.br/gazettes/4106902-2025-12-15",
+            "excerpts": [
+              "Criação de novas linhas de transporte. O Departamento de Trânsito comunica à população sobre criação de novas linhas de transporte. fiscalização será intensificada. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "385",
+            "processed": true
+          }
+        ]
+      },
+      "Recife": {
+        "total_gazettes": 5,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "969",
+            "is_extra_edition": true,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Normas de segurança viária. O Departamento de Trânsito comunica à população sobre normas de segurança viária. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "239",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "367",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Regulamentação de aplicativos de transporte. O Departamento de Trânsito comunica à população sobre regulamentação de aplicativos de transporte. prazo estabelecido em regulamento. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "354",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "222",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Licitação para concessão de transporte coletivo. Decreto Municipal determina normas para licitação para concessão de transporte coletivo. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "438",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "574",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Subsídios para tarifa de transporte público. Decreto Municipal determina normas para subsídios para tarifa de transporte público. infração de trânsito com multa. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "305",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "573",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2611606",
+            "territory_name": "Recife",
+            "url": "https://queridodiario.ok.org.br/gazettes/2611606-2025-12-15",
+            "excerpts": [
+              "Subsídios para tarifa de transporte público. O Departamento de Trânsito comunica à população sobre subsídios para tarifa de transporte público. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "374",
+            "processed": true
+          }
+        ]
+      },
+      "Porto_Alegre": {
+        "total_gazettes": 5,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "768",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. Decreto Municipal determina normas para regulamentação de transporte público municipal. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "367",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "458",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Criação de novas linhas de transporte. Decreto Municipal determina normas para criação de novas linhas de transporte. multa por excesso de velocidade. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "421",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "680",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Normas de acessibilidade em veículos. Fica regulamentado no município de acordo com a Lei Municipal nº 5392/2025. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "284",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "249",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. O Departamento de Trânsito comunica à população sobre regulamentação de transporte público municipal. fiscalização será intensificada. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "133",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "690",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "4314902",
+            "territory_name": "Porto Alegre",
+            "url": "https://queridodiario.ok.org.br/gazettes/4314902-2025-12-15",
+            "excerpts": [
+              "Regulamentação de aplicativos de transporte. Decreto Municipal determina normas para regulamentação de aplicativos de transporte. cumprimento das normas de segurança. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "23",
+            "processed": true
+          }
+        ]
+      }
+    },
+    "safety": {
+      "Sao_Paulo": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Rio_de_Janeiro": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Brasilia": {
+        "total_gazettes": 1,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "800",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "5300108",
+            "territory_name": "Brasilia",
+            "url": "https://queridodiario.ok.org.br/gazettes/5300108-2025-12-15",
+            "excerpts": [
+              "Implementação de ciclovias e ciclofaixas. Decreto Municipal determina normas para implementação de ciclovias e ciclofaixas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "302",
+            "processed": true
+          }
+        ]
+      },
+      "Salvador": {
+        "total_gazettes": 2,
+        "gazettes": [
+          {
+            "date": "2025-12-15",
+            "edition": "170",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2927408",
+            "territory_name": "Salvador",
+            "url": "https://queridodiario.ok.org.br/gazettes/2927408-2025-12-15",
+            "excerpts": [
+              "Regulamentação de transporte público municipal. Decreto Municipal determina normas para regulamentação de transporte público municipal. segurança de pedestres e ciclistas. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "443",
+            "processed": true
+          },
+          {
+            "date": "2025-12-15",
+            "edition": "366",
+            "is_extra_edition": false,
+            "state_code": "BR",
+            "territory_id": "2927408",
+            "territory_name": "Salvador",
+            "url": "https://queridodiario.ok.org.br/gazettes/2927408-2025-12-15",
+            "excerpts": [
+              "Subsídios para tarifa de transporte público. Decreto Municipal determina normas para subsídios para tarifa de transporte público. Publicado no Diário Oficial do Município."
+            ],
+            "edition_number": "189",
+            "processed": true
+          }
+        ]
+      },
+      "Fortaleza": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Belo_Horizonte": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Manaus": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Curitiba": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Recife": {
+        "total_gazettes": 0,
+        "gazettes": []
+      },
+      "Porto_Alegre": {
+        "total_gazettes": 0,
+        "gazettes": []
+      }
+    }
+  },
+  "metadata": {
+    "data_source": "synthetic",
+    "reason": "Querido Diário API blocked by Cloudflare (403 Forbidden)",
+    "generated_at": "2025-12-15T21:13:32.388233",
+    "note": "Synthetic data based on real API structure and realistic patterns"
+  }
+}
