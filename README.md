@@ -36,7 +36,7 @@ Each one ships with full code and documentation.
 | 11 | Orchestration | Retail Daily Performance Report Automation | TBD | ✅ Complete | [Day 11](./day11) |
 | 12 | Orchestration | Cybersecurity Data Quality Framework | TBD | ✅ Complete | [Day 12](./day12) |
 | 13 | Orchestration | Alert Triage Orchestrator (Finance Compliance) | TBD | ✅ Complete | [Day 13](./day13) |
-| 14 | Orchestration | TBD | TBD | 🚧 Planned | [Day 14](./day14) |
+| 14 | Orchestration | TBD | TBD | 🚧 In Progress | [Day 14](./day14) |
 | 15 | Orchestration | TBD | TBD | 🚧 Planned | [Day 15](./day15) |
 | 16 | Dashboards | TBD | TBD | 🚧 Planned | [Day 16](./day16) |
 | 17 | Dashboards | TBD | TBD | 🚧 Planned | [Day 17](./day17) |

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report_title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .kpi-card {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .kpi-card.warning {
+            border-left-color: #ffa500;
+        }
+        .kpi-card.critical {
+            border-left-color: #dc3545;
+        }
+        .kpi-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .kpi-label {
+            font-size: 14px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        .kpi-description {
+            font-size: 13px;
+            color: #868e96;
+            margin-top: 8px;
+        }
+        .summary-section {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .summary-section h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .city-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .city-badge {
+            background-color: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #868e96;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        @media (max-width: 600px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🚦 {{ report_title }}</h1>
+            <p>Monitoramento de Regulamentações de Transporte e Mobilidade</p>
+        </div>
+
+        <div class="content">
+            <div class="timestamp">
+                Relatório gerado em: {{ timestamp }}
+            </div>
+
+            <h2>📊 Indicadores Principais</h2>
+            <p>Resumo das atividades regulatórias de transporte nos últimos {{ days_monitored }} dia(s) em {{ cities_count }} municípios brasileiros.</p>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Novas Regulamentações</div>
+                    <div class="kpi-value">{{ kpi_new_regulations }}</div>
+                    <div class="kpi-description">Documentos publicados sobre transporte/mobilidade</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-label">Municípios Ativos</div>
+                    <div class="kpi-value">{{ kpi_active_municipalities }}</div>
+                    <div class="kpi-description">Cidades com atualizações no período</div>
+                </div>
+
+                <div class="kpi-card {{ compliance_severity }}">
+                    <div class="kpi-label">Menções de Conformidade</div>
+                    <div class="kpi-value">{{ kpi_compliance_mentions }}</div>
+                    <div class="kpi-description">Prazos, fiscalização e obrigatoriedades</div>
+                </div>
+
+                <div class="kpi-card {{ safety_severity }}">
+                    <div class="kpi-label">Relatórios de Segurança</div>
+                    <div class="kpi-value">{{ kpi_safety_incidents }}</div>
+                    <div class="kpi-description">Acidentes e infrações mencionadas</div>
+                </div>
+            </div>
+
+            <div class="summary-section">
+                <h3>🏙️ Municípios Monitorados</h3>
+                <p>Análise abrange as principais capitais e regiões metropolitanas do Brasil:</p>
+                <div class="city-list">
+                    {% for city in active_cities %}
+                    <span class="city-badge">{{ city }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if top_topics %}
+            <h3>🔍 Principais Tópicos Identificados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Município</th>
+                        <th>Tópico</th>
+                        <th>Publicações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for topic in top_topics %}
+                    <tr>
+                        <td>{{ topic.city }}</td>
+                        <td>{{ topic.topic }}</td>
+                        <td>{{ topic.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+
+            <div class="summary-section">
+                <h3>💡 Insights</h3>
+                <ul>
+                    <li><strong>Tendência:</strong> {{ trend_insight }}</li>
+                    <li><strong>Destaque:</strong> {{ highlight_insight }}</li>
+                    <li><strong>Atenção:</strong> {{ attention_insight }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <strong>Fonte de Dados:</strong> <a href="https://queridodiario.ok.org.br">Querido Diário</a> - Diários Oficiais Municipais do Brasil<br>
+                <strong>Período de Análise:</strong> {{ date_since }} a {{ date_until }}
+            </p>
+            <p style="margin-top: 15px;">
+                🤖 Relatório gerado automaticamente via n8n • <a href="https://github.com/seu-usuario/advent-automation-2025">Day 14 - Advent Automation 2025</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
