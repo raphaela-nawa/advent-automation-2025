@@ -41,7 +41,8 @@ DAY14_SEARCH_KEYWORDS = [
     'segurança viária',  # road safety
     'estacionamento', # parking
     'infraestrutura', # infrastructure
-    'política pública'  # public policy
+    'política pública',  # public policy
+    'passageiros'     # passengers
 ]
 
 # API Query Parameters
