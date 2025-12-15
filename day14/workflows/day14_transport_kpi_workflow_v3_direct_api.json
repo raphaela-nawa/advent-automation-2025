@@ -1,0 +1,309 @@
+{
+  "name": "Day14_Transport_KPIs_Direct_API",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Prepare API queries for 10 Brazilian cities\n// Using 15 days lookback for better results\n\nconst cities = [\n  { name: 'Sao_Paulo', id: '3550308' },\n  { name: 'Rio_de_Janeiro', id: '3304557' },\n  { name: 'Brasilia', id: '5300108' },\n  { name: 'Salvador', id: '2927408' },\n  { name: 'Fortaleza', id: '2304400' },\n  { name: 'Belo_Horizonte', id: '3106200' },\n  { name: 'Manaus', id: '1302603' },\n  { name: 'Curitiba', id: '4106902' },\n  { name: 'Recife', id: '2611606' },\n  { name: 'Porto_Alegre', id: '4314902' }\n];\n\n// Calculate date range (15 days back)\nconst endDate = new Date();\nconst startDate = new Date();\nstartDate.setDate(startDate.getDate() - 15);\n\nconst published_until = endDate.toISOString().split('T')[0];\nconst published_since = startDate.toISOString().split('T')[0];\n\n// Prepare queries\nconst queries = cities.map(city => ({\n  city_name: city.name,\n  territory_id: city.id,\n  published_since: published_since,\n  published_until: published_until,\n  querystring: 'transporte OR mobilidade OR trânsito OR veículo OR ônibus OR regulação OR passageiros'\n}));\n\nreturn queries.map(q => ({ json: q }));"
+      },
+      "id": "prepare-queries",
+      "name": "Prepare City Queries",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {}
+      },
+      "id": "split-batches",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.queridodiario.ok.org.br/gazettes",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "territory_ids",
+              "value": "={{ $json.territory_id }}"
+            },
+            {
+              "name": "querystring",
+              "value": "={{ $json.querystring }}"
+            },
+            {
+              "name": "published_since",
+              "value": "={{ $json.published_since }}"
+            },
+            {
+              "name": "published_until",
+              "value": "={{ $json.published_until }}"
+            },
+            {
+              "name": "excerpt_size",
+              "value": "500"
+            },
+            {
+              "name": "number_of_excerpts",
+              "value": "3"
+            },
+            {
+              "name": "size",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "query-api",
+      "name": "Query Querido Diário API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "seconds"
+      },
+      "id": "rate-limit-wait",
+      "name": "Wait (Rate Limit)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1050, 300],
+      "webhookId": "rate-limit-webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Attach city name to API response for aggregation\nconst cityName = $input.first().json.city_name;\nconst apiResponse = $input.last().json;\n\nreturn {\n  json: {\n    city_name: cityName,\n    total_gazettes: apiResponse.total_gazettes || 0,\n    gazettes: apiResponse.gazettes || []\n  }\n};"
+      },
+      "id": "attach-city-name",
+      "name": "Attach City Name",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "aggregate-results",
+      "name": "Aggregate Results",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Calculate KPIs from aggregated API responses\nconst items = $input.all();\n\nlet totalRegulations = 0;\nconst activeCities = new Set();\nlet complianceMentions = 0;\nlet safetyIncidents = 0;\n\nconst cityDetails = [];\n\nfor (const item of items) {\n  const cityName = item.json.city_name;\n  const gazettes = item.json.gazettes || [];\n  const count = gazettes.length;\n  \n  if (count > 0) {\n    activeCities.add(cityName);\n    totalRegulations += count;\n    \n    cityDetails.push({\n      name: cityName.replace(/_/g, ' '),\n      regulations: count\n    });\n    \n    // Count compliance and safety mentions in excerpts\n    for (const gazette of gazettes) {\n      const excerpts = gazette.excerpts || [];\n      for (const excerpt of excerpts) {\n        const text = excerpt.toLowerCase();\n        \n        // Compliance keywords\n        if (text.includes('conformidade') || \n            text.includes('regulamentação') || \n            text.includes('norma') || \n            text.includes('lei')) {\n          complianceMentions++;\n        }\n        \n        // Safety keywords\n        if (text.includes('segurança') || \n            text.includes('acidente') || \n            text.includes('incidente') || \n            text.includes('multa')) {\n          safetyIncidents++;\n        }\n      }\n    }\n  }\n}\n\n// Sort cities by regulation count\ncityDetails.sort((a, b) => b.regulations - a.regulations);\n\nreturn {\n  json: {\n    kpis: {\n      new_regulations: totalRegulations,\n      active_municipalities: activeCities.size,\n      compliance_mentions: complianceMentions,\n      safety_incidents: safetyIncidents\n    },\n    cities: cityDetails,\n    report_date: new Date().toISOString().split('T')[0],\n    period_days: 15\n  }\n};"
+      },
+      "id": "calculate-kpis",
+      "name": "Calculate KPIs",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Build HTML email using template\nconst data = $input.first().json;\nconst kpis = data.kpis;\nconst cities = data.cities;\nconst reportDate = data.report_date;\nconst periodDays = data.period_days;\n\n// Format city badges\nconst cityBadges = cities.map(city => \n  `<span class=\"city-badge\">${city.name} (${city.regulations})</span>`\n).join('');\n\n// Generate insights\nconst insights = [];\nif (kpis.new_regulations > 20) {\n  insights.push('📈 Aumento significativo de regulamentações publicadas');\n}\nif (kpis.active_municipalities >= 7) {\n  insights.push('🌟 Atividade regulatória alta em múltiplos municípios');\n}\nif (kpis.safety_incidents > 10) {\n  insights.push('⚠️ Atenção: Múltiplas menções a incidentes de segurança');\n}\nif (kpis.compliance_mentions > 15) {\n  insights.push('✅ Foco forte em conformidade regulatória');\n}\n\nconst insightsHtml = insights.length > 0 \n  ? insights.map(i => `<li>${i}</li>`).join('') \n  : '<li>📊 Atividade regulatória dentro do padrão esperado</li>';\n\nconst htmlBody = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <style>\n    body {\n      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n      margin: 0;\n      padding: 40px 20px;\n    }\n    .email-container {\n      max-width: 700px;\n      margin: 0 auto;\n      background: white;\n      border-radius: 16px;\n      box-shadow: 0 20px 60px rgba(0,0,0,0.3);\n      overflow: hidden;\n    }\n    .header {\n      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);\n      color: white;\n      padding: 40px 30px;\n      text-align: center;\n    }\n    .header h1 {\n      margin: 0 0 10px 0;\n      font-size: 32px;\n      font-weight: 700;\n    }\n    .header p {\n      margin: 0;\n      opacity: 0.9;\n      font-size: 16px;\n    }\n    .content {\n      padding: 40px 30px;\n    }\n    .kpi-grid {\n      display: grid;\n      grid-template-columns: repeat(2, 1fr);\n      gap: 20px;\n      margin-bottom: 30px;\n    }\n    .kpi-card {\n      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);\n      padding: 25px;\n      border-radius: 12px;\n      text-align: center;\n      border: 2px solid #d1d5db;\n      transition: transform 0.2s;\n    }\n    .kpi-card:hover {\n      transform: translateY(-5px);\n      box-shadow: 0 10px 20px rgba(0,0,0,0.1);\n    }\n    .kpi-value {\n      font-size: 42px;\n      font-weight: 700;\n      color: #1e3a8a;\n      margin: 10px 0;\n    }\n    .kpi-label {\n      font-size: 14px;\n      color: #6b7280;\n      text-transform: uppercase;\n      letter-spacing: 1px;\n      font-weight: 600;\n    }\n    .section-title {\n      font-size: 20px;\n      color: #1f2937;\n      margin: 30px 0 15px 0;\n      font-weight: 600;\n      border-bottom: 3px solid #3b82f6;\n      padding-bottom: 10px;\n    }\n    .city-badges {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 10px;\n      margin-bottom: 30px;\n    }\n    .city-badge {\n      background: #dbeafe;\n      color: #1e40af;\n      padding: 8px 16px;\n      border-radius: 20px;\n      font-size: 13px;\n      font-weight: 600;\n      border: 1px solid #93c5fd;\n    }\n    .insights {\n      background: #fef3c7;\n      border-left: 4px solid #f59e0b;\n      padding: 20px;\n      border-radius: 8px;\n      margin-top: 20px;\n    }\n    .insights ul {\n      margin: 10px 0 0 0;\n      padding-left: 20px;\n    }\n    .insights li {\n      margin: 8px 0;\n      color: #78350f;\n      font-weight: 500;\n    }\n    .footer {\n      background: #f9fafb;\n      padding: 25px 30px;\n      text-align: center;\n      color: #6b7280;\n      font-size: 13px;\n      border-top: 1px solid #e5e7eb;\n    }\n    .footer a {\n      color: #3b82f6;\n      text-decoration: none;\n    }\n    @media (max-width: 600px) {\n      .kpi-grid {\n        grid-template-columns: 1fr;\n      }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"email-container\">\n    <div class=\"header\">\n      <h1>🚦 Transport KPI Report</h1>\n      <p>Brazilian Municipal Regulations • ${reportDate}</p>\n      <p>Period: Last ${periodDays} days</p>\n    </div>\n    \n    <div class=\"content\">\n      <div class=\"kpi-grid\">\n        <div class=\"kpi-card\">\n          <div class=\"kpi-label\">New Regulations</div>\n          <div class=\"kpi-value\">${kpis.new_regulations}</div>\n        </div>\n        <div class=\"kpi-card\">\n          <div class=\"kpi-label\">Active Municipalities</div>\n          <div class=\"kpi-value\">${kpis.active_municipalities}</div>\n        </div>\n        <div class=\"kpi-card\">\n          <div class=\"kpi-label\">Compliance Mentions</div>\n          <div class=\"kpi-value\">${kpis.compliance_mentions}</div>\n        </div>\n        <div class=\"kpi-card\">\n          <div class=\"kpi-label\">Safety Incidents</div>\n          <div class=\"kpi-value\">${kpis.safety_incidents}</div>\n        </div>\n      </div>\n      \n      <h2 class=\"section-title\">📍 Active Municipalities</h2>\n      <div class=\"city-badges\">\n        ${cityBadges}\n      </div>\n      \n      <div class=\"insights\">\n        <h3 style=\"margin: 0 0 10px 0; color: #92400e;\">💡 Key Insights</h3>\n        <ul>\n          ${insightsHtml}\n        </ul>\n      </div>\n    </div>\n    \n    <div class=\"footer\">\n      <p><strong>Day 14: Transport Regulatory KPIs</strong></p>\n      <p>Data source: <a href=\"https://queridodiario.ok.org.br\">Querido Diário</a> (Brazilian Municipal Official Gazettes)</p>\n      <p>Automated by n8n • Advent Automation 2025</p>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn {\n  json: {\n    subject: `🚦 Transport KPI Report - ${reportDate} (${kpis.new_regulations} regulations, ${kpis.active_municipalities} cities)`,\n    html: htmlBody,\n    kpis: kpis\n  }\n};"
+      },
+      "id": "build-email",
+      "name": "Build HTML Email",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1850, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@gmail.com",
+        "toEmail": "your-email@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [2050, 300],
+      "credentials": {
+        "smtp": {
+          "id": "your-smtp-credential-id",
+          "name": "Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "error-trigger",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [1050, 500]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Log error for debugging\nconst error = $input.first().json;\n\nconsole.error('Workflow Error:', error);\n\nreturn {\n  json: {\n    error_message: error.message || 'Unknown error',\n    error_time: new Date().toISOString(),\n    workflow_name: 'Day14_Transport_KPIs_Direct_API'\n  }\n};"
+      },
+      "id": "log-error",
+      "name": "Log Error",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1250, 500]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare City Queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare City Queries": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Query Querido Diário API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Querido Diário API": {
+      "main": [
+        [
+          {
+            "node": "Wait (Rate Limit)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait (Rate Limit)": {
+      "main": [
+        [
+          {
+            "node": "Attach City Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attach City Name": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Aggregate Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Results": {
+      "main": [
+        [
+          {
+            "node": "Calculate KPIs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate KPIs": {
+      "main": [
+        [
+          {
+            "node": "Build HTML Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build HTML Email": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Log Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
