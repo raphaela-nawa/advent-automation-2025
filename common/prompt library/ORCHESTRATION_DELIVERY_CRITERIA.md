@@ -113,28 +113,49 @@ Christmas Data Advent 2025 - Days 11-15 (Orchestration Week)
 
 ---
 
-### **Day 14 - Andrea (Python + Email): Transport Regulatory KPIs**
+### **Day 14 - Andrea (n8n + Email): Transport Regulatory KPIs**
 
-**Tool:** Python + SMTP/SendGrid
-**Context:** Daily regulatory KPIs for transport/policy
-**Delivery:** Automated email report
+**Tool:** n8n workflow automation + SMTP
+**Context:** Daily regulatory KPIs for transport/policy from Brazilian municipal gazettes
+**Delivery:** Automated email report with HTML formatting
+**Data Source:** Querido Diário Public API (https://queridodiario.ok.org.br/api)
+
+**Implementation Decision Log:**
+- **Date:** 2025-12-15
+- **Data Source Selection:** Querido Diário API chosen over Ro-dou system
+  - **Rationale:** Cloud-based, no local installation required (user has limited disk space)
+  - **API Access:** Public, free, no authentication, 60 req/min rate limit
+  - **Coverage:** Municipal official gazettes (Diários Oficiais Municipais) across Brazil
+  - **Note:** Does NOT include federal DOU, but municipal data more relevant for policy analysts
+- **Orchestration Tool:** n8n (like Day 11) instead of pure Python
+  - **Rationale:** Visual workflow, easier stakeholder understanding, built-in error handling
+- **KPI Focus:** Transport/mobility regulations from municipal gazettes
+  - Keywords: "transporte", "mobilidade", "trânsito", "veículo", "regulação"
 
 **Specific Success Criteria:**
+- [ ] **n8n Workflow Export:** .json file committed to repo
+- [ ] **API Integration:** HTTP Request node querying Querido Diário API
 - [ ] **HTML Email Template:** Professional formatting with tables/charts
-- [ ] **KPI Calculation:** At least 4 meaningful transport/policy KPIs
-- [ ] **Scheduling:** Daily execution at specified time
+- [ ] **KPI Calculation:** At least 4 meaningful transport/policy KPIs:
+  - Number of new transport regulations published
+  - Municipalities with transport updates
+  - Compliance/deadline mentions
+  - Safety/incident report frequency
+- [ ] **Scheduling:** Daily execution at specified time (cron trigger)
 - [ ] **Email Delivery:** Successfully sends via SMTP with proper headers
-- [ ] **Attachment Support:** Can attach CSV/PDF if needed
-- [ ] **Recipient Management:** Configurable recipient list
+- [ ] **Error Handling:** Workflow includes fallback for API failures
 - [ ] **Send Verification:** Logs confirm successful email delivery
+- [ ] **Visual Documentation:** Screenshot of n8n workflow canvas
 
 **Common Pitfalls:**
 - Plain text emails (not HTML formatted)
-- No handling of SMTP failures
+- No handling of SMTP or API failures
 - Hardcoded email addresses
 - Missing transport-specific context in KPIs
+- Not handling empty API responses gracefully
+- Exceeding API rate limits (60 req/min)
 
-**Upwork Keywords:** automated reporting, email automation, regulatory compliance, transport analytics, policy monitoring
+**Upwork Keywords:** automated reporting, email automation, regulatory compliance, transport analytics, policy monitoring, n8n automation, API integration, government data
 
 ---
 
@@ -541,16 +562,22 @@ day13/
 └── README.md
 ```
 
-### Day 14 (Email Reports):
+### Day 14 (n8n Email Reports):
 ```
 day14/
-├── day14_ORCHESTRATOR_email_reports.py
+├── workflows/
+│   └── day14_transport_kpi_workflow.json
 ├── templates/
 │   └── day14_email_template.html
-├── day14_SCHEDULER_daily.py
 ├── day14_CONFIG_settings.py
+├── day14_HELPER_kpi_calculator.py (optional - for complex KPI logic)
+├── data/
+│   └── day14_querido_diario_cache.json (sample API responses)
 ├── screenshots/
+│   ├── day14_n8n_workflow_canvas.png
 │   └── day14_email_sample.png
+├── logs/
+│   └── day14_execution.log
 ├── day14_requirements.txt
 ├── .env.example
 └── README.md
