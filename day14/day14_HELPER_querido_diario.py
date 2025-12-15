@@ -68,9 +68,9 @@ class Day14QueridoDiarioClient:
         }
 
         if since_date:
-            params['since'] = since_date
+            params['published_since'] = since_date
         if until_date:
-            params['until'] = until_date
+            params['published_until'] = until_date
 
         try:
             response = requests.get(self.base_url, params=params, timeout=30)

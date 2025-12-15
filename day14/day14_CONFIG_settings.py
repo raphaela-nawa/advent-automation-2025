@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Querido Diário API Configuration
-DAY14_API_BASE_URL = "https://queridodiario.ok.org.br/api"
+DAY14_API_BASE_URL = "https://api.queridodiario.ok.org.br"
 DAY14_API_GAZETTES_ENDPOINT = f"{DAY14_API_BASE_URL}/gazettes"
 DAY14_API_RATE_LIMIT = 60  # requests per minute
 
