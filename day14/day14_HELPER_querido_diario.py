@@ -84,7 +84,8 @@ class Day14QueridoDiarioClient:
         self,
         keyword: str,
         cities: Optional[List[str]] = None,
-        since_date: Optional[str] = None
+        since_date: Optional[str] = None,
+        until_date: Optional[str] = None
     ) -> Dict[str, Dict]:
         """
         Query multiple cities for a specific keyword.
@@ -93,6 +94,7 @@ class Day14QueridoDiarioClient:
             keyword: Search keyword
             cities: List of city names (keys from DAY14_TERRITORY_IDS)
             since_date: Start date for search
+            until_date: End date for search
 
         Returns:
             Dictionary mapping city names to API responses
@@ -108,7 +110,8 @@ class Day14QueridoDiarioClient:
                 results[city] = self.query_gazettes(
                     territory_id=territory_id,
                     query_string=keyword,
-                    since_date=since_date
+                    since_date=since_date,
+                    until_date=until_date
                 )
 
         return results
@@ -189,7 +192,7 @@ class Day14KPICalculator:
         return kpis
 
 
-def day14_fetch_daily_kpis(days_back: int = 1) -> Dict:
+def day14_fetch_daily_kpis(days_back: int = 30) -> Dict:
     """
     Fetch and calculate daily transport regulatory KPIs.
 
@@ -210,19 +213,22 @@ def day14_fetch_daily_kpis(days_back: int = 1) -> Dict:
     # Query for transport regulations
     transport_results = client.query_multiple_cities(
         keyword='transporte OR mobilidade',
-        since_date=since_date
+        since_date=since_date,
+        until_date=until_date
     )
 
     # Query for compliance mentions
     compliance_results = client.query_multiple_cities(
         keyword='prazo OR cumprimento OR fiscalização',
-        since_date=since_date
+        since_date=since_date,
+        until_date=until_date
     )
 
     # Query for safety incidents
     safety_results = client.query_multiple_cities(
         keyword='acidente OR segurança viária',
-        since_date=since_date
+        since_date=since_date,
+        until_date=until_date
     )
 
     # Calculate KPIs
@@ -252,16 +258,16 @@ if __name__ == '__main__':
     # Test single city query
     client = Day14QueridoDiarioClient()
     test_result = client.query_gazettes(
-        territory_id=DAY14_TERRITORY_IDS['Sao_Paulo'],
+        territory_id=DAY14_TERRITORY_IDS['Curitiba'],
         query_string='transporte',
-        since_date=(datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+        since_date=(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
     )
 
-    print(f"São Paulo transport gazettes (last 7 days): {test_result.get('total_gazettes', 0)}")
+    print(f"Curitiba transport gazettes (last 30 days): {test_result.get('total_gazettes', 0)}")
 
     # Test KPI calculation
     print("\nFetching daily KPIs...")
-    daily_kpis = day14_fetch_daily_kpis(days_back=1)
+    daily_kpis = day14_fetch_daily_kpis(days_back=30)
 
     print("\nKPI Summary:")
     print(json.dumps(daily_kpis['kpis'], indent=2))
