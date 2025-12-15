@@ -1,12 +1,12 @@
 """
 Day 14: Local API Proxy for Querido Diário
-Uses synthetic data because Cloudflare blocks automated API access (403 Forbidden)
+Fetches real data from Querido Diário API (Brazilian government gazettes)
 
 Run this locally, then n8n calls localhost to get transport KPI data
 """
 
 from flask import Flask, jsonify, request
-from day14_SYNTHETIC_data_generator import day14_generate_synthetic_report
+from day14_HELPER_querido_diario import day14_fetch_daily_kpis
 import os
 
 app = Flask(__name__)
@@ -21,40 +21,34 @@ def health():
     return jsonify({
         'status': 'ok',
         'service': 'day14-api-proxy',
-        'data_source': 'synthetic',
-        'reason': 'Querido Diário API blocked by Cloudflare'
+        'data_source': 'querido_diario_api',
+        'api_url': 'https://api.queridodiario.ok.org.br'
     })
 
 
 @app.route('/kpis', methods=['GET'])
 def get_kpis():
     """
-    Fetch daily KPIs using synthetic data
+    Fetch daily KPIs from real Querido Diário API
 
     Query params:
-    - days_back: Number of days to look back (default: 1)
+    - days_back: Number of days to look back (default: 15)
     - api_key: Authentication key
-    - regenerate: Force regenerate data (default: false)
     """
     # Simple API key check
     api_key = request.args.get('api_key', '')
     if api_key != API_KEY:
         return jsonify({'error': 'Unauthorized'}), 401
 
-    # Get parameters
-    days_back = int(request.args.get('days_back', 1))
-    regenerate = request.args.get('regenerate', 'false').lower() == 'true'
+    # Get parameters (default to 15 days for better results)
+    days_back = int(request.args.get('days_back', 15))
 
     try:
-        # Generate synthetic data
-        # Each call generates fresh realistic data
-        print(f"[API] Generating synthetic KPIs (days_back={days_back})")
-        result = day14_generate_synthetic_report(
-            days_back=days_back,
-            save_to_file=True  # Always save for caching
-        )
+        # Fetch real data from Querido Diário API
+        print(f"[API] Fetching real KPIs from Querido Diário (days_back={days_back})")
+        result = day14_fetch_daily_kpis(days_back=days_back)
 
-        print(f"[API] KPIs generated successfully:")
+        print(f"[API] KPIs fetched successfully:")
         print(f"  - New Regulations: {result['kpis']['new_regulations']}")
         print(f"  - Active Municipalities: {result['kpis']['active_municipalities']}")
         print(f"  - Compliance Mentions: {result['kpis']['compliance_mentions']}")
@@ -69,17 +63,18 @@ def get_kpis():
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("Day 14 API Proxy Server (SYNTHETIC DATA)")
+    print("Day 14 API Proxy Server (REAL DATA)")
     print("=" * 60)
     print()
-    print("⚠️  NOTE: Using SYNTHETIC data because:")
-    print("    Querido Diário API is protected by Cloudflare")
-    print("    and blocks automated requests (403 Forbidden)")
+    print("✅  Using REAL data from:")
+    print("    Querido Diário API (Brazilian Government)")
+    print("    https://api.queridodiario.ok.org.br")
     print()
-    print("✅  Synthetic data is:")
-    print("    - Based on real API structure")
-    print("    - Realistic transport regulation patterns")
-    print("    - Perfect for portfolio demonstration")
+    print("📊  Monitoring:")
+    print("    - 10 major Brazilian cities")
+    print("    - Transport & mobility regulations")
+    print("    - Compliance mentions")
+    print("    - Safety incidents")
     print()
     print("=" * 60)
     print(f"Running on: http://localhost:5014")
@@ -87,7 +82,10 @@ if __name__ == '__main__':
     print()
     print("Endpoints:")
     print("  GET /health")
-    print("  GET /kpis?days_back=1&api_key=YOUR_KEY")
+    print("  GET /kpis?days_back=15&api_key=YOUR_KEY")
+    print()
+    print("Note: Using days_back=15 for better results")
+    print("      (municipalities don't publish daily)")
     print()
     print("Press CTRL+C to stop")
     print("=" * 60)
