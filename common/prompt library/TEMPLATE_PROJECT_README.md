@@ -7,6 +7,26 @@
 4. Keep Executive Summary concise (30 seconds to read)
 5. Ensure all code examples use the correct `dayXX_` prefix for your day number
 6. Collapse technical sections for executive readers - expand for engineers
+7. **IMPORTANT:** Fill in the **Industry:** field - choose from examples below or create your own
+
+**Industry Examples (for README automation):**
+- Marketing/Advertising
+- Creator Economy/Social Media
+- Legal/Compliance
+- Crypto/Blockchain
+- Cultural Heritage/Museums
+- SaaS/Software
+- Hospitality/Travel
+- Hospitality/Property Management
+- Wealth Management/Finance
+- Retail/Commerce
+- Cybersecurity/InfoSec
+- Finance/Compliance
+- Government/Public Policy
+- Healthcare/Medical
+- Education/EdTech
+- Manufacturing/Industrial
+- Real Estate/PropTech
 
 **Reading Guide by Audience:**
 - **Recruiters/Hiring Managers:** Read Executive Summary + Key Takeaways (2 min)
@@ -45,7 +65,7 @@
 
 **Business Impact:** [One metric or outcome that matters to stakeholder]
 
-**For:** [STAKEHOLDER_NAME] ([STAKEHOLDER_ROLE]) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** [STAKEHOLDER_NAME] ([STAKEHOLDER_ROLE]) | **Industry:** [INDUSTRY/SECTOR] | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
