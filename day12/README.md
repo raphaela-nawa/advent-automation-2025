@@ -55,7 +55,7 @@ This project demonstrates **two approaches** to data quality validation, showcas
 
 **Business Impact:** Prevents bad data from reaching production, reduces false positive alerts by ~30%, and provides audit-ready validation reports for compliance requirements (HIPAA, PCI-DSS, SOX).
 
-**For:** Sal (Cybersecurity Expert) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Sal (Cybersecurity Expert) | **Industry:** Cybersecurity/InfoSec | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

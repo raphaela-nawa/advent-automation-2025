@@ -27,7 +27,7 @@
 
 **Business Impact:** Reduces manual research from 2+ hours to 30 seconds, ensures zero regulations are missed, and provides actionable insights automatically.
 
-**For:** Andrea (Policy & Transport Analytics) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Andrea (Policy & Transport Analytics) | **Industry:** Government/Public Policy | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

@@ -27,7 +27,7 @@
 
 **Business Impact:** Saves 180 hours/year, eliminates human error, provides consistent stakeholder visibility
 
-**For:** Gleyson (Retail Marketing Automation Specialist) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Gleyson (Retail Marketing Automation Specialist) | **Industry:** Retail/Commerce | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 

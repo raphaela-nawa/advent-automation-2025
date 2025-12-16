@@ -33,10 +33,10 @@ Each one ships with full code and documentation.
 | 8 | Modeling | SaaS Growth Funnel & Cohort Analysis (dbt) | SaaS/Software | ✅ Complete | [Day 08](./day08) |
 | 9 | Modeling | Property Operations Data Warehouse (dbt) | Hospitality/Property Management | ✅ Complete | [Day 09](./day09) |
 | 10 | Modeling | Family Office Asset Management Data Warehouse | Wealth Management/Finance | ✅ Complete | [Day 10](./day10) |
-| 11 | Orchestration | Retail Daily Performance Report Automation | TBD | ✅ Complete | [Day 11](./day11) |
-| 12 | Orchestration | Cybersecurity Data Quality Framework | TBD | ✅ Complete | [Day 12](./day12) |
-| 13 | Orchestration | Alert Triage Orchestrator (Finance Compliance) | TBD | ✅ Complete | [Day 13](./day13) |
-| 14 | Orchestration | Transport Regulatory KPIs - Automated Email Reports | TBD | ✅ Complete | [Day 14](./day14) |
+| 11 | Orchestration | Retail Daily Performance Report Automation | Retail/Commerce | ✅ Complete | [Day 11](./day11) |
+| 12 | Orchestration | Cybersecurity Data Quality Framework | Cybersecurity/InfoSec | ✅ Complete | [Day 12](./day12) |
+| 13 | Orchestration | Alert Triage Orchestrator (Finance Compliance) | Finance/Compliance | ✅ Complete | [Day 13](./day13) |
+| 14 | Orchestration | Transport Regulatory KPIs - Automated Email Reports | Government/Public Policy | ✅ Complete | [Day 14](./day14) |
 | 15 | Orchestration | TBD | TBD | 🚧 Planned | [Day 15](./day15) |
 | 16 | Dashboards | TBD | TBD | 🚧 Planned | [Day 16](./day16) |
 | 17 | Dashboards | TBD | TBD | 🚧 Planned | [Day 17](./day17) |

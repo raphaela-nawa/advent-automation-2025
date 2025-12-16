@@ -27,7 +27,7 @@
 
 **Business Impact:** Reduces alert triage time from 2-3 hours daily to automated 15-minute cycles, ensures zero missed alerts, provides complete audit trail for regulatory compliance, and guarantees consistent severity classification.
 
-**For:** Rafael E. (Legal/GRC Leader) | **Time:** 3 hours | **Status:** ✅ Complete
+**For:** Rafael E. (Legal/GRC Leader) | **Industry:** Finance/Compliance | **Time:** 3 hours | **Status:** ✅ Complete
 
 ---
 
