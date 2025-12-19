@@ -1,0 +1,16 @@
+# Day 16 - Ignore sensitive files
+
+# Service account keys
+*.json
+!day16_metabase_dashboard.json
+
+# Data files (too large for git)
+data/*.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env
