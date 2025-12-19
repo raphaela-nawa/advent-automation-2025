@@ -13,6 +13,12 @@ from day17_CONFIG_settings import (
 
 BASE_DIR = Path(__file__).resolve().parent
 QUERY_DIR = BASE_DIR / "queries"
+DAY17_HAS_PYARROW = True
+
+try:
+    import pyarrow  # noqa: F401
+except Exception:
+    DAY17_HAS_PYARROW = False
 
 
 def day17_get_db_path() -> Path:
@@ -29,6 +35,14 @@ def day17_query_df(query_filename: str, params: dict | None = None) -> pd.DataFr
     db_path = day17_get_db_path()
     with sqlite3.connect(db_path) as conn:
         return pd.read_sql_query(day17_read_sql(query_filename), conn, params=params or {})
+
+
+def day17_render_table(df: pd.DataFrame) -> None:
+    if DAY17_HAS_PYARROW:
+        st.dataframe(df, use_container_width=True)
+    else:
+        st.caption("Table rendered as text (pyarrow unavailable).")
+        st.text(df.to_string(index=False))
 
 
 def day17_get_date_bounds() -> tuple[pd.Timestamp, pd.Timestamp]:
@@ -135,7 +149,9 @@ st.subheader("Asset Classification Timeline (SCD Type 2)")
 st.caption("Timeline uses synthetic history for Equipment/IP/Certification assets (change date = latest holdings date - 60 days).")
 scd_df = day17_query_df("day17_QUERY_scd_timeline.sql")
 scd_df["valid_from"] = pd.to_datetime(scd_df["valid_from"])
-scd_df["valid_to"] = pd.to_datetime(scd_df["valid_to"]).fillna(latest_date)
+scd_df["valid_to"] = pd.to_datetime(scd_df["valid_to"], errors="coerce").fillna(
+    latest_date
+)
 
 fig_timeline = px.timeline(
     scd_df,
@@ -152,7 +168,7 @@ st.plotly_chart(fig_timeline, use_container_width=True)
 
 st.subheader("Classification Changes This Quarter")
 changes_df = day17_query_df("day17_QUERY_changes_this_quarter.sql")
-st.dataframe(changes_df, use_container_width=True)
+day17_render_table(changes_df)
 
 # Section 3 - Compliance Status
 st.subheader("Compliance Status by Jurisdiction")
@@ -192,14 +208,11 @@ def day17_urgency_label(days: int) -> str:
 
 deadlines_df["urgency"] = deadlines_df["days_to_deadline"].apply(day17_urgency_label)
 
-st.dataframe(
-    deadlines_df.sort_values(["urgency", "days_to_deadline"]),
-    use_container_width=True,
-)
+day17_render_table(deadlines_df.sort_values(["urgency", "days_to_deadline"]))
 
 st.subheader("Point-in-Time Portfolio Composition")
 point_df = day17_query_df(
     "day17_QUERY_point_in_time.sql",
     params={"as_of_date": point_in_time_date.isoformat()},
 )
-st.dataframe(point_df, use_container_width=True)
+day17_render_table(point_df)

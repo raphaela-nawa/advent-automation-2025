@@ -15,8 +15,8 @@ This document contains all SQL queries needed for Murilo's SaaS Health Metrics D
 
 ```sql
 SELECT
-  ROUND(total_mrr, 2) as current_mrr
-FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
+  ROUND(current_mrr, 2) as current_mrr
+FROM `advent2025-day16.day16_saas_metrics.day06_dashboard_kpis`
 ```
 
 **Metabase Card Settings**:
@@ -31,8 +31,8 @@ FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
 
 ```sql
 SELECT
-  ROUND(churn_rate * 100, 2) as churn_rate_pct
-FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
+  ROUND(overall_churn_rate_pct, 2) as churn_rate_pct
+FROM `advent2025-day16.day16_saas_metrics.day06_dashboard_kpis`
 ```
 
 **Metabase Card Settings**:
@@ -49,7 +49,7 @@ FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
 ```sql
 SELECT
   active_customers
-FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
+FROM `advent2025-day16.day16_saas_metrics.day06_dashboard_kpis`
 ```
 
 **Metabase Card Settings**:
@@ -59,20 +59,20 @@ FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
 
 ---
 
-### Card 1.4: LTV/CAC Ratio (Metric Card)
-**Purpose**: Executive KPI - Customer acquisition efficiency
+### Card 1.4: Customer Health % (Metric Card)
+**Purpose**: Executive KPI - Percentage of healthy customers
 
 ```sql
 SELECT
-  ROUND(ltv_cac_ratio, 2) as ltv_cac_ratio
-FROM `PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis`
+  ROUND((healthy_customers * 100.0 / (healthy_customers + at_risk_customers + critical_customers)), 1) as healthy_pct
+FROM `advent2025-day16.day16_saas_metrics.day06_dashboard_kpis`
 ```
 
 **Metabase Card Settings**:
 - Visualization: Number
-- Display: Decimal (2 places)
-- Title: "LTV/CAC Ratio"
-- Color: Green if > 3.0, Yellow if 2-3, Red if < 2
+- Display: Percentage
+- Title: "Healthy Customers %"
+- Color: Green if > 80%, Yellow if 60-80%, Red if < 60%
 
 ---
 
@@ -89,7 +89,7 @@ SELECT
   ROUND(contraction_mrr, 2) as contraction_mrr,
   ROUND(churned_mrr, 2) as churned_mrr,
   ROUND(net_mrr, 2) as net_mrr
-FROM `PROJECT_ID.day16_saas_metrics.day06_mrr_summary`
+FROM `advent2025-day16.day16_saas_metrics.day06_mrr_summary`
 ORDER BY month ASC
 ```
 
@@ -115,7 +115,7 @@ ORDER BY month ASC
 SELECT
   month,
   ROUND(growth_rate * 100, 2) as growth_rate_pct
-FROM `PROJECT_ID.day16_saas_metrics.day06_mrr_summary`
+FROM `advent2025-day16.day16_saas_metrics.day06_mrr_summary`
 ORDER BY month ASC
 ```
 
@@ -139,7 +139,7 @@ SELECT
   cohort_month,
   months_since_signup,
   ROUND(retention_rate_pct, 2) as retention_rate_pct
-FROM `PROJECT_ID.day16_saas_metrics.day06_retention_curves`
+FROM `advent2025-day16.day16_saas_metrics.day06_retention_curves`
 WHERE months_since_signup <= 12  -- Focus on first year
 ORDER BY cohort_month ASC, months_since_signup ASC
 ```
@@ -172,7 +172,7 @@ SELECT
   ROUND(churn_rate * 100, 2) as churn_rate_pct,
   churned_customers,
   cohort_size
-FROM `PROJECT_ID.day16_saas_metrics.day06_churn_by_cohort`
+FROM `advent2025-day16.day16_saas_metrics.day06_churn_by_cohort`
 WHERE cohort_size > 5  -- Filter out small cohorts for statistical significance
 ORDER BY cohort_month ASC, plan_tier ASC
 ```
@@ -197,7 +197,7 @@ ORDER BY cohort_month ASC, plan_tier ASC
 SELECT
   health_status,
   COUNT(*) as customer_count
-FROM `PROJECT_ID.day16_saas_metrics.day06_customer_health`
+FROM `advent2025-day16.day16_saas_metrics.day06_customer_health`
 GROUP BY health_status
 ORDER BY customer_count DESC
 ```
@@ -225,7 +225,7 @@ SELECT
   health_status,
   days_since_last_activity,
   risk_reason
-FROM `PROJECT_ID.day16_saas_metrics.day06_customer_health`
+FROM `advent2025-day16.day16_saas_metrics.day06_customer_health`
 WHERE health_status = 'Critical'
 ORDER BY ltv DESC
 LIMIT 10
@@ -255,7 +255,7 @@ SELECT
     LAG(net_mrr, 1) OVER (ORDER BY month) * 100,
     2
   ) as nrr_pct
-FROM `PROJECT_ID.day16_saas_metrics.day06_mrr_summary`
+FROM `advent2025-day16.day16_saas_metrics.day06_mrr_summary`
 ORDER BY month ASC
 ```
 
@@ -273,7 +273,7 @@ SELECT
   plan_tier,
   ROUND(AVG(mrr), 2) as avg_mrr,
   COUNT(*) as customer_count
-FROM `PROJECT_ID.day16_saas_metrics.day06_subscriptions`
+FROM `advent2025-day16.day16_saas_metrics.day06_subscriptions`
 WHERE end_date IS NULL  -- Active subscriptions only
 GROUP BY plan_tier
 ORDER BY avg_mrr DESC
@@ -329,8 +329,8 @@ Run each query in BigQuery console first to verify results before creating Metab
 
 ```bash
 # Test in BigQuery:
-bq query --use_legacy_sql=false --project_id=YOUR_PROJECT_ID "
-SELECT * FROM \`YOUR_PROJECT_ID.day16_saas_metrics.day06_dashboard_kpis\`
+bq query --use_legacy_sql=false --project_id=advent2025-day16 "
+SELECT * FROM \`advent2025-day16.day16_saas_metrics.day06_dashboard_kpis\`
 "
 ```
 
@@ -362,13 +362,11 @@ Before finalizing dashboard, verify:
 
 ---
 
-## Replace PROJECT_ID
+## ✅ Project ID Already Configured
 
-**IMPORTANT**: Replace `PROJECT_ID` in all queries with your actual GCP project ID.
+**All queries in this document use:** `advent2025-day16.day16_saas_metrics`
 
-Quick find/replace in Metabase:
-- Find: `PROJECT_ID.day16_saas_metrics`
-- Replace: `your-actual-project-id.day16_saas_metrics`
+You can copy/paste the SQL queries directly into Metabase without any modifications!
 
 ---
 

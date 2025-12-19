@@ -933,35 +933,330 @@ ORDER BY total_value DESC;
 
 ---
 
-### **Day 18 - Andrea (Transport Policy KPI Dashboard)**
+### **Day 18 - Google Arts & Culture Experiment MVP (Museum Collection + Audio Sync)**
 
-**Stakeholder:** Andrea (Policy Analyst - Transport Regulation)
-**Project:** Municipal Transport Regulation Tracker
-**Data Source:** Day 14 (Querido Diário API - transport regulations)
+**Project:** Interactive Museum Collection Visualization with Audio Synchronization
+**Tool:** React + Vite + Tone.js + Framer Motion
+**Data Source:** Day 5 (Museum API data - Brooklyn Museum collection) + BigQuery (for GAC compatibility)
+**Target Platform:** Google Arts & Culture Lab Experiment (Apache 2.0 compliant)
 
-**Decision Context:**
-- **WHO:** Andrea, Policy Analyst monitoring municipal transport regulations
-- **WHAT decision:** Which municipalities to prioritize for policy review THIS WEEK based on regulation activity
-- **WHAT visual:** Heatmap: Municipalities (rows), Weeks (columns), Cell color = number of transport regulations published
+#### Project Context
 
-**Mandatory Output:**
-- [ ] **Primary Visual:** Heatmap showing regulation activity by municipality over time
-- [ ] **Secondary Visual:** Bar chart: Top 10 municipalities by total regulation count
-- [ ] **Metric Cards:** Total regulations, active municipalities, most active city
-- [ ] **Filter:** Regulation type (trânsito, mobilidade, transporte, etc.)
-- [ ] **Data Source:** Queries Day 14 cached API responses OR synthetic gazette data
-- [ ] **Screenshot:** Evidence of working dashboard with heatmap
+**Objective:**
+Build an interactive web-based visualization that synchronizes a museum's digital collection with specialized audio content (podcasts/tours). Create a seamless "bi-directional" experience where visual exploration and audio narration are perfectly aligned in time.
 
-**When to Stop:**
-- ✅ Heatmap shows last 12 weeks of data
-- ✅ Color intensity indicates activity level
-- ✅ Top 10 chart helps prioritize municipalities
-- ✅ Regulation type filter works
-- ✅ README explains: "Helps Andrea identify policy hotspots requiring review"
-- ✅ Connection to Day 14 documented
-- ❌ DON'T do: Real-time API calls, full-text search, NLP analysis, automated policy summaries
+**Why This Tech Stack:**
+- **React + Vite:** Matches Google Arts & Culture frontend architecture
+- **Tone.js:** Sample-accurate audio synchronization (required for audio-to-visual sync)
+- **BigQuery:** Google Cloud native data source (GAC integration-ready)
+- **Framer Motion:** Fluid transitions mimicking GAC aesthetic
+- **Apache 2.0:** Open-source license requirement for GAC Lab submission
 
-**Tool Recommendation:** Plotly (heatmaps) or Streamlit with Plotly Express
+#### Decision Context
+
+- **WHO:** Cultural institution digital experience team OR portfolio demonstration for GAC Lab submission
+- **WHAT decision:** Which museum items to feature in audio tour based on narrative flow and visual synchronization quality
+- **WHAT visual:** Deep-zoom gallery with audio-synchronized highlighting (audio timestamp → visual focus OR visual click → audio seek)
+
+**Why THIS visualization:**
+- Demonstrates technical capability for GAC Lab experiments (audio-visual sync)
+- Showcases museum collection in immersive format (not static gallery)
+- Proves bi-directional interaction pattern (audio ↔ visual)
+
+**Rejected alternatives:**
+- ❌ Static image gallery - No temporal synchronization
+- ❌ Separate audio player + gallery - Breaks immersive experience
+- ❌ Video tour - Less interactive, higher bandwidth, not GAC pattern
+
+#### Technical Architecture (GAC-Compatible)
+
+**The "Sync-Link" Engine:**
+
+1. **Audio-to-Visual Sync:**
+   - When audio reaches timestamp T, UI automatically highlights corresponding museum item
+   - Deep zoom animation transitions to featured artwork
+   - "Now Narrating" visual indicator appears
+
+2. **Visual-to-Audio Sync:**
+   - Clicking museum item triggers audio player `seekTo(timestamp)`
+   - Audio jumps to narration segment for that specific artwork
+   - Visual highlight follows audio position
+
+**Data Flow:**
+```
+Day 5 Museum API → BigQuery (ETL) → React App
+                      ↓
+            Temporal Metadata (timestamps)
+                      ↓
+            Tone.js Audio Player ↔ Framer Motion Visuals
+```
+
+#### Mandatory Output (MVP in 3 Hours)
+
+**Core Functionality:**
+- [ ] **Data Integration:** Retrieve at least 5 museum items from BigQuery (Title, Creator, High-res Image URL, Description)
+- [ ] **Audio Player:** Functioning player with "Now Narrating" visual indicator
+- [ ] **Audio-to-Visual Sync:** Audio timestamp triggers automatic artwork highlight + deep zoom
+- [ ] **Visual-to-Audio Sync:** Clicking artwork seeks audio to corresponding timestamp (seekTo works correctly)
+- [ ] **Responsive Layout:** Works on mobile and desktop "exhibit mode"
+
+**Technical Quality:**
+- [ ] React + Vite setup with HMR (Hot Module Replacement)
+- [ ] Tone.js integrated for sample-accurate audio sync
+- [ ] BigQuery connection authenticated (ADC or Service Account)
+- [ ] Framer Motion transitions smooth (60fps minimum)
+- [ ] Tailwind CSS for rapid UI prototyping
+
+**Deployment:**
+- [ ] Live staging URL (Firebase App Hosting or Vercel)
+- [ ] Public demo link works without authentication
+- [ ] Mobile-responsive (tested on 375px and 1920px viewports)
+
+**Documentation:**
+- [ ] README with GAC Lab submission context
+- [ ] Setup instructions for BigQuery authentication
+- [ ] Apache 2.0 LICENSE file
+- [ ] Screenshots of audio-visual sync in action
+- [ ] Architecture diagram (audio ↔ visual sync flow)
+
+#### When to Stop
+
+**Success Criteria:**
+- ✅ 5+ museum items loaded from BigQuery
+- ✅ Audio player plays and displays current timestamp
+- ✅ Audio reaches timestamp → Visual highlights + zooms to artwork (automatic)
+- ✅ Click artwork → Audio seeks to timestamp (manual trigger)
+- ✅ Deployed to live URL (Firebase or Vercel)
+- ✅ README explains: "GAC Experiment MVP demonstrating audio-visual synchronization for museum collections"
+- ✅ Connection to Day 5 documented: "Consumes Brooklyn Museum API data transformed to BigQuery"
+
+**Scope Creep to AVOID:**
+- ❌ Multi-language support - English only for MVP
+- ❌ User accounts/authentication - Public demo, no login
+- ❌ Backend API - Direct BigQuery queries from frontend (OAuth handled client-side)
+- ❌ Advanced audio features - No EQ, no effects, basic playback only
+- ❌ AR/VR features - 2D web only, no WebXR
+- ❌ Analytics tracking - No GA4, no user behavior tracking
+- ❌ CMS integration - Hardcoded timestamps, no admin panel
+
+#### Expected Files
+
+```
+day18/
+├── README.md                                # GAC Lab context, setup instructions
+├── LICENSE                                  # Apache 2.0 (required for GAC submission)
+├── package.json                             # React + Vite + Tone.js + Framer Motion
+├── vite.config.js                           # Vite configuration
+├── src/
+│   ├── App.jsx                              # Main React component
+│   ├── components/
+│   │   ├── AudioPlayer.jsx                  # Tone.js audio controller
+│   │   ├── ArtworkGallery.jsx               # Framer Motion visual grid
+│   │   ├── SyncEngine.jsx                   # Bi-directional sync logic
+│   │   └── DeepZoom.jsx                     # Image zoom on highlight
+│   ├── data/
+│   │   ├── bigquery-client.js               # BigQuery SDK connection
+│   │   └── temporal-metadata.json           # Timestamp → artwork mapping
+│   ├── styles/
+│   │   └── tailwind.css                     # Tailwind base + custom GAC aesthetic
+│   └── main.jsx                             # React entry point
+├── public/
+│   └── audio/
+│       └── museum-tour.mp3                  # Audio narration file
+├── screenshots/
+│   ├── day18_audio_to_visual_sync.png       # Auto-highlight demo
+│   ├── day18_visual_to_audio_sync.png       # Click-to-seek demo
+│   └── day18_mobile_view.png                # Responsive layout
+├── .env.example                             # BigQuery credentials template
+└── firebase.json                            # OR vercel.json for deployment
+```
+
+#### Setup & Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Set up BigQuery authentication
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/service-account-key.json"
+
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your BigQuery project ID
+
+# Run development server
+npm run dev
+
+# Access: http://localhost:5173
+
+# Build for production
+npm run build
+
+# Deploy to Firebase App Hosting
+firebase deploy --only hosting
+
+# OR Deploy to Vercel
+vercel --prod
+```
+
+#### GAC Lab Submission Requirements
+
+**Apache 2.0 License:**
+```
+Copyright 2025 [Your Name]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+```
+
+**Modular Code Structure:**
+- All components must be independently exportable
+- No hardcoded API keys (use environment variables)
+- Well-documented props and function signatures
+- Follows React best practices (hooks, functional components)
+
+**GAC Aesthetic Guidelines:**
+- Clean, minimal UI (white/black/accent color palette)
+- High-quality images (minimum 1200px width)
+- Smooth transitions (Framer Motion spring animations)
+- Typography: Sans-serif, generous whitespace
+- Mobile-first responsive design
+
+#### 3-Hour Timeline
+
+**Hour 1: Data & Audio Setup (60 min)**
+- 0:00-0:20 - BigQuery setup + fetch 5 museum items
+- 0:20-0:40 - Tone.js audio player integration
+- 0:40-1:00 - Temporal metadata mapping (timestamp → artwork ID)
+
+**Hour 2: Sync Engine (PRIMARY FEATURE) (60 min)**
+- 1:00-1:30 - Audio-to-Visual: Auto-highlight on timestamp
+- 1:30-2:00 - Visual-to-Audio: Click artwork → seekTo(timestamp)
+
+**Hour 3: UI Polish & Deployment (60 min)**
+- 2:00-2:30 - Framer Motion transitions + Tailwind styling
+- 2:30-2:45 - Mobile responsiveness testing
+- 2:45-3:00 - Deploy to Firebase/Vercel, README, screenshots
+
+**3:00 - HARD STOP**
+
+#### Naming Examples
+
+```javascript
+// ✅ CORRECT
+const DAY18_BIGQUERY_PROJECT_ID = process.env.VITE_BIGQUERY_PROJECT_ID;
+const DAY18_AUDIO_FILE = '/audio/museum-tour.mp3';
+
+function day18_syncAudioToVisual(currentTime, artworks) {
+  // Find artwork matching current audio timestamp
+}
+
+class Day18SyncEngine {
+  constructor(audioPlayer, artworkGallery) {
+    this.audioPlayer = audioPlayer;
+    this.artworkGallery = artworkGallery;
+  }
+}
+
+// ❌ WRONG
+const PROJECT_ID = "my-project";  // No prefix
+function syncAudio() { }  // Generic name
+```
+
+#### Key Code Patterns
+
+**Bi-Directional Sync Logic:**
+```javascript
+// Audio-to-Visual Sync
+audioPlayer.on('timeupdate', (currentTime) => {
+  const activeArtwork = temporal_metadata.find(
+    item => currentTime >= item.start && currentTime < item.end
+  );
+
+  if (activeArtwork) {
+    artworkGallery.highlight(activeArtwork.id);
+    artworkGallery.deepZoom(activeArtwork.id);
+  }
+});
+
+// Visual-to-Audio Sync
+artworkGallery.on('click', (artworkId) => {
+  const timestamp = temporal_metadata.find(
+    item => item.id === artworkId
+  ).start;
+
+  audioPlayer.seekTo(timestamp);
+});
+```
+
+**BigQuery Data Fetch:**
+```javascript
+import { BigQuery } from '@google-cloud/bigquery';
+
+async function day18_fetchMuseumItems() {
+  const bigquery = new BigQuery();
+
+  const query = `
+    SELECT title, creator, image_url, description
+    FROM \`${DAY18_BIGQUERY_PROJECT_ID}.museum.items\`
+    LIMIT 5
+  `;
+
+  const [rows] = await bigquery.query(query);
+  return rows;
+}
+```
+
+**Framer Motion Deep Zoom:**
+```jsx
+import { motion } from 'framer-motion';
+
+function ArtworkCard({ artwork, isActive }) {
+  return (
+    <motion.div
+      animate={{
+        scale: isActive ? 1.2 : 1,
+        zIndex: isActive ? 10 : 1,
+        opacity: isActive ? 1 : 0.6
+      }}
+      transition={{ type: 'spring', stiffness: 300 }}
+    >
+      <img src={artwork.image_url} alt={artwork.title} />
+      {isActive && <div className="now-narrating">🔊 Now Narrating</div>}
+    </motion.div>
+  );
+}
+```
+
+#### GAC Lab Experiment Philosophy
+
+This project is designed for **Google Arts & Culture Lab submission**, not generic web development:
+
+**Key Differences from Standard Dashboards:**
+- **Sample-accurate sync** - Tone.js provides <10ms audio precision (not HTML5 Audio)
+- **Deep zoom aesthetics** - Framer Motion mimics GAC smooth transitions (not CSS transitions)
+- **BigQuery native** - Cloud-first data architecture (not REST APIs)
+- **Apache 2.0 modular** - Code must be reusable for GAC codebase (not monolithic app)
+
+**What GAC Experiments Require:**
+- High-performance animations (60fps)
+- Cultural data integration (museum APIs, BigQuery)
+- Accessible design (WCAG 2.1 AA minimum)
+- Open-source licensing (Apache 2.0)
+
+**What It Does NOT Need:**
+- Backend server (serverless/client-side only)
+- User management (public experiment)
+- SEO optimization (not public website)
+- Production-scale infrastructure (MVP demo)
+
+**Tool Recommendation:** React + Vite (required for GAC stack compatibility) + Tone.js (audio sync) + Framer Motion (visual transitions)
+
+**Connection to Day 5:** Consumes Brooklyn Museum API data collected on Day 5, transformed to BigQuery-compatible schema for GAC integration
 
 ---
 

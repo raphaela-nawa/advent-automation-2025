@@ -6,11 +6,14 @@ pandas>=2.0.0
 numpy>=1.24.0
 
 # Database
-sqlite3  # Built-in with Python
+# sqlite3  # Built-in with Python
 
 # BigQuery SDK (for uploading data)
 google-cloud-bigquery>=3.14.1
 google-auth>=2.25.2
 
-# Optional: for automated dashboard management
-# metabase-api>=1.2.0  # Uncomment if using API automation
+# Environment variables
+python-dotenv>=1.0.0
+
+# Metabase API automation
+requests>=2.31.0

@@ -1,5 +1,8 @@
 # Day 16 - Ignore sensitive files
 
+# Environment variables (contains passwords!)
+.env
+
 # Service account keys
 *.json
 !day16_metabase_dashboard.json
@@ -11,6 +14,4 @@ data/*.csv
 __pycache__/
 *.pyc
 *.pyo
-
-# Environment files
-.env
+*.pyd
