@@ -39,7 +39,7 @@ Each one ships with full code and documentation.
 | 14 | Orchestration | Transport Regulatory KPIs - Automated Email Reports | Government/Public Policy | ✅ Complete | [Day 14](./day14) |
 | 15 | Orchestration | Real-Time Analytics Orchestrator - Webhook Event Processing Pipeline | SaaS / Technology | ✅ Complete | [Day 15](./day15) |
 | 16 | Dashboards | SaaS Health Metrics Dashboard - Metabase Cloud | TBD | ✅ Complete | [Day 16](./day16) |
-| 17 | Dashboards | TBD | TBD | 🚧 Planned | [Day 17](./day17) |
+| 17 | Dashboards | Rafael - Multi-Jurisdictional Asset Compliance Dashboard | Wealth Management / Legal Compliance | ✅ Complete | [Day 17](./day17) |
 | 18 | Dashboards | TBD | TBD | 🚧 Planned | [Day 18](./day18) |
 | 19 | Dashboards | TBD | TBD | 🚧 Planned | [Day 19](./day19) |
 | 20 | Dashboards | TBD | TBD | 🚧 Planned | [Day 20](./day20) |
