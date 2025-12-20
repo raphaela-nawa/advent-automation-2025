@@ -11,7 +11,17 @@
 code config/.env  # or nano config/.env, vim config/.env, etc.
 ```
 
-**Add these 4 lines to `config/.env`:**
+**Add these lines to `config/.env`:**
+
+**Authentication Option 1 - API Key (Recommended, More Secure):**
+```bash
+# Day 16: Metabase Cloud Configuration
+DAY16_METABASE_URL=https://your-instance.metabaseapp.com
+DAY16_METABASE_API_KEY=mb_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+DAY16_METABASE_DATABASE_NAME=Day 16 - SaaS Health Metrics
+```
+
+**OR Authentication Option 2 - Email/Password (Legacy):**
 ```bash
 # Day 16: Metabase Cloud Configuration
 DAY16_METABASE_URL=https://your-instance.metabaseapp.com
@@ -20,11 +30,19 @@ DAY16_METABASE_PASSWORD=your-actual-password
 DAY16_METABASE_DATABASE_NAME=Day 16 - SaaS Health Metrics
 ```
 
+**How to get your Metabase API Key (Option 1):**
+1. Log into Metabase Cloud
+2. Click your profile icon (top right) → Account Settings
+3. Go to "API Keys" tab
+4. Click "Create API Key"
+5. Give it a name like "Day 16 Dashboard Automation"
+6. Copy the key (starts with `mb_`) - you'll only see it once!
+
 **How to find your Metabase URL:**
 - If you signed up at metabase.com, it's usually: `https://[your-company].metabaseapp.com`
 - Check your browser address bar when logged into Metabase
 
-**⚠️  IMPORTANT:** `config/.env` is in root `.gitignore` - your password is safe!
+**⚠️  IMPORTANT:** `config/.env` is in root `.gitignore` - your credentials are safe!
 
 ---
 
@@ -142,9 +160,12 @@ The dashboard will be **80% ready**. You only need to:
 
 ## 🆘 Troubleshooting
 
-### "Login failed: 401"
-**Cause:** Wrong email or password
-**Fix:** Double-check `DAY16_METABASE_EMAIL` and `DAY16_METABASE_PASSWORD` in `config/.env` file
+### "Login failed: 401" or "API Key authentication failed"
+**Cause:** Wrong credentials
+**Fix:**
+- If using API Key: Regenerate a new key in Metabase → Account Settings → API Keys
+- If using email/password: Double-check `DAY16_METABASE_EMAIL` and `DAY16_METABASE_PASSWORD` in `config/.env` file
+- Make sure you're using the correct authentication method (API key is recommended)
 
 ---
 

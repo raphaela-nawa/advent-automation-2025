@@ -3,46 +3,61 @@ Day 16: Metabase Dashboard Auto-Setup via API
 Automatically creates all 6 dashboard cards so you only need to adjust visual layout
 
 SETUP:
-1. Copy .env.example to .env
-2. Edit .env with your Metabase credentials
+1. Add credentials to config/.env (root .env file)
+2. Choose authentication method:
+   - API Key (recommended): DAY16_METABASE_API_KEY
+   - OR Email/Password: DAY16_METABASE_EMAIL + DAY16_METABASE_PASSWORD
 3. Run: python3 day16_METABASE_auto_setup.py
 """
 
 import requests
 import json
 import os
+import sys
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
+from pathlib import Path
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from ROOT config/.env file
+root_dir = Path(__file__).parent.parent
+env_path = root_dir / "config" / ".env"
+
+if env_path.exists():
+    load_dotenv(env_path)
+    print(f"✅ Loaded environment variables from: {env_path}")
+else:
+    print(f"❌ ERROR: Could not find {env_path}")
+    print("\n💡 Fix: Create config/.env file with your Metabase credentials")
+    sys.exit(1)
 
 # ============================================================================
-# CONFIGURATION - Loaded from .env file
+# CONFIGURATION - Loaded from config/.env file
 # ============================================================================
 
 METABASE_URL = os.getenv("DAY16_METABASE_URL")
-METABASE_EMAIL = os.getenv("DAY16_METABASE_EMAIL")
+METABASE_API_KEY = os.getenv("DAY16_METABASE_API_KEY")  # Option 1: API Key (recommended)
+METABASE_EMAIL = os.getenv("DAY16_METABASE_EMAIL")      # Option 2: Email/Password
 METABASE_PASSWORD = os.getenv("DAY16_METABASE_PASSWORD")
 BIGQUERY_DATABASE_NAME = os.getenv("DAY16_METABASE_DATABASE_NAME", "Day 16 - SaaS Health Metrics")
 
 # Validate required environment variables
-REQUIRED_ENV_VARS = {
-    "DAY16_METABASE_URL": METABASE_URL,
-    "DAY16_METABASE_EMAIL": METABASE_EMAIL,
-    "DAY16_METABASE_PASSWORD": METABASE_PASSWORD
-}
+if not METABASE_URL:
+    print("❌ ERROR: Missing DAY16_METABASE_URL in config/.env")
+    sys.exit(1)
 
-missing_vars = [var for var, value in REQUIRED_ENV_VARS.items() if not value]
-if missing_vars:
-    print("❌ ERROR: Missing required environment variables:")
-    for var in missing_vars:
-        print(f"   - {var}")
-    print("\n💡 Fix:")
-    print("   1. Copy .env.example to .env")
-    print("   2. Edit .env with your Metabase credentials")
-    print("   3. Run this script again")
-    exit(1)
+# Check authentication method
+if METABASE_API_KEY:
+    print("🔑 Using API Key authentication (recommended)")
+    AUTH_METHOD = "api_key"
+elif METABASE_EMAIL and METABASE_PASSWORD:
+    print("🔐 Using Email/Password authentication")
+    AUTH_METHOD = "email_password"
+else:
+    print("❌ ERROR: No authentication credentials found in config/.env")
+    print("\n💡 Fix: Add ONE of the following to config/.env:")
+    print("   Option 1 (Recommended): DAY16_METABASE_API_KEY=mb_xxxxxxxxxxxx")
+    print("   Option 2: DAY16_METABASE_EMAIL + DAY16_METABASE_PASSWORD")
+    sys.exit(1)
 
 # ============================================================================
 # CARD DEFINITIONS - All 6 dashboard cards
@@ -228,18 +243,37 @@ LIMIT 10
 # ============================================================================
 
 class MetabaseClient:
-    def __init__(self, url: str, email: str, password: str):
+    def __init__(self, url: str, api_key: Optional[str] = None, email: Optional[str] = None, password: Optional[str] = None):
         self.url = url.rstrip('/')
         self.session = requests.Session()
         self.session_token = None
         self.database_id = None
 
-        # Login
-        self._login(email, password)
+        # Authenticate using API key or email/password
+        if api_key:
+            self._auth_with_api_key(api_key)
+        elif email and password:
+            self._auth_with_credentials(email, password)
+        else:
+            raise Exception("❌ Must provide either api_key OR email+password")
 
-    def _login(self, email: str, password: str):
-        """Authenticate with Metabase"""
-        print("🔐 Logging into Metabase...")
+    def _auth_with_api_key(self, api_key: str):
+        """Authenticate with Metabase API Key (recommended)"""
+        print("🔑 Authenticating with API Key...")
+        self.session.headers.update({"X-Api-Key": api_key})
+
+        # Test authentication by fetching current user
+        response = self.session.get(f"{self.url}/api/user/current")
+
+        if response.status_code == 200:
+            user = response.json()
+            print(f"✅ Authentication successful! Logged in as: {user.get('email', 'Unknown')}")
+        else:
+            raise Exception(f"❌ API Key authentication failed: {response.status_code} - {response.text}")
+
+    def _auth_with_credentials(self, email: str, password: str):
+        """Authenticate with email/password (legacy method)"""
+        print("🔐 Logging into Metabase with email/password...")
 
         response = self.session.post(
             f"{self.url}/api/session",
@@ -370,10 +404,13 @@ def main():
 
     # Step 1: Connect to Metabase
     try:
-        client = MetabaseClient(METABASE_URL, METABASE_EMAIL, METABASE_PASSWORD)
+        if AUTH_METHOD == "api_key":
+            client = MetabaseClient(METABASE_URL, api_key=METABASE_API_KEY)
+        else:
+            client = MetabaseClient(METABASE_URL, email=METABASE_EMAIL, password=METABASE_PASSWORD)
     except Exception as e:
         print(f"\n❌ Error connecting to Metabase: {e}")
-        print("\n💡 Make sure you updated METABASE_URL, METABASE_EMAIL, and METABASE_PASSWORD")
+        print("\n💡 Check your credentials in config/.env")
         return
 
     # Step 2: Get database ID
