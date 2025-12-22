@@ -1,0 +1,12 @@
+{
+  "data_source": "NOAA AIS - Gulf of Mexico (copied from GIS_SymphonyLayer)",
+  "data_location": "day19/data/processed/",
+  "time_period": "2024-01-01 (demonstration data)",
+  "grid_resolution": "~2.5km x 2.5km (0.025 degrees)",
+  "noise_model": "JOMOPANS-ECHO (125 Hz)",
+  "vessel_count_total": 1593,
+  "vessel_records": 5000,
+  "grid_cells_active": 964,
+  "source_project": "GIS_SymphonyLayer (methodology copied to day19/)",
+  "self_contained": true
+}

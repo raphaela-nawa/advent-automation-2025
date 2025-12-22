@@ -1260,6 +1260,501 @@ This project is designed for **Google Arts & Culture Lab submission**, not gener
 
 ---
 
+### **Day 19 - Maritime Underwater Noise Mapping (Geospatial Analytics MVP)**
+
+**Project:** Interactive Map for Maritime Noise Impact Visualization
+**Tool:** Folium (Python) + GeoPandas + Matplotlib
+**Data Source:** GIS_SymphonyLayer project (NOAA AIS vessel tracking data + JOMOPANS-ECHO noise calculations)
+**Industry:** Environmental Marine Science / Ocean Policy
+**Target User:** Marine spatial planners, environmental compliance officers, ocean conservation analysts
+
+#### Project Context
+
+**Objective:**
+Create a 3-hour MVP interactive map that visualizes underwater noise pollution from maritime traffic in a defined region (Gulf of Mexico demonstration data). The map should enable decision-makers to quickly identify noise hotspots, understand vessel traffic patterns, and evaluate noise impact on marine habitats.
+
+**Why This Matters:**
+Underwater noise from ship traffic disrupts marine life communication, navigation, and feeding. EU Marine Strategy Framework Directive (MSFD) and similar regulations require monitoring of continuous low-frequency noise (125 Hz). This visualization helps marine planners:
+- Identify high-impact shipping lanes for mitigation strategies
+- Evaluate compliance with noise thresholds (MSFD descriptor 11)
+- Support Marine Spatial Planning (MSP) decisions for protected areas
+
+**The Decision:**
+- **WHO:** Marine spatial planner evaluating shipping route optimization
+- **WHAT decision:** Which 3 areas need noise mitigation measures this quarter (e.g., speed restrictions, route deviations)
+- **WHY visualization:** Heatmap reveals noise concentration + tooltips show vessel type dominance → identifies actionable intervention zones
+
+#### MVP Scope (3-Hour Timebox)
+
+**MUST HAVE (Core MVP):**
+1. **1 Interactive Map:** Folium map with zoom/pan controls
+2. **2 Layers:**
+   - Layer 1: Point markers (vessel positions) colored by vessel type
+   - Layer 2: Heatmap OR Choropleth grid (250m x 250m cells showing noise intensity)
+3. **1 Filter:** Vessel type selector (cargo, tanker, passenger, fishing, other)
+4. **1 Decent Tooltip:** On hover/click, show:
+   - Grid cell: Noise level (dB re 1 µPa @ 1m), vessel count, dominant vessel type
+   - Point: Vessel MMSI, type, speed, timestamp
+
+**EXPLICITLY OUT OF SCOPE (DO NOT BUILD):**
+- ❌ Time-series animation (too complex)
+- ❌ Multiple geographic regions (Gulf of Mexico ONLY)
+- ❌ Custom noise model tuning (use existing JOMOPANS-ECHO calculations)
+- ❌ Real-time data streaming (static dataset snapshot)
+- ❌ Multi-temporal comparison (single time period)
+- ❌ Advanced statistics layer (standard deviation, percentiles)
+
+#### Technical Implementation Guide
+
+**CRITICAL: Data File Management**
+All data files and processing code from the GIS_SymphonyLayer project MUST be copied into the `day19/` directory structure. All code must reference these LOCAL copies within `day19/data/`, NOT the original GIS_SymphonyLayer repository paths. This ensures the Day 19 project is self-contained and reproducible.
+
+**Step 0: Copy Required Files from GIS_SymphonyLayer (10 min)**
+
+```bash
+# Create day19 directory structure
+mkdir -p day19/data/processed
+mkdir -p day19/data/reference
+mkdir -p day19/screenshots
+mkdir -p day19/gis_modules
+
+# Copy processed data files (if they exist from running the GIS demo notebook)
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/data/outputs/demo_visualizations/*.geojson day19/data/processed/ 2>/dev/null || echo "Grid GeoJSON not found - will generate"
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/data/outputs/*.csv day19/data/processed/ 2>/dev/null || echo "Vessel CSV not found - will generate"
+
+# Copy GIS processing modules/scripts (needed to generate data if not exported)
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/scripts/*.py day19/gis_modules/ 2>/dev/null || echo "Scripts not found"
+
+# Copy the demo notebook as reference
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/01_DEMO_gulf_of_mexico.ipynb day19/data/reference/ 2>/dev/null
+
+# Copy requirements from GIS project (will merge with day19 requirements)
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/environment.yml day19/data/reference/gis_environment.yml 2>/dev/null
+```
+
+**Step 1: Data Preparation (30 min)**
+
+All paths reference the LOCAL `day19/data/` directory:
+
+```python
+# File: day19_data_prep.py
+import pandas as pd
+import geopandas as gpd
+from pathlib import Path
+import sys
+
+# CRITICAL: All paths use LOCAL day19 directory structure
+PROJECT_ROOT = Path(__file__).parent
+DATA_DIR = PROJECT_ROOT / 'data'
+PROCESSED_DIR = DATA_DIR / 'processed'
+REFERENCE_DIR = DATA_DIR / 'reference'
+
+# Add local GIS modules to path (copied from GIS_SymphonyLayer)
+sys.path.insert(0, str(PROJECT_ROOT / 'gis_modules'))
+
+# Vessel type mapping
+VESSEL_TYPES = ['Cargo', 'Tanker', 'Passenger', 'Fishing', 'Other']
+
+# Option A: Load pre-exported data from day19/data/processed/
+try:
+    print("📂 Loading processed data from LOCAL day19/data/processed/...")
+    grid_noise = gpd.read_file(PROCESSED_DIR / 'grid_noise_gulf_of_mexico.geojson')
+    vessel_positions = pd.read_csv(PROCESSED_DIR / 'vessel_positions_sample.csv')
+    print(f"✅ Loaded {len(grid_noise)} grid cells and {len(vessel_positions)} vessel positions")
+
+except FileNotFoundError:
+    # Option B: Generate data from scratch using copied GIS modules
+    print("⚠️  Pre-processed data not found in day19/data/processed/")
+    print("🔄 Generating data using GIS_SymphonyLayer processing code...")
+
+    # Import from LOCAL copied modules (in day19/gis_modules/)
+    try:
+        from gis_ais_loader import AISDataLoader
+        from gis_noise_calculator import calculate_125hz_emission, classify_vessel_from_ais
+        from gis_grid_generator import GridGenerator
+        from gis_spatial_analyzer import SpatialNoiseAnalyzer
+
+        # Process AIS data (referencing LOCAL data/reference/ directory)
+        # ... data processing logic ...
+        # Save outputs to LOCAL day19/data/processed/
+
+    except ImportError:
+        print("❌ ERROR: GIS modules not found in day19/gis_modules/")
+        print("   Run Step 0 to copy files from GIS_SymphonyLayer project")
+        sys.exit(1)
+
+    # Save generated data to LOCAL processed directory
+    grid_noise.to_file(PROCESSED_DIR / 'grid_noise_gulf_of_mexico.geojson', driver='GeoJSON')
+    vessel_positions.to_csv(PROCESSED_DIR / 'vessel_positions_sample.csv', index=False)
+    print(f"💾 Saved processed data to day19/data/processed/")
+
+# Filter for MVP: Keep only cells with vessel_count > 0
+grid_noise_filtered = grid_noise[grid_noise['vessel_count'] > 0]
+print(f"📊 Filtered to {len(grid_noise_filtered)} active grid cells")
+```
+
+**Step 2: Create Folium Map Base (20 min)**
+
+```python
+# File: day19_VIZ_maritime_noise_map.py
+import folium
+from folium.plugins import HeatMap
+import branca.colormap as cm
+
+# Initialize map (Gulf of Mexico focus)
+center_lat = 28.5  # Approximate center
+center_lon = -91.5
+m = folium.Map(
+    location=[center_lat, center_lon],
+    zoom_start=7,
+    tiles='CartoDB positron',  # Clean base layer
+    attr='Maritime Noise Analysis - Day 19'
+)
+
+# Create layer control
+folium.LayerControl().add_to(m)
+```
+
+**Step 3: Layer 1 - Noise Heatmap/Choropleth (45 min)**
+
+```python
+# Option A: Choropleth (RECOMMENDED for grid data)
+# Color cells by noise intensity
+colormap = cm.LinearColormap(
+    colors=['green', 'yellow', 'orange', 'red'],
+    vmin=grid_noise_filtered['noise_mean'].min(),
+    vmax=grid_noise_filtered['noise_mean'].max(),
+    caption='125 Hz Noise Level (dB re 1 µPa @ 1m)'
+)
+
+folium.GeoJson(
+    grid_noise_filtered,
+    name='Noise Intensity Grid',
+    style_function=lambda feature: {
+        'fillColor': colormap(feature['properties']['noise_mean']),
+        'color': 'gray',
+        'weight': 0.5,
+        'fillOpacity': 0.6
+    },
+    tooltip=folium.GeoJsonTooltip(
+        fields=['noise_mean', 'vessel_count', 'dominant_vessel_type'],
+        aliases=['Noise Level (dB):', 'Vessel Count:', 'Dominant Type:'],
+        localize=True
+    )
+).add_to(m)
+
+colormap.add_to(m)
+
+# Option B: HeatMap (simpler but less precise)
+# heat_data = [[row['LAT'], row['LON'], row['emission_125hz_dB']]
+#              for idx, row in vessel_positions.iterrows()]
+# HeatMap(heat_data, name='Vessel Noise Heatmap').add_to(m)
+```
+
+**Step 4: Layer 2 - Vessel Point Markers (30 min)**
+
+```python
+# Create feature group for vessel markers
+vessel_layer = folium.FeatureGroup(name='Vessel Positions (Sample)')
+
+# Color by vessel type
+VESSEL_COLORS = {
+    'Cargo': 'blue',
+    'Tanker': 'red',
+    'Passenger': 'green',
+    'Fishing': 'orange',
+    'Other': 'gray'
+}
+
+# Sample 500 vessels to avoid cluttering (3-hour constraint)
+vessel_sample = vessel_positions.sample(min(500, len(vessel_positions)))
+
+for idx, row in vessel_sample.iterrows():
+    folium.CircleMarker(
+        location=[row['LAT'], row['LON']],
+        radius=4,
+        color=VESSEL_COLORS.get(row['vessel_class'], 'gray'),
+        fill=True,
+        fillOpacity=0.7,
+        popup=f"""
+            <b>MMSI:</b> {row['MMSI']}<br>
+            <b>Type:</b> {row['vessel_class']}<br>
+            <b>Speed:</b> {row['SOG']:.1f} knots<br>
+            <b>Noise:</b> {row['emission_125hz_dB']:.1f} dB
+        """
+    ).add_to(vessel_layer)
+
+vessel_layer.add_to(m)
+```
+
+**Step 5: Filter Implementation (25 min)**
+
+```python
+# JavaScript-based filter (Folium limitation workaround)
+# For MVP: Pre-generate 5 separate HTML files (one per vessel type filter)
+
+def generate_filtered_map(vessel_type_filter):
+    """Generate map filtered by vessel type"""
+    if vessel_type_filter != 'All':
+        filtered_grid = grid_noise_filtered[
+            grid_noise_filtered['dominant_vessel_type'] == vessel_type_filter
+        ]
+        filtered_vessels = vessel_sample[
+            vessel_sample['vessel_class'] == vessel_type_filter
+        ]
+    else:
+        filtered_grid = grid_noise_filtered
+        filtered_vessels = vessel_sample
+
+    # ... rebuild map with filtered data ...
+    return m
+
+# Generate 6 versions: All, Cargo, Tanker, Passenger, Fishing, Other
+for vessel_type in ['All'] + VESSEL_TYPES:
+    map_filtered = generate_filtered_map(vessel_type)
+    map_filtered.save(f'day19/day19_map_{vessel_type.lower()}.html')
+
+# Link them with simple HTML navigation
+```
+
+**Alternative (Simpler):** Use Streamlit wrapper for dynamic filtering:
+
+```python
+# File: day19_VIZ_maritime_noise_streamlit.py
+import streamlit as st
+
+st.title("🌊 Maritime Noise Impact Map - Gulf of Mexico")
+
+vessel_filter = st.selectbox(
+    "Filter by Vessel Type:",
+    ['All', 'Cargo', 'Tanker', 'Passenger', 'Fishing', 'Other']
+)
+
+# Generate map with filter applied
+m = generate_filtered_map(vessel_filter)
+
+# Display in Streamlit
+st.components.v1.html(m._repr_html_(), height=600)
+```
+
+**Step 6: Output & Documentation (30 min)**
+
+```python
+# File: day19_VIZ_maritime_noise_map.py (continued)
+# Save main map to LOCAL day19 directory
+import json
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent
+OUTPUT_FILE = PROJECT_ROOT / 'day19_maritime_noise_map.html'
+
+m.save(str(OUTPUT_FILE))
+print(f"✅ Map saved to: {OUTPUT_FILE}")
+
+# Export metadata with LOCAL file references
+metadata = {
+    "data_source": "NOAA AIS - Gulf of Mexico (copied from GIS_SymphonyLayer)",
+    "data_location": "day19/data/processed/",
+    "time_period": "Sample demonstration data",
+    "grid_resolution": "250m x 250m",
+    "noise_model": "JOMOPANS-ECHO (125 Hz)",
+    "vessel_count": len(vessel_positions),
+    "grid_cells_active": len(grid_noise_filtered),
+    "source_project": "GIS_SymphonyLayer (all files copied to day19/)",
+    "self_contained": True
+}
+
+metadata_file = PROJECT_ROOT / 'day19_MAP_metadata.json'
+with open(metadata_file, 'w') as f:
+    json.dump(metadata, f, indent=2)
+
+print(f"📄 Metadata saved to: {metadata_file}")
+print(f"\n🎉 Day 19 visualization complete! Open {OUTPUT_FILE.name} in your browser.")
+```
+
+#### Mandatory Output
+
+**Map Functionality:**
+- [ ] Interactive map loads in browser (Chrome/Firefox tested)
+- [ ] Zoom controls work (zoom in reveals 250m grid detail)
+- [ ] Pan works (entire Gulf of Mexico region navigable)
+- [ ] 2 layers visible in layer control (toggle on/off)
+- [ ] Tooltips appear on hover/click
+- [ ] Noise intensity color scale shows green → yellow → red gradient
+
+**Data Accuracy:**
+- [ ] Grid cells show noise levels between 140-180 dB re 1 µPa @ 1m (typical maritime range)
+- [ ] Dominant vessel type matches highest count in cell
+- [ ] Vessel point markers match their grid cell location
+- [ ] Color legend matches actual data range (no hardcoded values)
+
+**Filter Functionality:**
+- [ ] Vessel type filter works (shows only selected type)
+- [ ] "All" option shows complete dataset
+- [ ] Filtered map updates both layers (grid + points)
+
+**Performance:**
+- [ ] Map loads in <10 seconds (500 vessel sample enforced)
+- [ ] Hover tooltips respond in <1 second
+- [ ] No JavaScript console errors
+
+**Documentation:**
+- [ ] README explains: "Identifies 3 high-noise areas (>170 dB, >50 vessels/cell) needing speed restriction consideration"
+- [ ] Screenshot: `day19/screenshots/day19_full_map.png`
+- [ ] Screenshot: `day19/screenshots/day19_tooltip_demo.png`
+- [ ] Data sources documented: "Uses GIS_SymphonyLayer JOMOPANS-ECHO model with NOAA AIS data (copied to day19/data/)"
+- [ ] Connection to existing work: "Reuses grid methodology from GIS_SymphonyLayer (all files copied to day19/)"
+- [ ] README includes Step 0 copy commands for reproducibility
+
+**Project Self-Containment:**
+- [ ] All data files exist in `day19/data/` (not external references)
+- [ ] All Python imports use relative paths within `day19/`
+- [ ] No absolute paths to `/Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/`
+- [ ] Project directory can be zipped and run elsewhere
+- [ ] `day19_MAP_metadata.json` confirms `"self_contained": true`
+
+#### When to Stop
+
+**Success Criteria:**
+- ✅ Map displays 2 layers (noise grid + vessel points)
+- ✅ Clicking a high-noise cell (red) shows tooltip: ">170 dB, 80 vessels, Cargo dominant"
+- ✅ Vessel type filter changes visible data (e.g., "Tanker" shows only red markers)
+- ✅ Visual clearly identifies 3 hotspot zones (e.g., shipping lanes near port entrances)
+- ✅ README includes decision context: "Planner can identify which shipping lanes to reroute or restrict"
+- ✅ Map file is standalone HTML (no server required)
+- ✅ All files copied from GIS_SymphonyLayer to `day19/` directory
+- ✅ All code uses LOCAL paths only (no external repository references)
+
+**Scope Creep to AVOID:**
+- ❌ Time-series slider (out of scope - static snapshot only)
+- ❌ Multiple regions (Gulf of Mexico only)
+- ❌ Statistical overlays (mean, std dev layers)
+- ❌ Export to GIS formats (Folium HTML output only)
+- ❌ Custom basemap tiles (use Folium defaults)
+- ❌ Mobile optimization (desktop browser only)
+- ❌ Data download buttons (map visualization only)
+
+#### Expected Files
+
+```
+day19/
+├── README.md                                   # Decision context, Marine Spatial Planning use case
+├── day19_VIZ_maritime_noise_map.py             # Main Folium map generation script
+├── day19_data_prep.py                          # Data loading (LOCAL paths only)
+├── day19_maritime_noise_map.html               # Interactive map output (PRIMARY DELIVERABLE)
+├── day19_MAP_metadata.json                     # Data source documentation
+├── screenshots/
+│   ├── day19_full_map.png                      # Complete map view
+│   ├── day19_tooltip_demo.png                  # Tooltip interaction example
+│   ├── day19_noise_hotspot_zoom.png            # Zoomed into high-noise area
+│   └── day19_layer_control.png                 # Layer toggle demonstration
+├── data/                                       # ALL data stored locally in day19/
+│   ├── processed/                              # Processed outputs (referenced by visualization code)
+│   │   ├── grid_noise_gulf_of_mexico.geojson  # 250m grid with noise metrics (COPIED from GIS project)
+│   │   └── vessel_positions_sample.csv        # Vessel point data (500 samples, COPIED from GIS project)
+│   └── reference/                              # Reference materials from GIS_SymphonyLayer
+│       ├── 01_DEMO_gulf_of_mexico.ipynb       # Original demo notebook (for reference)
+│       └── gis_environment.yml                # Original GIS dependencies
+├── gis_modules/                                # GIS processing code (COPIED from GIS_SymphonyLayer/scripts/)
+│   ├── 01_download_ais_data.py                # (if needed for data generation)
+│   ├── 02_process_ais_to_density.py           # (if needed for data generation)
+│   └── 03_generate_noise_layer.py             # (if needed for data generation)
+└── requirements.txt                            # folium, geopandas, pandas, matplotlib
+```
+
+**CRITICAL FILE MANAGEMENT RULE:**
+- ✅ ALL paths in Python code reference `day19/data/` directory
+- ✅ NO references to `/Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/` in code
+- ✅ Copy commands in README for reproducibility
+- ❌ DO NOT create symlinks (breaks portability)
+- ❌ DO NOT use absolute paths to GIS_SymphonyLayer repo
+
+#### Setup & Installation
+
+```bash
+# STEP 0: Copy files from GIS_SymphonyLayer (MUST BE DONE FIRST)
+cd day19
+bash << 'EOF'
+mkdir -p data/processed data/reference screenshots gis_modules
+
+# Copy processed data (if available)
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/data/outputs/demo_visualizations/*.geojson data/processed/ 2>/dev/null || echo "Will generate data"
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/data/outputs/*.csv data/processed/ 2>/dev/null || echo "Will generate data"
+
+# Copy GIS modules
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/scripts/*.py gis_modules/ 2>/dev/null || echo "Scripts not found"
+
+# Copy reference materials
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/01_DEMO_gulf_of_mexico.ipynb data/reference/ 2>/dev/null
+cp /Users/raphaelanawa/Documents/GitHub/GIS_SymphonyLayer/environment.yml data/reference/gis_environment.yml 2>/dev/null
+
+echo "✅ Files copied to day19/ directory"
+EOF
+
+# STEP 1: Install dependencies
+pip install folium geopandas pandas matplotlib
+
+# STEP 2: Run data preparation (uses LOCAL day19/data/ paths)
+python day19_data_prep.py
+
+# STEP 3: Generate map (references LOCAL data)
+python day19_VIZ_maritime_noise_map.py
+
+# STEP 4: Open map in browser
+open day19_maritime_noise_map.html  # macOS
+# OR
+xdg-open day19_maritime_noise_map.html  # Linux
+# OR
+start day19_maritime_noise_map.html  # Windows
+```
+
+#### Connection to Existing Work
+
+**Reuses GIS_SymphonyLayer Components (ALL COPIED to day19/):**
+- **Data Pipeline:** AIS data processing (copied to `day19/gis_modules/`)
+- **Noise Model:** JOMOPANS-ECHO 125 Hz calculations (copied functions)
+- **Grid Methodology:** 250m x 250m spatial aggregation (copied methodology)
+- **Demonstration Data:** Gulf of Mexico NOAA AIS (copied to `day19/data/processed/`)
+
+**What's NEW for Day 19:**
+- Folium interactive map (vs static matplotlib plots)
+- Dual-layer visualization (grid + points)
+- Vessel type filtering (interactive decision support)
+- Web-deliverable output (HTML, not Jupyter notebook)
+- **Self-contained project structure** (all dependencies in `day19/` directory)
+
+**File Independence:**
+- Day 19 is 100% independent from GIS_SymphonyLayer repository location
+- All code uses relative paths within `day19/` directory
+- Project can be zipped and run on any machine after copying source files
+- README documents exact copy commands for reproducibility
+
+**Path to Production (Post-MVP):**
+- Replace Gulf of Mexico data with Swedish waters (HELCOM AIS)
+- Integrate with Symphony Ocean Platform APIs
+- Add temporal dimension (monthly/seasonal comparisons)
+- Multi-scenario analysis (e.g., "What if cargo routes shift 5km north?")
+
+#### Tool Justification
+
+**Why Folium (Not Tableau/PowerBI):**
+- Native support for GeoJSON/geospatial data
+- Python integration with existing GIS_SymphonyLayer codebase
+- Lightweight (no server required for HTML output)
+- Open-source (marine science community standard)
+
+**Why GeoPandas:**
+- Spatial joins between vessel points and 250m grid cells
+- CRS transformations (lat/lon to projected coordinates)
+- GeoJSON export for Folium compatibility
+
+**Why NOT Custom React/Leaflet:**
+- 3-hour timebox (Folium abstracts complexity)
+- No need for custom interactivity (Folium tooltips sufficient)
+- Focus on analytical clarity, not UI polish
+
+---
+
 ### **Day 20 - Carol (Hospitality LTV Dashboard)**
 
 **Stakeholder:** Carol (Pousada Owner - Campos do Jordão)
