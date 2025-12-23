@@ -213,3 +213,4 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 .streamlit/config.toml
+day19/data/raw/AIS_2024_01_01.csv

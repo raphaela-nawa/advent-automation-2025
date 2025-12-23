@@ -1755,35 +1755,751 @@ start day19_maritime_noise_map.html  # Windows
 
 ---
 
-### **Day 20 - Carol (Hospitality LTV Dashboard)**
+### **Day 20 - Jo (Property Portfolio Visualization Module - Code-First + Framer Embed)**
 
-**Stakeholder:** Carol (Pousada Owner - Campos do Jordão)
-**Project:** Guest Lifetime Value & Retention Dashboard
-**Data Source:** Day 7 (Hospitality LTV & cohort model)
+**Project:** Host Portfolio Data Visualization Module (Embeddable)
+**Tool:** Next.js / Astro (code-first) → Deployed URL → Framer embed
+**Data Source:** Day 09 (Property Operations DW - Airbnb + Booking.com unified metrics)
+**Industry:** Hospitality / Property Management
+**Target User:** Jo (Independent Property Manager) presenting portfolio to investors/partners
 
-**Decision Context:**
-- **WHO:** Carol, pousada owner managing guest relationships
-- **WHAT decision:** Which guest cohorts to target with loyalty campaigns THIS QUARTER based on LTV potential
-- **WHAT visual:** Scatter plot: Average LTV (x-axis) vs Return rate % (y-axis), one dot per cohort, sized by cohort size
+#### Project Context
 
-**Mandatory Output:**
-- [ ] **Primary Visual:** Scatter plot showing LTV vs Return rate by cohort
-- [ ] **Secondary Visual:** Table: Top 20 guests by LTV with contact info (synthetic)
-- [ ] **Metric Cards:** Average LTV, return guest rate, average booking value
-- [ ] **Filter:** Booking season selector (Summer, Winter, All)
-- [ ] **Data Source:** Queries Day 7 database OR synthetic hospitality data
-- [ ] **Screenshot:** Evidence of working dashboard with scatter plot
+**Objective:**
+Build a **3-hour MVP** data visualization module that renders structured Airbnb/Booking.com portfolio data into clean, semantic sections. This is a **code-first, Framer-embeddable** module designed for portfolio presentation—NOT a full dashboard product.
 
-**When to Stop:**
-- ✅ Scatter plot reveals cohort segments (e.g., high LTV + low return = re-engagement target)
-- ✅ Top guests table shows LTV ranking
-- ✅ Season filter updates all visuals
-- ✅ Metric cards calculate correctly
-- ✅ README explains: "Helps Carol prioritize guest retention efforts by LTV segment"
-- ✅ Connection to Day 7 documented (if using that data)
-- ❌ DON'T do: Email integration, booking system, dynamic pricing, churn prediction
+**Why Code-First + Framer Architecture:**
+- **Code module** handles data rendering and meaning (metrics, charts, property cards)
+- **Framer** provides presentation shell (layout, branding, typography, navigation)
+- **Clear separation:** Module is layout-agnostic and embeddable via iframe/URL
 
-**Tool Recommendation:** Streamlit or Tableau Public (hospitality context benefits from visual storytelling)
+**The Decision:**
+- **WHO:** Jo showing portfolio performance to potential investors or booking platform account managers
+- **WHAT decision:** Which properties to highlight, which channel performs better, what occupancy trends reveal
+- **WHY visualization:** Structured portfolio view replaces spreadsheet exports—makes data believable, shareable, extensible
+
+#### Hard Constraints (Non-Negotiable)
+
+**Time limit:** 3 hours (hard stop)
+
+**MVP ONLY:**
+- ❌ NO backend
+- ❌ NO authentication
+- ❌ NO real API integrations
+- ❌ NO design system
+- ❌ NO pixel-perfect UI
+- ❌ NO Framer component replication
+
+**Architecture:**
+```
+Static JSON data (from Day 09 marts)
+    ↓
+Frontend app (Next.js / Astro)
+    ↓
+Deployed public URL (Vercel / Netlify)
+    ↓
+Embedded inside Framer (iframe)
+```
+
+**Framer is treated as presentation shell only.**
+
+#### Responsibilities Split
+
+**The Code Module MUST:**
+- ✅ Render data clearly
+- ✅ Define semantic sections (4 sections, see below)
+- ✅ Compute and display metrics
+- ✅ Support basic navigation between views (property detail)
+
+**The Code Module MUST NOT:**
+- ❌ Define global layout
+- ❌ Define typography styles
+- ❌ Define spacing rules
+- ❌ Define branding
+- ❌ Include headers or footers
+
+**Framer provides:** Layout, branding, typography, headers, navigation chrome.
+
+#### Semantic Sections (The Contract)
+
+The module must render exactly **4 semantic sections**, in this order:
+
+**Section 1 — Host Overview (Performance Snapshot)**
+
+**Purpose:** High-level portfolio KPIs at a glance.
+
+**Data to display:**
+- `occupancy_rate` (portfolio-wide %)
+- `total_revenue` (last 30 days)
+- `average_daily_rate` (ADR)
+- `revpar` (Revenue Per Available Room)
+- `property_count`
+
+**Data Source:** Day 09 `metrics_portfolio_public` mart
+
+**Presentation:**
+- Simple KPI blocks (4-5 cards)
+- No decoration, no comparison logic
+- Example: `<div>Occupancy: 58.8%</div>`
+
+**Section 2 — Performance Trends (Time-Series)**
+
+**Purpose:** Show how revenue and occupancy evolve over time.
+
+**Data to display:**
+- `revenue_by_day` (last 60–90 days)
+- `occupancy_by_day` (last 60–90 days)
+
+**Data Source:** Day 09 `fct_reservations_unified` aggregated by check-in date
+
+**Presentation:**
+- Simple line or bar charts
+- Readable axes (date on x-axis, value on y-axis)
+- No styling customization (use chart library defaults)
+- Library suggestion: Chart.js, Recharts, or even plain `<canvas>`
+
+**Section 3 — Listings Summary (Property Cards)**
+
+**Purpose:** Per-property performance at a glance.
+
+**Data to display (per property):**
+- `property_id`
+- `property_name`
+- `occupancy_rate`
+- `total_revenue`
+- `average_price`
+
+**Data Source:** Day 09 `metrics_portfolio_public` + `int_property_performance`
+
+**Presentation:**
+- Simple cards or table (one row/card per property)
+- Clickable navigation to Section 4 (Listing Detail)
+- Example: `<div onclick="showDetail('HB001')">HB001 - Floating Paradise</div>`
+
+**Section 4 — Listing Detail (Property Drill-Down)**
+
+**Purpose:** Zoom into one property's performance.
+
+**Data to display:**
+- Property KPIs: occupancy, revenue, ADR
+- `revenue_by_day` (property-specific)
+- Recent bookings list (platform, check-in date, guest count, price)
+- Platform comparison (Airbnb vs Booking.com for this property)
+
+**Data Source:**
+- Day 09 `fct_reservations_unified` filtered by `property_id`
+- Day 09 `dim_platform_comparison`
+
+**Presentation:**
+- Stacked sections (KPIs → chart → bookings table → platform split)
+- No advanced interactions (simple back button to Section 3)
+
+#### Data Structure (Static JSON)
+
+**Data must be:**
+- Realistic
+- Flat (no deeply nested structures)
+- Representative of Day 09 schema
+
+**Minimal JSON Schema:**
+
+```json
+{
+  "portfolio_overview": {
+    "occupancy_rate": 58.8,
+    "total_revenue": 148500,
+    "average_daily_rate": 201.13,
+    "revpar": 118.27,
+    "property_count": 6
+  },
+  "revenue_by_day": [
+    {"date": "2024-11-01", "revenue": 1200},
+    {"date": "2024-11-02", "revenue": 1350},
+    // ... 60-90 days
+  ],
+  "occupancy_by_day": [
+    {"date": "2024-11-01", "occupancy_pct": 62},
+    {"date": "2024-11-02", "occupancy_pct": 58},
+    // ... 60-90 days
+  ],
+  "properties": [
+    {
+      "property_id": "HB001",
+      "property_name": "Floating Paradise",
+      "occupancy_rate": 67.2,
+      "total_revenue": 28400,
+      "average_price": 195,
+      "bookings": [
+        {
+          "booking_id": "AIR-2024-001",
+          "platform": "Airbnb",
+          "check_in": "2024-11-15",
+          "guest_count": 2,
+          "total_price": 420
+        }
+        // ... recent bookings
+      ],
+      "platform_stats": {
+        "airbnb": {"bookings": 12, "revenue": 15200, "avg_price": 192},
+        "booking_com": {"bookings": 8, "revenue": 13200, "avg_price": 218}
+      }
+    }
+    // ... 2-3 more properties for MVP
+  ]
+}
+```
+
+**Data Generation:**
+- Export from Day 09 SQLite database: `SELECT * FROM metrics_portfolio_public;`
+- Transform to JSON using Python script: `day20_export_to_json.py`
+- Place in `/public/data/portfolio_data.json` (Next.js) or `/src/data/` (Astro)
+
+#### Styling Rules (Very Important)
+
+**Use neutral, minimal styling:**
+
+**Prefer:**
+- Plain `<div>` and semantic HTML
+- Simple flex/stack layouts (`display: flex; flex-direction: column;`)
+- No font imports (system fonts only)
+- No color systems (grayscale + 1 accent color max)
+- No animations
+- No responsive tuning beyond basic width handling
+
+**Example Acceptable CSS:**
+```css
+.kpi-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 8px;
+}
+
+.property-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+```
+
+**The UI must look clean but unfinished by design.** Framer will provide the polish.
+
+#### Technical Implementation Guide
+
+**Step 1: Setup (15 min)**
+
+```bash
+# Option A: Next.js (recommended for quick deploy)
+npx create-next-app@latest day20-portfolio-module
+cd day20-portfolio-module
+
+# Option B: Astro (lighter, faster)
+npm create astro@latest day20-portfolio-module
+cd day20-portfolio-module
+
+# Install chart library
+npm install chart.js react-chartjs-2  # Next.js
+# OR
+npm install chart.js  # Astro
+```
+
+**Step 2: Data Export from Day 09 (20 min)**
+
+```python
+# File: day20_export_to_json.py
+import sqlite3
+import json
+from pathlib import Path
+
+# Connect to Day 09 database
+db_path = Path(__file__).parent.parent / 'day09' / 'data' / 'day09_property_operations.db'
+conn = sqlite3.connect(db_path)
+
+# Export portfolio overview
+portfolio_overview = conn.execute("""
+    SELECT
+        AVG(day09_occupancy_rate_pct) as occupancy_rate,
+        SUM(total_revenue) as total_revenue,
+        AVG(day09_avg_daily_rate) as average_daily_rate,
+        AVG(day09_revpar) as revpar,
+        COUNT(*) as property_count
+    FROM metrics_portfolio_public
+""").fetchone()
+
+# Export properties
+properties = conn.execute("""
+    SELECT
+        day09_property_id,
+        day09_occupancy_rate_pct,
+        total_revenue,
+        day09_avg_daily_rate
+    FROM metrics_portfolio_public
+    ORDER BY total_revenue DESC
+    LIMIT 3
+""").fetchall()
+
+# Export revenue by day (aggregate)
+revenue_by_day = conn.execute("""
+    SELECT
+        day09_check_in_date as date,
+        SUM(day09_total_price) as revenue
+    FROM fct_reservations_unified
+    WHERE day09_check_in_date >= date('now', '-60 days')
+    GROUP BY day09_check_in_date
+    ORDER BY day09_check_in_date
+""").fetchall()
+
+# Build JSON structure
+data = {
+    "portfolio_overview": {
+        "occupancy_rate": round(portfolio_overview[0], 1),
+        "total_revenue": round(portfolio_overview[1], 2),
+        "average_daily_rate": round(portfolio_overview[2], 2),
+        "revpar": round(portfolio_overview[3], 2),
+        "property_count": portfolio_overview[4]
+    },
+    "revenue_by_day": [
+        {"date": row[0], "revenue": round(row[1], 2)}
+        for row in revenue_by_day
+    ],
+    "properties": [
+        {
+            "property_id": row[0],
+            "occupancy_rate": round(row[1], 1),
+            "total_revenue": round(row[2], 2),
+            "average_price": round(row[3], 2)
+        }
+        for row in properties
+    ]
+}
+
+# Save to public directory
+output_path = Path(__file__).parent / 'day20-portfolio-module' / 'public' / 'data' / 'portfolio_data.json'
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+with open(output_path, 'w') as f:
+    json.dump(data, f, indent=2)
+
+print(f"✅ Data exported to {output_path}")
+conn.close()
+```
+
+**Step 3: Build Section 1 - Host Overview (30 min)**
+
+```jsx
+// File: components/HostOverview.jsx (Next.js) or src/components/HostOverview.astro
+import React from 'react';
+
+export default function HostOverview({ data }) {
+  const { occupancy_rate, total_revenue, average_daily_rate, revpar, property_count } = data;
+
+  return (
+    <section className="host-overview">
+      <h2>Portfolio Overview</h2>
+      <div className="kpi-grid">
+        <div className="kpi-card">
+          <div className="kpi-value">{occupancy_rate}%</div>
+          <div className="kpi-label">Occupancy Rate</div>
+        </div>
+        <div className="kpi-card">
+          <div className="kpi-value">${total_revenue.toLocaleString()}</div>
+          <div className="kpi-label">Total Revenue (30d)</div>
+        </div>
+        <div className="kpi-card">
+          <div className="kpi-value">${average_daily_rate}</div>
+          <div className="kpi-label">Average Daily Rate</div>
+        </div>
+        <div className="kpi-card">
+          <div className="kpi-value">${revpar}</div>
+          <div className="kpi-label">RevPAR</div>
+        </div>
+        <div className="kpi-card">
+          <div className="kpi-value">{property_count}</div>
+          <div className="kpi-label">Properties</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+```css
+/* Minimal styling - styles/module.css */
+.kpi-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.kpi-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-width: 140px;
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.kpi-label {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+```
+
+**Step 4: Build Section 2 - Performance Trends (40 min)**
+
+```jsx
+// File: components/PerformanceTrends.jsx
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title } from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
+
+export default function PerformanceTrends({ revenueData }) {
+  const chartData = {
+    labels: revenueData.map(d => d.date),
+    datasets: [{
+      label: 'Revenue',
+      data: revenueData.map(d => d.revenue),
+      borderColor: '#333',
+      backgroundColor: 'transparent',
+    }]
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      title: { display: false }
+    },
+    scales: {
+      y: { beginAtZero: true }
+    }
+  };
+
+  return (
+    <section className="performance-trends">
+      <h2>Revenue Trend (Last 60 Days)</h2>
+      <Line data={chartData} options={options} />
+    </section>
+  );
+}
+```
+
+**Step 5: Build Section 3 - Listings Summary (30 min)**
+
+```jsx
+// File: components/ListingsSummary.jsx
+import React from 'react';
+
+export default function ListingsSummary({ properties, onSelectProperty }) {
+  return (
+    <section className="listings-summary">
+      <h2>Properties</h2>
+      <div className="property-grid">
+        {properties.map(property => (
+          <div
+            key={property.property_id}
+            className="property-card"
+            onClick={() => onSelectProperty(property.property_id)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="property-id">{property.property_id}</div>
+            <div className="property-metric">Occupancy: {property.occupancy_rate}%</div>
+            <div className="property-metric">Revenue: ${property.total_revenue.toLocaleString()}</div>
+            <div className="property-metric">Avg Price: ${property.average_price}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+```
+
+**Step 6: Build Section 4 - Listing Detail (40 min)**
+
+```jsx
+// File: components/ListingDetail.jsx
+import React from 'react';
+
+export default function ListingDetail({ property, onBack }) {
+  if (!property) return null;
+
+  return (
+    <section className="listing-detail">
+      <button onClick={onBack}>← Back to Properties</button>
+      <h2>{property.property_id} Detail</h2>
+
+      <div className="detail-kpis">
+        <div>Occupancy: {property.occupancy_rate}%</div>
+        <div>Revenue: ${property.total_revenue.toLocaleString()}</div>
+        <div>Avg Price: ${property.average_price}</div>
+      </div>
+
+      {property.bookings && (
+        <div className="bookings-list">
+          <h3>Recent Bookings</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Check-in</th>
+                <th>Guests</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {property.bookings.slice(0, 5).map((booking, idx) => (
+                <tr key={idx}>
+                  <td>{booking.platform}</td>
+                  <td>{booking.check_in}</td>
+                  <td>{booking.guest_count}</td>
+                  <td>${booking.total_price}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  );
+}
+```
+
+**Step 7: Main App Integration (25 min)**
+
+```jsx
+// File: pages/index.jsx (Next.js) or src/pages/index.astro
+import React, { useState, useEffect } from 'react';
+import HostOverview from '../components/HostOverview';
+import PerformanceTrends from '../components/PerformanceTrends';
+import ListingsSummary from '../components/ListingsSummary';
+import ListingDetail from '../components/ListingDetail';
+
+export default function PortfolioModule() {
+  const [data, setData] = useState(null);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+
+  useEffect(() => {
+    fetch('/data/portfolio_data.json')
+      .then(res => res.json())
+      .then(setData);
+  }, []);
+
+  if (!data) return <div>Loading...</div>;
+
+  const currentProperty = selectedProperty
+    ? data.properties.find(p => p.property_id === selectedProperty)
+    : null;
+
+  return (
+    <div className="portfolio-module">
+      {!selectedProperty ? (
+        <>
+          <HostOverview data={data.portfolio_overview} />
+          <PerformanceTrends revenueData={data.revenue_by_day} />
+          <ListingsSummary
+            properties={data.properties}
+            onSelectProperty={setSelectedProperty}
+          />
+        </>
+      ) : (
+        <ListingDetail
+          property={currentProperty}
+          onBack={() => setSelectedProperty(null)}
+        />
+      )}
+    </div>
+  );
+}
+```
+
+**Step 8: Deploy & Embed (20 min)**
+
+```bash
+# Deploy to Vercel (Next.js)
+vercel --prod
+
+# Deploy to Netlify (Astro)
+netlify deploy --prod
+
+# Get public URL (e.g., https://day20-portfolio.vercel.app)
+```
+
+**Embed in Framer:**
+1. Add Embed component in Framer
+2. Set URL to deployed link
+3. Adjust iframe height (e.g., 800px)
+4. Done - Framer handles layout/branding
+
+#### Mandatory Output
+
+**Module Functionality:**
+- [ ] All 4 semantic sections render correctly
+- [ ] Portfolio overview shows 5 KPI cards
+- [ ] Revenue trend chart displays (60-90 days)
+- [ ] Property cards are clickable
+- [ ] Property detail view shows bookings table
+- [ ] Navigation works (Section 3 ↔ Section 4)
+
+**Data Accuracy:**
+- [ ] KPIs match Day 09 `metrics_portfolio_public` values
+- [ ] Revenue chart sums match total revenue
+- [ ] Property count matches number of cards
+- [ ] No hardcoded values (all driven by JSON data)
+
+**Code Quality:**
+- [ ] Static JSON data loads successfully
+- [ ] No backend/API calls
+- [ ] Minimal CSS (grayscale + 1 accent color max)
+- [ ] No custom fonts imported
+- [ ] Code is embeddable (no full-page layout assumptions)
+
+**Deployment:**
+- [ ] App runs locally (`npm run dev`)
+- [ ] App deployed to public URL (Vercel/Netlify)
+- [ ] URL can be embedded in Framer iframe
+- [ ] No authentication required to view
+
+**Documentation:**
+- [ ] README explains: "Code-first portfolio module for Framer embed"
+- [ ] README documents data export from Day 09
+- [ ] Screenshot: `day20/screenshots/day20_section1_overview.png`
+- [ ] Screenshot: `day20/screenshots/day20_section3_properties.png`
+- [ ] Connection to Day 09: "Consumes metrics_portfolio_public + fct_reservations_unified"
+
+#### When to Stop
+
+**Success Criteria:**
+- ✅ All 4 sections render with real Day 09 data
+- ✅ Portfolio overview shows correct occupancy/ADR/RevPAR
+- ✅ Revenue chart displays time-series trend
+- ✅ Clicking property card navigates to detail view
+- ✅ Module deployed to public URL
+- ✅ URL successfully embeds in Framer
+- ✅ README documents Framer embed instructions
+- ✅ No manual content filling required (data-driven)
+
+**Scope Creep to AVOID:**
+- ❌ Backend server
+- ❌ Authentication/user management
+- ❌ Real-time API integrations
+- ❌ Custom design system
+- ❌ Responsive mobile optimization
+- ❌ Advanced filtering/sorting
+- ❌ Export to PDF/Excel
+- ❌ Email notifications
+- ❌ Booking management features
+
+#### Expected Files
+
+```
+day20/
+├── README.md                               # Code-first module documentation
+├── day20_export_to_json.py                 # Data export from Day 09
+├── day20-portfolio-module/                 # Next.js/Astro app
+│   ├── components/
+│   │   ├── HostOverview.jsx                # Section 1
+│   │   ├── PerformanceTrends.jsx           # Section 2
+│   │   ├── ListingsSummary.jsx             # Section 3
+│   │   └── ListingDetail.jsx               # Section 4
+│   ├── public/
+│   │   └── data/
+│   │       └── portfolio_data.json         # Static JSON (exported from Day 09)
+│   ├── styles/
+│   │   └── module.css                      # Minimal neutral styling
+│   ├── pages/
+│   │   └── index.jsx                       # Main app (Next.js)
+│   ├── package.json
+│   └── vercel.json                         # Deployment config
+├── screenshots/
+│   ├── day20_section1_overview.png
+│   ├── day20_section2_trends.png
+│   ├── day20_section3_properties.png
+│   └── day20_section4_detail.png
+└── day20_FRAMER_embed_guide.md             # How to embed in Framer
+```
+
+#### Setup & Installation
+
+```bash
+# STEP 1: Export data from Day 09
+cd day20
+python day20_export_to_json.py
+
+# STEP 2: Setup frontend
+cd day20-portfolio-module
+npm install
+
+# STEP 3: Run locally
+npm run dev
+# Visit http://localhost:3000
+
+# STEP 4: Deploy
+vercel --prod
+# OR
+netlify deploy --prod
+
+# STEP 5: Embed in Framer
+# 1. Copy deployed URL
+# 2. Add Embed component in Framer
+# 3. Paste URL
+# 4. Adjust height to 800-1000px
+```
+
+#### Connection to Existing Work
+
+**Consumes Day 09 Data (DIRECT DATABASE EXPORT):**
+- **Primary Mart:** `metrics_portfolio_public` (occupancy, ADR, RevPAR)
+- **Reservations:** `fct_reservations_unified` (bookings, revenue by day)
+- **Platform Comparison:** `dim_platform_comparison` (Airbnb vs Booking.com)
+- **Property Performance:** `int_property_performance` (per-property metrics)
+
+**What's NEW for Day 20:**
+- Code-first visualization (not BI tool dashboard)
+- Framer-embeddable architecture (iframe-ready)
+- Static JSON export (no database connection in frontend)
+- Semantic section contract (4 sections, clear responsibilities)
+- **Portfolio presentation focus** (investor/partner-facing, not operational dashboard)
+
+**Architectural Philosophy:**
+- **Code module:** Renders data, computes metrics, handles navigation
+- **Framer shell:** Provides layout, branding, typography, global navigation
+- **Clear separation:** Module can be embedded in ANY presentation tool, not just Framer
+
+**Difference from Traditional Dashboard:**
+- NOT responsible for: layout, spacing, fonts, colors, headers
+- IS responsible for: data accuracy, semantic structure, meaning extraction
+- Result: Lightweight, embeddable, reusable module
+
+#### Tool Justification
+
+**Why Next.js/Astro (Not Streamlit/Tableau):**
+- Embeddable in Framer/Webflow/any iframe context
+- Code-first = version controlled, reproducible, testable
+- Deploy to public URL in minutes (Vercel/Netlify)
+- No BI tool licensing or authentication barriers
+
+**Why Static JSON (Not Database Connection):**
+- 3-hour MVP constraint (no time for API layer)
+- Data changes infrequently (weekly refresh acceptable)
+- Simplifies deployment (no backend required)
+- Framer embed doesn't support server-side code
+
+**Why NOT Full Dashboard Product:**
+- Goal is portfolio presentation, not operational monitoring
+- Framer handles UX polish (module stays minimal)
+- Focus on data clarity over feature completeness
+
+**Guiding Principle:**
+
+> **Clarity > Polish**
+> **Meaning > Aesthetics**
+> **Shipping > Completeness**
+
+This is a **data visualization MVP**, not a product. The code module makes data **believable, shareable, extensible**—but intentionally minimal.
 
 ---
 

@@ -1,0 +1,777 @@
+{
+  "portfolio_overview": {
+    "occupancy_rate": 20.3,
+    "total_revenue": 90064.0,
+    "average_daily_rate": 210.35,
+    "revpar": 41.87,
+    "property_count": 6
+  },
+  "revenue_by_day": [
+    {
+      "date": "2024-10-09 00:00:00",
+      "revenue": 560.0
+    },
+    {
+      "date": "2024-10-13 00:00:00",
+      "revenue": 840.0
+    },
+    {
+      "date": "2024-10-18 00:00:00",
+      "revenue": 440.0
+    },
+    {
+      "date": "2024-10-21 00:00:00",
+      "revenue": 450.0
+    },
+    {
+      "date": "2024-10-26 00:00:00",
+      "revenue": 440.0
+    },
+    {
+      "date": "2024-10-27 00:00:00",
+      "revenue": 840.0
+    },
+    {
+      "date": "2024-10-29 00:00:00",
+      "revenue": 760.0
+    },
+    {
+      "date": "2024-11-04 00:00:00",
+      "revenue": 760.0
+    },
+    {
+      "date": "2024-11-08 00:00:00",
+      "revenue": 720.0
+    },
+    {
+      "date": "2024-11-09 00:00:00",
+      "revenue": 360.0
+    },
+    {
+      "date": "2024-11-14 00:00:00",
+      "revenue": 1020.0
+    },
+    {
+      "date": "2024-11-16 00:00:00",
+      "revenue": 1890.0
+    },
+    {
+      "date": "2024-11-20 00:00:00",
+      "revenue": 840.0
+    },
+    {
+      "date": "2024-11-21 00:00:00",
+      "revenue": 540.0
+    },
+    {
+      "date": "2024-11-26 00:00:00",
+      "revenue": 950.0
+    },
+    {
+      "date": "2024-11-28 00:00:00",
+      "revenue": 630.0
+    },
+    {
+      "date": "2024-12-01 00:00:00",
+      "revenue": 810.0
+    },
+    {
+      "date": "2024-12-02 00:00:00",
+      "revenue": 792.0
+    },
+    {
+      "date": "2024-12-10 00:00:00",
+      "revenue": 513.0
+    },
+    {
+      "date": "2024-12-11 00:00:00",
+      "revenue": 810.0
+    },
+    {
+      "date": "2024-12-12 00:00:00",
+      "revenue": 594.0
+    },
+    {
+      "date": "2024-12-13 00:00:00",
+      "revenue": 684.0
+    },
+    {
+      "date": "2024-12-18 00:00:00",
+      "revenue": 756.0
+    },
+    {
+      "date": "2024-12-21 00:00:00",
+      "revenue": 648.0
+    },
+    {
+      "date": "2024-12-25 00:00:00",
+      "revenue": 540.0
+    },
+    {
+      "date": "2024-12-29 00:00:00",
+      "revenue": 810.0
+    },
+    {
+      "date": "2025-01-07 00:00:00",
+      "revenue": 648.0
+    }
+  ],
+  "occupancy_by_day": [
+    {
+      "date": "2024-10-09 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-13 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-18 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-21 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-26 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-27 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-10-29 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-04 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-08 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-09 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-14 00:00:00",
+      "occupancy_pct": 33.3
+    },
+    {
+      "date": "2024-11-16 00:00:00",
+      "occupancy_pct": 33.3
+    },
+    {
+      "date": "2024-11-20 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-21 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-26 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-11-28 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-01 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-02 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-10 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-11 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-12 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-13 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-18 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-21 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-25 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2024-12-29 00:00:00",
+      "occupancy_pct": 16.7
+    },
+    {
+      "date": "2025-01-07 00:00:00",
+      "occupancy_pct": 16.7
+    }
+  ],
+  "properties": [
+    {
+      "property_id": "HB005",
+      "property_name": "Property HB005",
+      "occupancy_rate": 27.2,
+      "total_revenue": 18924.0,
+      "average_price": 193.8,
+      "bookings": [
+        {
+          "booking_id": "AIR-BKG-0063",
+          "platform": "airbnb",
+          "check_in": "2024-12-13 00:00:00",
+          "guest_count": 1,
+          "total_price": 684.0
+        },
+        {
+          "booking_id": "BDC-BKG-0026",
+          "platform": "booking_com",
+          "check_in": "2024-12-10 00:00:00",
+          "guest_count": 2,
+          "total_price": 513.0
+        },
+        {
+          "booking_id": "BDC-BKG-0042",
+          "platform": "booking_com",
+          "check_in": "2024-11-26 00:00:00",
+          "guest_count": 1,
+          "total_price": 950.0
+        },
+        {
+          "booking_id": "AIR-BKG-0012",
+          "platform": "airbnb",
+          "check_in": "2024-11-16 00:00:00",
+          "guest_count": 2,
+          "total_price": 570.0
+        },
+        {
+          "booking_id": "BDC-BKG-0022",
+          "platform": "booking_com",
+          "check_in": "2024-11-14 00:00:00",
+          "guest_count": 2,
+          "total_price": 570.0
+        },
+        {
+          "booking_id": "AIR-BKG-0057",
+          "platform": "airbnb",
+          "check_in": "2024-11-04 00:00:00",
+          "guest_count": 3,
+          "total_price": 760.0
+        },
+        {
+          "booking_id": "BDC-BKG-0039",
+          "platform": "booking_com",
+          "check_in": "2024-10-29 00:00:00",
+          "guest_count": 2,
+          "total_price": 760.0
+        },
+        {
+          "booking_id": "AIR-BKG-0058",
+          "platform": "airbnb",
+          "check_in": "2024-10-06 00:00:00",
+          "guest_count": 3,
+          "total_price": 760.0
+        },
+        {
+          "booking_id": "AIR-BKG-0023",
+          "platform": "airbnb",
+          "check_in": "2024-10-01 00:00:00",
+          "guest_count": 1,
+          "total_price": 950.0
+        },
+        {
+          "booking_id": "BDC-BKG-0013",
+          "platform": "booking_com",
+          "check_in": "2024-10-01 00:00:00",
+          "guest_count": 1,
+          "total_price": 570.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 16,
+          "revenue": 11419.0,
+          "avg_price": 713.69
+        },
+        "booking_com": {
+          "bookings": 9,
+          "revenue": 7505.0,
+          "avg_price": 833.89
+        }
+      }
+    },
+    {
+      "property_id": "HB004",
+      "property_name": "Property HB004",
+      "occupancy_rate": 17.9,
+      "total_revenue": 18900.0,
+      "average_price": 292.6,
+      "bookings": [
+        {
+          "booking_id": "BDC-BKG-0030",
+          "platform": "booking_com",
+          "check_in": "2024-12-18 00:00:00",
+          "guest_count": 7,
+          "total_price": 756.0
+        },
+        {
+          "booking_id": "BDC-BKG-0019",
+          "platform": "booking_com",
+          "check_in": "2024-11-20 00:00:00",
+          "guest_count": 3,
+          "total_price": 840.0
+        },
+        {
+          "booking_id": "BDC-BKG-0037",
+          "platform": "booking_com",
+          "check_in": "2024-10-13 00:00:00",
+          "guest_count": 5,
+          "total_price": 840.0
+        },
+        {
+          "booking_id": "AIR-BKG-0016",
+          "platform": "airbnb",
+          "check_in": "2024-10-09 00:00:00",
+          "guest_count": 2,
+          "total_price": 560.0
+        },
+        {
+          "booking_id": "AIR-BKG-0024",
+          "platform": "airbnb",
+          "check_in": "2024-09-23 00:00:00",
+          "guest_count": 3,
+          "total_price": 840.0
+        },
+        {
+          "booking_id": "AIR-BKG-0029",
+          "platform": "airbnb",
+          "check_in": "2024-09-02 00:00:00",
+          "guest_count": 2,
+          "total_price": 1680.0
+        },
+        {
+          "booking_id": "BDC-BKG-0048",
+          "platform": "booking_com",
+          "check_in": "2024-08-13 00:00:00",
+          "guest_count": 3,
+          "total_price": 1008.0
+        },
+        {
+          "booking_id": "BDC-BKG-0025",
+          "platform": "booking_com",
+          "check_in": "2024-08-11 00:00:00",
+          "guest_count": 8,
+          "total_price": 1344.0
+        },
+        {
+          "booking_id": "BDC-BKG-0033",
+          "platform": "booking_com",
+          "check_in": "2024-08-07 00:00:00",
+          "guest_count": 4,
+          "total_price": 1680.0
+        },
+        {
+          "booking_id": "BDC-BKG-0049",
+          "platform": "booking_com",
+          "check_in": "2024-07-03 00:00:00",
+          "guest_count": 5,
+          "total_price": 1008.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 11,
+          "revenue": 8988.0,
+          "avg_price": 817.09
+        },
+        "booking_com": {
+          "bookings": 9,
+          "revenue": 9912.0,
+          "avg_price": 1101.33
+        }
+      }
+    },
+    {
+      "property_id": "HB001",
+      "property_name": "Property HB001",
+      "occupancy_rate": 25.8,
+      "total_revenue": 16578.0,
+      "average_price": 179.18,
+      "bookings": [
+        {
+          "booking_id": "AIR-BKG-0004",
+          "platform": "airbnb",
+          "check_in": "2025-01-07 00:00:00",
+          "guest_count": 2,
+          "total_price": 648.0
+        },
+        {
+          "booking_id": "BDC-BKG-0005",
+          "platform": "booking_com",
+          "check_in": "2024-12-21 00:00:00",
+          "guest_count": 3,
+          "total_price": 648.0
+        },
+        {
+          "booking_id": "BDC-BKG-0028",
+          "platform": "booking_com",
+          "check_in": "2024-12-01 00:00:00",
+          "guest_count": 3,
+          "total_price": 810.0
+        },
+        {
+          "booking_id": "BDC-BKG-0041",
+          "platform": "booking_com",
+          "check_in": "2024-11-21 00:00:00",
+          "guest_count": 4,
+          "total_price": 540.0
+        },
+        {
+          "booking_id": "AIR-BKG-0036",
+          "platform": "airbnb",
+          "check_in": "2024-11-09 00:00:00",
+          "guest_count": 3,
+          "total_price": 360.0
+        },
+        {
+          "booking_id": "AIR-BKG-0055",
+          "platform": "airbnb",
+          "check_in": "2024-11-08 00:00:00",
+          "guest_count": 2,
+          "total_price": 720.0
+        },
+        {
+          "booking_id": "BDC-BKG-0032",
+          "platform": "booking_com",
+          "check_in": "2024-10-05 00:00:00",
+          "guest_count": 4,
+          "total_price": 1080.0
+        },
+        {
+          "booking_id": "AIR-BKG-0032",
+          "platform": "airbnb",
+          "check_in": "2024-10-03 00:00:00",
+          "guest_count": 3,
+          "total_price": 720.0
+        },
+        {
+          "booking_id": "AIR-BKG-0045",
+          "platform": "airbnb",
+          "check_in": "2024-10-02 00:00:00",
+          "guest_count": 4,
+          "total_price": 540.0
+        },
+        {
+          "booking_id": "AIR-BKG-0007",
+          "platform": "airbnb",
+          "check_in": "2024-09-15 00:00:00",
+          "guest_count": 3,
+          "total_price": 720.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 15,
+          "revenue": 11394.0,
+          "avg_price": 759.6
+        },
+        "booking_com": {
+          "bookings": 7,
+          "revenue": 5184.0,
+          "avg_price": 740.57
+        }
+      }
+    },
+    {
+      "property_id": "HB002",
+      "property_name": "Property HB002",
+      "occupancy_rate": 19.3,
+      "total_revenue": 15664.0,
+      "average_price": 226.88,
+      "bookings": [
+        {
+          "booking_id": "BDC-BKG-0001",
+          "platform": "booking_com",
+          "check_in": "2024-12-12 00:00:00",
+          "guest_count": 6,
+          "total_price": 594.0
+        },
+        {
+          "booking_id": "BDC-BKG-0034",
+          "platform": "booking_com",
+          "check_in": "2024-12-02 00:00:00",
+          "guest_count": 4,
+          "total_price": 792.0
+        },
+        {
+          "booking_id": "BDC-BKG-0031",
+          "platform": "booking_com",
+          "check_in": "2024-11-16 00:00:00",
+          "guest_count": 1,
+          "total_price": 1320.0
+        },
+        {
+          "booking_id": "AIR-BKG-0020",
+          "platform": "airbnb",
+          "check_in": "2024-10-26 00:00:00",
+          "guest_count": 6,
+          "total_price": 440.0
+        },
+        {
+          "booking_id": "BDC-BKG-0038",
+          "platform": "booking_com",
+          "check_in": "2024-10-18 00:00:00",
+          "guest_count": 4,
+          "total_price": 440.0
+        },
+        {
+          "booking_id": "BDC-BKG-0009",
+          "platform": "booking_com",
+          "check_in": "2024-10-05 00:00:00",
+          "guest_count": 2,
+          "total_price": 1100.0
+        },
+        {
+          "booking_id": "BDC-BKG-0027",
+          "platform": "booking_com",
+          "check_in": "2024-09-20 00:00:00",
+          "guest_count": 5,
+          "total_price": 1100.0
+        },
+        {
+          "booking_id": "BDC-BKG-0017",
+          "platform": "booking_com",
+          "check_in": "2024-07-24 00:00:00",
+          "guest_count": 3,
+          "total_price": 792.0
+        },
+        {
+          "booking_id": "BDC-BKG-0006",
+          "platform": "booking_com",
+          "check_in": "2024-07-09 00:00:00",
+          "guest_count": 2,
+          "total_price": 1056.0
+        },
+        {
+          "booking_id": "AIR-BKG-0052",
+          "platform": "airbnb",
+          "check_in": "2024-07-06 00:00:00",
+          "guest_count": 2,
+          "total_price": 1320.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 6,
+          "revenue": 5544.0,
+          "avg_price": 924.0
+        },
+        "booking_com": {
+          "bookings": 10,
+          "revenue": 10120.0,
+          "avg_price": 1012.0
+        }
+      }
+    },
+    {
+      "property_id": "HB003",
+      "property_name": "Property HB003",
+      "occupancy_rate": 19.6,
+      "total_revenue": 10590.0,
+      "average_price": 152.65,
+      "bookings": [
+        {
+          "booking_id": "AIR-BKG-0034",
+          "platform": "airbnb",
+          "check_in": "2024-12-29 00:00:00",
+          "guest_count": 2,
+          "total_price": 810.0
+        },
+        {
+          "booking_id": "AIR-BKG-0014",
+          "platform": "airbnb",
+          "check_in": "2024-12-25 00:00:00",
+          "guest_count": 1,
+          "total_price": 540.0
+        },
+        {
+          "booking_id": "BDC-BKG-0036",
+          "platform": "booking_com",
+          "check_in": "2024-12-11 00:00:00",
+          "guest_count": 2,
+          "total_price": 810.0
+        },
+        {
+          "booking_id": "AIR-BKG-0031",
+          "platform": "airbnb",
+          "check_in": "2024-11-14 00:00:00",
+          "guest_count": 2,
+          "total_price": 450.0
+        },
+        {
+          "booking_id": "BDC-BKG-0043",
+          "platform": "booking_com",
+          "check_in": "2024-10-21 00:00:00",
+          "guest_count": 2,
+          "total_price": 450.0
+        },
+        {
+          "booking_id": "AIR-BKG-0006",
+          "platform": "airbnb",
+          "check_in": "2024-10-02 00:00:00",
+          "guest_count": 1,
+          "total_price": 1050.0
+        },
+        {
+          "booking_id": "AIR-BKG-0011",
+          "platform": "airbnb",
+          "check_in": "2024-09-15 00:00:00",
+          "guest_count": 2,
+          "total_price": 300.0
+        },
+        {
+          "booking_id": "AIR-BKG-0044",
+          "platform": "airbnb",
+          "check_in": "2024-08-25 00:00:00",
+          "guest_count": 1,
+          "total_price": 720.0
+        },
+        {
+          "booking_id": "AIR-BKG-0074",
+          "platform": "airbnb",
+          "check_in": "2024-08-10 00:00:00",
+          "guest_count": 1,
+          "total_price": 900.0
+        },
+        {
+          "booking_id": "AIR-BKG-0070",
+          "platform": "airbnb",
+          "check_in": "2024-06-02 00:00:00",
+          "guest_count": 2,
+          "total_price": 360.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 11,
+          "revenue": 6630.0,
+          "avg_price": 602.73
+        },
+        "booking_com": {
+          "bookings": 6,
+          "revenue": 3960.0,
+          "avg_price": 660.0
+        }
+      }
+    },
+    {
+      "property_id": "HB006",
+      "property_name": "Property HB006",
+      "occupancy_rate": 12.0,
+      "total_revenue": 9408.0,
+      "average_price": 217.0,
+      "bookings": [
+        {
+          "booking_id": "BDC-BKG-0020",
+          "platform": "booking_com",
+          "check_in": "2024-11-28 00:00:00",
+          "guest_count": 3,
+          "total_price": 630.0
+        },
+        {
+          "booking_id": "AIR-BKG-0026",
+          "platform": "airbnb",
+          "check_in": "2024-10-27 00:00:00",
+          "guest_count": 6,
+          "total_price": 840.0
+        },
+        {
+          "booking_id": "BDC-BKG-0008",
+          "platform": "booking_com",
+          "check_in": "2024-09-14 00:00:00",
+          "guest_count": 2,
+          "total_price": 840.0
+        },
+        {
+          "booking_id": "BDC-BKG-0016",
+          "platform": "booking_com",
+          "check_in": "2024-09-10 00:00:00",
+          "guest_count": 4,
+          "total_price": 1470.0
+        },
+        {
+          "booking_id": "AIR-BKG-0001",
+          "platform": "airbnb",
+          "check_in": "2024-08-02 00:00:00",
+          "guest_count": 6,
+          "total_price": 504.0
+        },
+        {
+          "booking_id": "AIR-BKG-0040",
+          "platform": "airbnb",
+          "check_in": "2024-07-27 00:00:00",
+          "guest_count": 1,
+          "total_price": 1260.0
+        },
+        {
+          "booking_id": "AIR-BKG-0048",
+          "platform": "airbnb",
+          "check_in": "2024-07-06 00:00:00",
+          "guest_count": 6,
+          "total_price": 1260.0
+        },
+        {
+          "booking_id": "AIR-BKG-0071",
+          "platform": "airbnb",
+          "check_in": "2024-05-23 00:00:00",
+          "guest_count": 2,
+          "total_price": 630.0
+        },
+        {
+          "booking_id": "AIR-BKG-0018",
+          "platform": "airbnb",
+          "check_in": "2024-04-25 00:00:00",
+          "guest_count": 3,
+          "total_price": 420.0
+        },
+        {
+          "booking_id": "AIR-BKG-0043",
+          "platform": "airbnb",
+          "check_in": "2024-03-03 00:00:00",
+          "guest_count": 5,
+          "total_price": 420.0
+        }
+      ],
+      "platform_stats": {
+        "airbnb": {
+          "bookings": 8,
+          "revenue": 5901.0,
+          "avg_price": 737.62
+        },
+        "booking_com": {
+          "bookings": 4,
+          "revenue": 3507.0,
+          "avg_price": 876.75
+        }
+      }
+    }
+  ]
+}

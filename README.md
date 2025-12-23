@@ -42,7 +42,7 @@ Each one ships with full code and documentation.
 | 17 | Dashboards | Rafael - Multi-Jurisdictional Asset Compliance Dashboard | Wealth Management / Legal Compliance | ✅ Complete | [Day 17](./day17) |
 | 18 | Dashboards | Google Arts & Culture Experiment MVP | TBD | 🚧 In Progress | [Day 18](./day18) |
 | 19 | Dashboards | Maritime Underwater Noise Mapping (Geospatial Analytics MVP) | Environmental Marine Science / Ocean Policy | ✅ Complete | [Day 19](./day19) |
-| 20 | Dashboards | TBD | TBD | 🚧 Planned | [Day 20](./day20) |
+| 20 | Dashboards | TBD | TBD | 🚧 In Progress | [Day 20](./day20) |
 | 21 | AI Insights | TBD | TBD | 🚧 Planned | [Day 21](./day21) |
 | 22 | AI Insights | TBD | TBD | 🚧 Planned | [Day 22](./day22) |
 | 23 | AI Insights | TBD | TBD | 🚧 Planned | [Day 23](./day23) |

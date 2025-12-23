@@ -1,0 +1,284 @@
+/* Minimal neutral styling for portfolio module */
+/* Designed to be embedded in Framer - Framer provides layout/branding */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #333;
+  background: #fff;
+  line-height: 1.6;
+}
+
+/* Main Container */
+.portfolio-module {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Loading and Error States */
+.loading,
+.error {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+
+.error {
+  color: #c00;
+}
+
+/* Section Headers */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #222;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Section 1: Host Overview - KPI Cards */
+.host-overview {
+  margin-bottom: 40px;
+}
+
+.kpi-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.kpi-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  min-width: 140px;
+  flex: 1;
+  background: #fafafa;
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.kpi-label {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Section 2: Performance Trends */
+.performance-trends {
+  margin-bottom: 40px;
+}
+
+/* Section 3: Listings Summary - Property Cards */
+.listings-summary {
+  margin-bottom: 40px;
+}
+
+.property-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.property-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background: #fafafa;
+  transition: border-color 0.2s;
+}
+
+.property-card:hover {
+  border-color: #999;
+}
+
+.property-header {
+  margin-bottom: 16px;
+}
+
+.property-id {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.property-name {
+  font-size: 14px;
+  color: #666;
+}
+
+.property-metrics {
+  margin-bottom: 12px;
+}
+
+.property-metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.metric-label {
+  color: #666;
+}
+
+.metric-value {
+  font-weight: 600;
+  color: #222;
+}
+
+.view-details {
+  font-size: 14px;
+  color: #555;
+  margin-top: 12px;
+}
+
+/* Section 4: Listing Detail */
+.listing-detail {
+  margin-bottom: 40px;
+}
+
+.back-button {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background: #e5e5e5;
+}
+
+.detail-header {
+  margin-bottom: 24px;
+}
+
+.detail-header h2 {
+  margin-bottom: 4px;
+}
+
+.property-subtitle {
+  color: #666;
+  font-size: 16px;
+}
+
+.detail-kpis {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.detail-kpi-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  min-width: 120px;
+  background: #fafafa;
+}
+
+.detail-kpi-card .kpi-value {
+  font-size: 24px;
+}
+
+/* Platform Stats */
+.platform-stats-section {
+  margin-bottom: 32px;
+}
+
+.platform-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.platform-stat-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.platform-name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.platform-metrics div {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #555;
+}
+
+/* Bookings Table */
+.bookings-section {
+  margin-bottom: 32px;
+}
+
+.bookings-table-container {
+  overflow-x: auto;
+}
+
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.bookings-table th {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.bookings-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.bookings-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.platform-badge {
+  font-weight: 500;
+  color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .kpi-grid {
+    flex-direction: column;
+  }
+
+  .property-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-kpis {
+    flex-direction: column;
+  }
+
+  .platform-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
