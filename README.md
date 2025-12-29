@@ -43,7 +43,7 @@ Each one ships with full code and documentation.
 | 18 | Dashboards | Google Arts & Culture Experiment MVP | TBD | 🚧 In Progress | [Day 18](./day18) |
 | 19 | Dashboards | Maritime Underwater Noise Mapping (Geospatial Analytics MVP) | Environmental Marine Science / Ocean Policy | ✅ Complete | [Day 19](./day19) |
 | 20 | Dashboards | TBD | TBD | 🚧 In Progress | [Day 20](./day20) |
-| 21 | AI Insights | TBD | TBD | 🚧 Planned | [Day 21](./day21) |
+| 21 | AI Insights | AI Insights Layer - Executive Summary Generator | SaaS/Software | ✅ Complete | [Day 21](./day21) |
 | 22 | AI Insights | TBD | TBD | 🚧 Planned | [Day 22](./day22) |
 | 23 | AI Insights | TBD | TBD | 🚧 Planned | [Day 23](./day23) |
 | 24 | AI Insights | TBD | TBD | 🚧 Planned | [Day 24](./day24) |

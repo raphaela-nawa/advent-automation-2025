@@ -1,0 +1,22 @@
+# Day 21: AI Insights Layer - Executive Summary Generator
+# Specific dependencies for this project
+
+# AI/LLM
+anthropic>=0.40.0
+
+# Data processing (already in root requirements.txt, listed here for reference)
+# pandas>=2.0.0
+# numpy>=1.24.0
+
+# BigQuery (already in root, reusing Day 16 connection)
+# google-cloud-bigquery>=3.14.1
+# google-auth>=2.25.2
+
+# Environment variables (already in root)
+# python-dotenv>=1.0.0
+
+# Date/time utilities
+python-dateutil>=2.9.0
+
+# YAML configuration
+pyyaml>=6.0.0

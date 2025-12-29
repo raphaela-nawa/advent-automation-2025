@@ -1,0 +1,115 @@
+# Day 21: AI Insights Layer - Configuration Settings
+# Defines which metrics to analyze and how to structure insights
+
+# BigQuery connection settings (reuse Day 16 connection)
+bigquery:
+  project_id: "advent2025-day16"
+  dataset_id: "day16_saas_metrics"
+
+# Metrics to fetch for AI analysis
+metrics_sources:
+  kpis:
+    table: "day06_dashboard_kpis"
+    columns:
+      - current_mrr
+      - churn_rate_pct
+      - active_customers
+      - healthy_customer_pct
+
+  mrr_growth:
+    table: "day06_mrr_summary"
+    columns:
+      - month
+      - current_mrr
+      - net_mrr
+      - mom_growth_rate_pct
+    order_by: "month DESC"
+    limit: 12  # Last 12 months
+
+  retention:
+    table: "day06_retention_curves"
+    columns:
+      - cohort_month
+      - months_since_signup
+      - retention_rate_pct
+    filters:
+      - "cohort_month IN ('2023-02', '2023-04', '2023-01', '2023-05', '2023-03', '2023-06')"
+      - "months_since_signup = 12"
+
+  customer_health:
+    table: "day06_customer_health"
+    columns:
+      - health_status
+      - customer_id
+      - ltv_estimate
+      - current_mrr
+      - plan_tier
+    filters:
+      - "health_status = 'At Risk'"
+    order_by: "ltv_estimate DESC"
+    limit: 10
+
+# AI insight generation settings
+insight_generation:
+  model: "claude-sonnet-4-5-20250929"
+  max_tokens: 4000
+  temperature: 0.3  # Lower for more factual, consistent insights
+
+  # Insight categories to generate
+  categories:
+    - name: "executive_summary"
+      description: "High-level business health overview"
+      priority: 1
+
+    - name: "growth_trajectory"
+      description: "MRR growth trends and momentum"
+      priority: 2
+
+    - name: "retention_performance"
+      description: "Cohort retention patterns and insights"
+      priority: 3
+
+    - name: "customer_risk"
+      description: "At-risk customer analysis and recommendations"
+      priority: 4
+
+    - name: "strategic_recommendations"
+      description: "Actionable next steps based on all metrics"
+      priority: 5
+
+# Output settings
+output:
+  format: "markdown"
+  file_prefix: "day21_INSIGHT_"
+  timestamp_format: "%Y%m%d_%H%M%S"
+  save_to: "insights/"
+
+  # Include these sections in output
+  sections:
+    - "Executive Summary"
+    - "Key Metrics Overview"
+    - "Growth Trajectory Analysis"
+    - "Retention Performance Insights"
+    - "Customer Risk Assessment"
+    - "Strategic Recommendations"
+    - "Appendix: Raw Metrics"
+
+# Thresholds for automated alerts
+alerts:
+  mrr_growth_negative_months: 2  # Alert if negative for 2+ consecutive months
+  churn_rate_threshold_pct: 40.0  # Alert if above 40%
+  at_risk_ltv_total: 10000.0  # Alert if total at-risk LTV > $10k
+  retention_gap_threshold_pct: 10.0  # Alert if best-worst gap > 10%
+
+# Context for AI (business background)
+business_context:
+  industry: "SaaS"
+  business_model: "Subscription-based"
+  primary_metric: "MRR"
+  target_audience: "Executive team, investors"
+  decision_timeframe: "Monthly strategic planning"
+
+# Version control
+version: "1.0.0"
+created: "2025-12-28"
+last_modified: "2025-12-28"
